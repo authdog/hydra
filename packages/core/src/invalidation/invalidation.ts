@@ -29,16 +29,16 @@ interface IAgregateTypesWithIds {
 }
 
 export const extractMutationName = (inputString: string): string | null => {
-    const regex = /{([^}]*)}/;
-    const matches = inputString.match(regex);
-    if (matches && matches.length >= 2) {
-        const textInsideBraces = matches[1]?.trim();
-        const firstWord = textInsideBraces?.match(/\b\w+\b/);
-        if (firstWord && firstWord.length > 0) {
-            return firstWord[0];
-        }
+  const regex = /{([^}]*)}/;
+  const matches = inputString.match(regex);
+  if (matches && matches.length >= 2) {
+    const textInsideBraces = matches[1]?.trim();
+    const firstWord = textInsideBraces?.match(/\b\w+\b/);
+    if (firstWord && firstWord.length > 0) {
+      return firstWord[0];
     }
-    return null;
+  }
+  return null;
 };
 
 // export const invalidateCache = () => {
@@ -49,7 +49,7 @@ export const extractMutationName = (inputString: string): string | null => {
 
 export const extractInvalidationBlocksFromQuery = (
   input: string,
-  id: string = "id"
+  id: string = "id",
 ): string[] => {
   const regex = /{[^{}]+?(?=\n\s*})/g;
   const matches = input.match(regex) || [];
@@ -73,7 +73,7 @@ interface PathResult {
 export const mapPathsToTypes = (
   schema: IGraphQLSchema,
   pathResult: PathResult,
-  mutationId: string
+  mutationId: string,
 ): Record<string, string> => {
   const mutationField = schema.types
     .find((type) => type.name === "Mutation")
@@ -95,7 +95,7 @@ export const mapPathsToTypes = (
         ?.fields.find((field) => field.name === p);
       if (!currentField) {
         throw new Error(
-          `Field ${p} not found in the schema for type ${currentType}`
+          `Field ${p} not found in the schema for type ${currentType}`,
         );
       }
       currentType = currentField.type;
@@ -113,43 +113,49 @@ export const findFieldsWithId = (
   //   result: string[] = [],
   paths: string[] = [],
   currentPath: string = "",
-  mutationId: string = ""
+  mutationId: string = "",
 ) => {
-  selectionSet.selections.forEach((selection: { selectionSet: { selections: any[]; }; name: { value: string; }; }) => {
-    // if (selection.kind === "Field" && selection.name.value === "id") {
-    // //   result.push(selectionParent);
-    // }
-    if (selection.selectionSet) {
-      // check if selectionSet has id field
-      const hasIdField = selection.selectionSet.selections.find(
-        (s: { kind: string; name: { value: string; }; }) => s.kind === "Field" && s.name.value === "id"
-      );
+  selectionSet.selections.forEach(
+    (selection: {
+      selectionSet: { selections: any[] };
+      name: { value: string };
+    }) => {
+      // if (selection.kind === "Field" && selection.name.value === "id") {
+      // //   result.push(selectionParent);
+      // }
+      if (selection.selectionSet) {
+        // check if selectionSet has id field
+        const hasIdField = selection.selectionSet.selections.find(
+          (s: { kind: string; name: { value: string } }) =>
+            s.kind === "Field" && s.name.value === "id",
+        );
 
-      if (hasIdField) {
-        if (paths.length > 0) {
-          paths.push(currentPath + "." + selection.name.value);
-        } else {
-          paths.push(selectionParent + "." + selection.name.value);
+        if (hasIdField) {
+          if (paths.length > 0) {
+            paths.push(currentPath + "." + selection.name.value);
+          } else {
+            paths.push(selectionParent + "." + selection.name.value);
+          }
         }
-      }
 
-      findFieldsWithId(
-        selection.name.value,
-        selection.selectionSet,
-        paths,
-        paths.length === 0
-          ? mutationId + "." + selection.name.value
-          : mutationId + currentPath + "." + selection.name.value
-      );
-    }
-  });
+        findFieldsWithId(
+          selection.name.value,
+          selection.selectionSet,
+          paths,
+          paths.length === 0
+            ? mutationId + "." + selection.name.value
+            : mutationId + currentPath + "." + selection.name.value,
+        );
+      }
+    },
+  );
 
   return paths;
 };
 
 export const getTypesFromPaths = (
   pathsGraph: string[],
-  schema: IGraphQLSchema
+  schema: IGraphQLSchema,
 ): string[] => {
   const { types } = schema;
   const result: string[] = [];
@@ -185,7 +191,7 @@ export const generateGraphQLCacheKey = async ({
   if (crypto && crypto.subtle) {
     const digest = await crypto.subtle.digest(
       "SHA-256",
-      new TextEncoder().encode(query)
+      new TextEncoder().encode(query),
     );
     const hashArray = Array.from(new Uint8Array(digest));
     queryHashHex = hashArray
@@ -194,7 +200,7 @@ export const generateGraphQLCacheKey = async ({
 
     const digestUserId = await crypto.subtle.digest(
       "SHA-256",
-      new TextEncoder().encode(userId)
+      new TextEncoder().encode(userId),
     );
     const hashArrayUserId = Array.from(new Uint8Array(digestUserId));
     userIdHashHex = hashArrayUserId
@@ -203,7 +209,7 @@ export const generateGraphQLCacheKey = async ({
 
     variablesHashHex = await crypto.subtle.digest(
       "SHA-256",
-      new TextEncoder().encode(JSON.stringify(variables))
+      new TextEncoder().encode(JSON.stringify(variables)),
     );
   } else {
     const sha256 = require("crypto-js/sha256");
@@ -226,50 +232,50 @@ export const generateGraphQLCacheKey = async ({
 };
 
 interface IResult {
-    [key: string]: { id: string; name: string }[];
+  [key: string]: { id: string; name: string }[];
 }
 
 const extractTypeNamesAndIds = (obj: any, result: IResult = {}) => {
-    for (let key in obj) {
-        if (typeof obj[key] === "object" && obj[key] !== null) {
-            if (obj[key].id && obj[key].__typename) {
-                const typeName = obj[key].__typename;
-                result[typeName] = result[typeName] || [];
-                if (result[typeName]) {
-                    const item = {
-                        id: obj[key].id,
-                        name: obj[key].name,
-                    };
-                    if (Array.isArray(result[typeName])) {
-                        if (!!result[typeName]) {
-                            // @ts-ignore
-                            result[typeName].push(item);
-                        }
-                    }
-                }
+  for (let key in obj) {
+    if (typeof obj[key] === "object" && obj[key] !== null) {
+      if (obj[key].id && obj[key].__typename) {
+        const typeName = obj[key].__typename;
+        result[typeName] = result[typeName] || [];
+        if (result[typeName]) {
+          const item = {
+            id: obj[key].id,
+            name: obj[key].name,
+          };
+          if (Array.isArray(result[typeName])) {
+            if (!!result[typeName]) {
+              // @ts-ignore
+              result[typeName].push(item);
             }
-
-            extractTypeNamesAndIds(obj[key], result);
+          }
         }
-    }
+      }
 
-    return result;
+      extractTypeNamesAndIds(obj[key], result);
+    }
+  }
+
+  return result;
 };
 
 export const aggregateTypesWithIds = (data: any): IAgregateTypesWithIds[] => {
-    const result = extractTypeNamesAndIds(data);
-    const typesWithIds: IAgregateTypesWithIds[] = [];
+  const result = extractTypeNamesAndIds(data);
+  const typesWithIds: IAgregateTypesWithIds[] = [];
 
-    Object.keys(result).forEach((key) => {
-        if (result[key]) {
-            typesWithIds.push({
-                name: key,
-                ids: result[key]?.map((item) => item.id) || [],
-            });
-        }
-    });
+  Object.keys(result).forEach((key) => {
+    if (result[key]) {
+      typesWithIds.push({
+        name: key,
+        ids: result[key]?.map((item) => item.id) || [],
+      });
+    }
+  });
 
-    return typesWithIds;
+  return typesWithIds;
 };
 
 /*
@@ -356,7 +362,7 @@ export const aggregateTypesWithIds = (data: any): IAgregateTypesWithIds[] => {
 */
 export const splitAggregatedTypesWithIds = (
   data: IAgregateTypesWithIds[],
-  chunkSize: number = 5
+  chunkSize: number = 5,
 ): IAgregateTypesWithIds[][] => {
   interface ITypeWithId {
     name: string;
@@ -420,22 +426,24 @@ export const splitAggregatedTypesWithIds = (
 };
 
 export const extractedAllQueryIdentifiersInRawQuery = (
-  rawQuery: string
+  rawQuery: string,
 ): string[] => {
   const extracted = gql(rawQuery);
   const result: string[] = [];
 
-  extracted.definitions.forEach((definition: { kind: string; selectionSet: { selections: any[]; }; }) => {
-    if (definition.kind === "OperationDefinition") {
-      if (definition.selectionSet) {
-        definition.selectionSet.selections.forEach((selection) => {
-          if (selection.kind === "Field") {
-            result.push(selection.name.value);
-          }
-        });
+  extracted.definitions.forEach(
+    (definition: { kind: string; selectionSet: { selections: any[] } }) => {
+      if (definition.kind === "OperationDefinition") {
+        if (definition.selectionSet) {
+          definition.selectionSet.selections.forEach((selection) => {
+            if (selection.kind === "Field") {
+              result.push(selection.name.value);
+            }
+          });
+        }
       }
-    }
-  });
+    },
+  );
 
   return result;
 };
