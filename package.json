@@ -14,5 +14,8 @@
     "turbo": "latest"
   },
   "packageManager": "pnpm@8.9.0",
-  "name": "hydra"
+  "name": "hydra",
+  "dependencies": {
+    "@types/node": "^20.9.0"
+  }
 }
