@@ -1,4 +1,4 @@
-name: adog-websdk-ci
+name: adog-hydra-ci
 on: [push]
 
 jobs:
