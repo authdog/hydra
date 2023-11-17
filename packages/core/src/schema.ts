@@ -15,7 +15,7 @@ const fetchGraphQLEndpoint = async (
   query: string,
   variables: object = {},
   methodId: string,
-  headers: object = {}
+  headers: object = {},
 ) => {
   const requestBody = {
     query,
@@ -34,7 +34,7 @@ const fetchGraphQLEndpoint = async (
 
     if (!response.ok) {
       throw new Error(
-        `Network response was not ok: ${response.status} ${response.statusText}`
+        `Network response was not ok: ${response.status} ${response.statusText}`,
       );
     }
 
@@ -93,11 +93,11 @@ const queries = [
                 addTypenameKeywordToSchema(queryBody),
                 variables,
                 operationName,
-                { Authorization: authorization }
+                { Authorization: authorization },
               );
             },
           };
-        }
+        },
       );
     })
     .flat(),
@@ -119,11 +119,11 @@ const mutations = [
                 addTypenameKeywordToSchema(queryBody),
                 variables,
                 operationName,
-                { Authorization: authorization }
+                { Authorization: authorization },
               );
             },
           };
-        }
+        },
       );
     })
     .flat(),
@@ -146,7 +146,7 @@ let schema = makeExecutableSchema({
   typeDefs: buildGraphQLSchemaSDL(
     unifyGraphQLSchemasObjects([
       ...schemas.map(({ introspected }) => introspected),
-    ])
+    ]),
   ),
   resolvers,
 });

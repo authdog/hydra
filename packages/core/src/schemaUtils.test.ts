@@ -144,7 +144,7 @@ describe("Should import types primitives from schema", () => {
         ],
       };
       expect(extractGenericBlockPayload(block, INPUT_BLOCK_REGEXP)).toEqual(
-        expected
+        expected,
       );
     });
   });
