@@ -1,3 +1,18 @@
 {
-  "extends": "tsconfig/base.json"
+  "esm": true,
+  "compilerOptions": {
+     "jsx": "react",
+     "lib": [
+        "es5",
+        "es6"
+     ],
+     "target": "ES2021", 
+     "esModuleInterop": true,
+     "module": "commonjs",
+     "moduleResolution": "Node",
+     "outDir": "./build",
+     "emitDecoratorMetadata": true,
+     "experimentalDecorators": true,
+     "sourceMap": true
+  }
 }
