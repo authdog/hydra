@@ -10,6 +10,9 @@ importers:
       graphql-yoga:
         specifier: ^5.0.0
         version: 5.0.0(graphql@16.8.1)
+      itty-durable:
+        specifier: ^2.1.0
+        version: 2.1.0(itty-router@4.0.23)
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.9.0)
@@ -2060,6 +2063,18 @@ packages:
     dependencies:
       html-escaper: 2.0.2
       istanbul-lib-report: 3.0.1
+
+  /itty-durable@2.1.0(itty-router@4.0.23):
+    resolution: {integrity: sha512-iOfuUcMCMVfTS+qqd0miRw9caH+DuonwALoBGlfjqT6ed6yyskI2sWX6gAtDQsaueCRl3BdYRVpvlVNsuNsiNw==}
+    peerDependencies:
+      itty-router: ^4.0.9
+    dependencies:
+      itty-router: 4.0.23
+    dev: false
+
+  /itty-router@4.0.23:
+    resolution: {integrity: sha512-tP1NI8PVK43vWlBnIPqj47ni5FDSczFviA4wgBznscndo8lEvBA+pO3DD1rNbIQPcZhprr775iUTunyGvQMcBw==}
+    dev: false
 
   /jest-changed-files@29.7.0:
     resolution: {integrity: sha512-fEArFiwf1BpQ+4bXSprcDc3/x4HSzL4al2tozwVpDFpsxALjLYdyiIK4e5Vz66GQJIbXJ82+35PtysofptNX2w==}

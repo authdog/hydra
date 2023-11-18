@@ -110,7 +110,6 @@ export const mapPathsToTypes = (
 export const findFieldsWithId = (
   selectionParent: string,
   selectionSet: any,
-  //   result: string[] = [],
   paths: string[] = [],
   currentPath: string = "",
   mutationId: string = "",
@@ -120,9 +119,6 @@ export const findFieldsWithId = (
       selectionSet: { selections: any[] };
       name: { value: string };
     }) => {
-      // if (selection.kind === "Field" && selection.name.value === "id") {
-      // //   result.push(selectionParent);
-      // }
       if (selection.selectionSet) {
         // check if selectionSet has id field
         const hasIdField = selection.selectionSet.selections.find(
@@ -248,7 +244,6 @@ const extractTypeNamesAndIds = (obj: any, result: IResult = {}) => {
           };
           if (Array.isArray(result[typeName])) {
             if (!!result[typeName]) {
-              // @ts-ignore
               result[typeName].push(item);
             }
           }
@@ -374,7 +369,6 @@ export const splitAggregatedTypesWithIds = (
   let currentSize = 0;
 
   for (let i = 0; i < data.length; i++) {
-    // @ts-ignore
     for (let j = 0; data[i].ids?.length && j < data[i].ids.length; j++) {
       if (currentSize === chunkSize) {
         const aggregated: IAgregateTypesWithIds[] = [];
@@ -391,15 +385,12 @@ export const splitAggregatedTypesWithIds = (
         });
 
         result.push(aggregated);
-
-        // Reset currentArray and currentSize
+        // reset currentArray and currentSize
         currentArray = [];
         currentSize = 0;
       }
       currentArray.push({
-        // @ts-ignore
         name: data[i].name,
-        // @ts-ignore
         id: data[i].ids[j],
       });
       currentSize++;
