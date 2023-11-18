@@ -1,0 +1,18 @@
+name = "itty-hydra"
+workers_dev = true
+
+compatibility_date = "2023-10-10"
+compatibility_flags = ["nodejs_compat"]
+
+[build]
+command = "npm run build"
+
+[build.upload]
+format = "modules"
+dir = "dist"
+main = "./index.mjs"
+
+[dev]
+ip = "0.0.0.0"
+local_protocol="http"
+upstream_protocol="https"

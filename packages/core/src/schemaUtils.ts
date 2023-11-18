@@ -6,7 +6,7 @@ import {
   SCALAR_BLOCK_REGEX_GENERAL,
   TYPE_BLOCK_REGEXP,
   TYPE_BLOCK_REGEX_GENERAL,
-} from "./federation/constants";
+} from "./constants";
 
 interface Field {
   name: string;

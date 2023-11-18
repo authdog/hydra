@@ -1,4 +1,4 @@
-import { INPUT_BLOCK_REGEXP } from "./federation/constants";
+import { INPUT_BLOCK_REGEXP } from "./constants";
 import {
   extractTypesBlocks,
   extractGenericBlockPayload,
