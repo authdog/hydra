@@ -16,3 +16,7 @@ main = "./index.mjs"
 ip = "0.0.0.0"
 local_protocol="http"
 upstream_protocol="https"
+
+kv_namespaces = [
+    { binding = "HYDRA_ACME", id = "c63f48a0f29843e8ab8251ef533e1c9c" }    
+]
