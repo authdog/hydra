@@ -11,6 +11,11 @@
       "cache": false,
       "persistent": true
     },
+    "deploy": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "persistent": true
+    }, 
     "test": {
       "outputs": ["coverage/**"],
       "cache": true

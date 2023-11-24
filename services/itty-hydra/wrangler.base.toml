@@ -1,4 +1,4 @@
-name = "itty-hydra"
+name = "itty-hydra-demo"
 workers_dev = true
 
 compatibility_date = "2023-10-10"

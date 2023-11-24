@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "node build.mjs",
-    "dev": "npx wrangler dev  -c wrangler.base.toml  --live-reload --port 3544"
+    "dev": "npx wrangler dev  -c wrangler.base.toml --live-reload --port 3544",
+    "deploy": "npx wrangler -c wrangler.base.toml deploy --minify"
   },
   "keywords": [],
   "author": "",
