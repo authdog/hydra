@@ -14,6 +14,7 @@ router
   .get("/", Health)
   .get("/health", Health)
   .get("/graphql", GraphQLHandler)
+  .post("/graphql", GraphQLHandler)
   .get("*", NotFound);
 
 const handleRequest = (req, env, ctx) => {
