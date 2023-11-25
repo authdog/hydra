@@ -6,11 +6,9 @@ This project is a sample application to demonstrate the use of Hydra with Itty.
 
 Wrangler is recommended for local development and deployment.
 
-
 ## Cloudflare Configuration
 
 A KV namespace and a Durable object (optional) are required for this project.
-
 
 ## KV Namespace
 
