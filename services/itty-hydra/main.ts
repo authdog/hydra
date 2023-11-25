@@ -3,6 +3,7 @@ import { createCors } from "itty-cors";
 import { withDurables } from "itty-durable";
 import { NotFound } from "./handlers/notFound";
 import { Health } from "./handlers/health";
+import {GraphQLHandler} from "@authdog/hydra-core";
 
 const { preflight, corsify } = createCors();
 
@@ -12,11 +13,20 @@ router
   .options("*", preflight)
   .get("/", Health)
   .get("/health", Health)
+  .get("/graphql", GraphQLHandler)
   .get("*", NotFound);
 
 const handleRequest = (req, env, ctx) => {
+  const {HYDRA_ACME} = env;
+
+  const enrichedContext = {
+    ...ctx,
+    kv: HYDRA_ACME,
+    rateLimiter: null,
+  };
+
   return router
-    .handle(req, env, ctx)
+    .handle(req, env, enrichedContext)
     .catch(
       (err) => () =>
         new Response(err.stack, {

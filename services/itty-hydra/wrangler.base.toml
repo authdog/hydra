@@ -4,6 +4,10 @@ workers_dev = true
 compatibility_date = "2023-10-10"
 compatibility_flags = ["nodejs_compat"]
 
+kv_namespaces = [
+    { binding = "HYDRA_ACME", id = "c63f48a0f29843e8ab8251ef533e1c9c" }    
+]
+
 [build]
 command = "npm run build"
 
@@ -17,6 +21,3 @@ ip = "0.0.0.0"
 local_protocol="http"
 upstream_protocol="https"
 
-kv_namespaces = [
-    { binding = "HYDRA_ACME", id = "c63f48a0f29843e8ab8251ef533e1c9c" }    
-]
