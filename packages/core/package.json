@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "build/index.js",
-  "type": "module",
   "scripts": {
     "start": "node .",
     "dev": "tsc -w -p tsconfig.json",
