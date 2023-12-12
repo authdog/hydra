@@ -5,8 +5,7 @@
   "main": "build/index.js",
   "scripts": {
     "dev": "tsc -w -p tsconfig.json",
-    "build": "tsc -p tsconfig.json",
-    "test": "jest"
+    "build": "tsc -p tsconfig.json"
   },
   "keywords": [],
   "author": "",
