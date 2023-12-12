@@ -1,4 +1,4 @@
-export const HydraConfig = {
+const HydraConfig = {
     rateLimiting: {
       default: {
         budget: 100,
@@ -14,3 +14,5 @@ export const HydraConfig = {
     ],
     jwksUri: "https://id.authdog.com/oidc/.well-known/jwks.json",
 };
+
+export default HydraConfig;

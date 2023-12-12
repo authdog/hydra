@@ -4,6 +4,7 @@
   "description": "",
   "main": "build/index.js",
   "scripts": {
+    "start": "node .",
     "dev": "tsc -w -p tsconfig.json",
     "build": "tsc -p tsconfig.json"
   },
@@ -15,7 +16,6 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "crypto-js": "^4.2.0",
     "graphql-tag": "^2.12.6"
   }
 }

@@ -1,5 +1,4 @@
 {
-    "esm": true,
     "compilerOptions": {
        "jsx": "react",
        "lib": [
