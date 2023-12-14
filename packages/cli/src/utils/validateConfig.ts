@@ -1,26 +1,10 @@
 import {ZodError, z} from "zod";
 
-/*
-const HydraConfig = {
-    rateLimiting: {
-      default: {
-        budget: 100,
-      },
-    },
-    publicQueries: [
-      {
-        name: "health",
-      },
-      {
-        name: "hydraDevQuery",
-      },
-    ],
-    jwksUri: "https://id.authdog.com/oidc/.well-known/jwks.json",
-};
-
-*/
-
 interface IHydraConfig {
+    schemas: {
+        id: string;
+        uri: string;
+    }[];
     rateLimiting?: {
         default: {
             budget: number;
@@ -31,6 +15,13 @@ interface IHydraConfig {
     }[],
     jwksUri: string;
 }
+
+const remoteGraphQLSchemaSchema = z.object({
+    id: z.string(),
+    uri: z.string().url(),
+  });
+  
+  const schemasSchema = z.array(remoteGraphQLSchemaSchema);
 
 const rateLimitingSchema = z.object({
     default: z.object({
@@ -43,6 +34,7 @@ const rateLimitingSchema = z.object({
   });
   
   const hydraConfigSchema = z.object({
+    schemas: schemasSchema,
     rateLimiting: rateLimitingSchema.optional(),
     publicQueries: z.array(publicQuerySchema).optional(),
     jwksUri: z.string(),
@@ -57,9 +49,7 @@ const rateLimitingSchema = z.object({
       if (error instanceof ZodError) {
         // Handle validation errors here
         console.error("Validation error:", error.errors);
-        // You might want to throw an error or handle it accordingly based on your application's needs
       }
-      // Throw the error if it's not a ZodError (unexpected error)
       throw error;
     }
   };

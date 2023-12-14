@@ -3,6 +3,16 @@ import { validateConfig } from './validateConfig'; // Update with the correct fi
 
 describe('validateConfig function', () => {
   const validConfig: any = {
+    schemas: [
+        {
+            id: 'mgt',
+            uri: 'https://mgt.auth.dog/graphql',
+        },
+        {
+            id: 'authz',
+            uri: 'https://authz.auth.dog/graphql',
+        },
+    ],
     rateLimiting: {
       default: {
         budget: 100,
@@ -36,12 +46,34 @@ describe('validateConfig function', () => {
     jwksUri: 'invalid uri', // invalid URL format
   }; 
 
+  const missingSchemasConfig: any = {
+    rateLimiting: {
+      default: {
+        budget: 100,
+      },
+    },
+    publicQueries: [
+      {
+        name: 'health',
+      },
+      {
+        name: 'hydraDevQuery',
+      },
+    ],
+    jwksUri: 'https://id.authdog.com/oidc/.well-known/jwks.json',
+  };
+
+
   it('should validate a valid config object without throwing errors', () => {
     expect(() => validateConfig(validConfig)).not.toThrow();
   });
 
   it('should throw a ZodError for an invalid config object', () => {
     expect(() => validateConfig(invalidConfig)).toThrow();
+  });
+
+  it('should throw a ZodError for a config object missing the schemas property', () => {
+    expect(() => validateConfig(missingSchemasConfig)).toThrow();
   });
 
   it('should log validation errors to the console for an invalid config object', () => {
