@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node .",
     "dev": "tsc -w -p tsconfig.json",
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
