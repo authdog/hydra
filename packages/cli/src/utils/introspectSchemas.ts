@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import { getIntrospectionQuery, buildClientSchema, printSchema } from "graphql";
 
-async function introspectRemoteSchema(endpointUrl: string) {
+export async function introspectRemoteSchema(endpointUrl: string) {
   try {
     // Send an introspection query to the GraphQL endpoint
     const response = await fetch(endpointUrl, {
@@ -26,19 +26,16 @@ async function introspectRemoteSchema(endpointUrl: string) {
 
     // Create a multi-line string enclosed within backticks
     const formattedSchemaString = `${schemaString}`;
-
-    console.log(formattedSchemaString);
-
     return formattedSchemaString;
   } catch (error) {
-    console.error(`Error: ${error.message}`);
+    console.error(error);
   }
 }
 
 interface GraphQLSchema {
   id: string;
   uri: string;
-  token?: string; // some schemas require a token to be introspected
+  // token?: string; // some schemas require a token to be introspected
 }
 
 export const buildSchemaIntrospection = async (schemas:GraphQLSchema[], outputPath: string) => {

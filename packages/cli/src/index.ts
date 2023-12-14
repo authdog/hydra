@@ -17,17 +17,21 @@ program
     .option("-c, --config <configPath>", "Path to Hydra configuration path, default being <hydra.config.ts>")
     .action(generateSchemaAction);
 
+// TODO
 program
     .command("login")
     .description(loginDescription)
     .action(loginAction);
 
+// TODO
 program
     .command("start")
     .description("start development server")
     .option("-p, --port <port>", "Development server port")
     .action(startAction);
 
+// TODO
+// requires to be authenticated
 program
     .command("purge")
     .description("purge cached data")
