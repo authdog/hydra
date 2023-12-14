@@ -1,16 +1,32 @@
 module.exports = {
-    // setupFilesAfterEnv: ['./jest.setup.js'],
-    transform: {
-      '^.+\\.tsx?$': ['ts-jest', {//the content you'd placed at "global"
-        babel: true,
-        tsconfig: 'tsconfig.json',
-      }]
-    },
-    "transformIgnorePatterns": [
-      "/node_modules/",
+  moduleFileExtensions: [
+    'js',
+    'ts',
+    'tsx',
+  ],
+  transform: {
+    '^.+\\.(ts|tsx)?$': [
+      'ts-jest'
     ],
-    // moduleNameMapper: {
-    //   '^@authdog\/platform-utils$': require.resolve('@authdog/platform-utils'),
-    // }
-  }
-  
+  },
+  modulePaths: [
+    "<rootDir>",
+  ],
+  moduleNameMapper: {
+    '^@authdog/(.*)$': '<rootDir>/packages/$1/src',
+  },
+  testMatch: [
+    '**/**/*.test.(ts|js)',
+    '**/test/**/*.test.(ts|js)',
+  ],
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    'build',
+  ],
+  testEnvironment: 'node',
+  rootDir: '.',
+  collectCoverageFrom: [
+    '!<rootDir>/src',
+  ],
+  preset: 'ts-jest',
+}

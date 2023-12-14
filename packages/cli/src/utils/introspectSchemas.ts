@@ -35,14 +35,11 @@ async function introspectRemoteSchema(endpointUrl: string) {
   }
 }
 
-
 interface GraphQLSchema {
   id: string;
   uri: string;
   token?: string; // some schemas require a token to be introspected
 }
-
-
 
 export const buildSchemaIntrospection = async (schemas:GraphQLSchema[], outputPath: string) => {
   let schemaWithIntrospection = [];
@@ -86,4 +83,3 @@ export const buildSchemaIntrospection = async (schemas:GraphQLSchema[], outputPa
     console.error(err);
   }
 };
-// buildSchemaIntrospection();
