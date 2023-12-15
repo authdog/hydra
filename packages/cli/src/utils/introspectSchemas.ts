@@ -38,7 +38,10 @@ interface GraphQLSchema {
   // token?: string; // some schemas require a token to be introspected
 }
 
-export const buildSchemaIntrospection = async (schemas:GraphQLSchema[], outputPath: string) => {
+export const buildSchemaIntrospection = async (
+  schemas: GraphQLSchema[],
+  outputPath: string,
+) => {
   let schemaWithIntrospection = [];
 
   for (const schema of schemas) {
@@ -68,7 +71,6 @@ export const buildSchemaIntrospection = async (schemas:GraphQLSchema[], outputPa
   const fs = require("fs");
 
   try {
-
     // define .hydra folder if it doesn't exist
     if (!fs.existsSync(".hydra")) {
       fs.mkdirSync(".hydra");

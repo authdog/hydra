@@ -1,4 +1,4 @@
-import { Command } from "commander"
+import { Command } from "commander";
 // import { startAction } from "./commands/start";
 // import { loginAction, loginDescription } from "./commands/login";
 import { generateSchemaAction } from "./commands/generate-schema";
@@ -6,16 +6,16 @@ import { generateSchemaAction } from "./commands/generate-schema";
 
 const program = new Command();
 
-program
-  .name('hydra-cli')
-  .description('Hydra CLI')
-  .version('0.1.0');
+program.name("hydra-cli").description("Hydra CLI").version("0.1.0");
 
 program
-    .command("generate-schema")
-    .description("generate hydra schema from configuration specifications")
-    .option("-c, --config <configPath>", "Path to Hydra configuration path, default being <hydra.config.ts>")
-    .action(generateSchemaAction);
+  .command("generate-schema")
+  .description("generate hydra schema from configuration specifications")
+  .option(
+    "-c, --config <configPath>",
+    "Path to Hydra configuration path, default being <hydra.config.ts>",
+  )
+  .action(generateSchemaAction);
 
 // TODO
 // program
