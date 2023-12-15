@@ -18,26 +18,19 @@ export const generateSchemaAction = async ({
     const demoConfig = require(configPath).default;
 
     console.log(demoConfig);
-    // const validatedConfig = validateConfig(demoConfig);
+    const validatedConfig = validateConfig(demoConfig);
 
-    // if (!validatedConfig) {
-    //     throw new Error("Invalid config");
-    // }
-
-    // const schemas = [
-    //       {
-    //         id: "mgt",
-    //         uri: "https://mgt.auth.dog/graphql",
-    //       },
-    //       {
-    //         id: "authz",
-    //         uri: "https://authz.auth.dog/graphql",
-    //       },
-    // ];
-    
-
-    // await buildSchemaIntrospection(schemas, outputPath);
+    if (!validatedConfig) {
+        throw new Error("Invalid config");
+    }
 
 
-    // console.log("Generate Schema action");
+    try {
+        await buildSchemaIntrospection(validatedConfig.schemas, outputPath);
+    }
+    catch (error) {
+        console.error(error);
+    }
+
+    console.info("Schema generated successfully");
 }
