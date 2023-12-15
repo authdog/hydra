@@ -1,36 +1,43 @@
+import path from "path";
 import {buildSchemaIntrospection} from "../utils/introspectSchemas";
+import { validateConfig } from "../utils/validateConfig";
+
+interface IGenerateSchemaAction {
+    config?: string
+}
 
 export const generateSchemaAction = async ({
-    config = {
-        
-    }
-}) => {
+    config  = "./hydra.config.ts"
+}: IGenerateSchemaAction) => {
 
-    // let hydraConfig = {};
+  const rootPath = process.cwd(); // Get the root directory path
 
-    // if (config) {
-    //     // validate custom config
-    // } else {
-    //     // check if config exists
-    //     // validate standard config
+    const configPath = path.resolve(rootPath, config); // Construct absolute path for config
+    const outputPath = path.resolve(rootPath, ".hydra/schemaRaw.ts"); // Construct absolute path for output
+
+    const demoConfig = require(configPath).default;
+
+    console.log(demoConfig);
+    // const validatedConfig = validateConfig(demoConfig);
+
+    // if (!validatedConfig) {
+    //     throw new Error("Invalid config");
     // }
-    // // if valid, set hydraConfig as parsed config
 
-    const schemas = [
-          {
-            id: "mgt",
-            uri: "https://mgt.auth.dog/graphql",
-          },
-          {
-            id: "authz",
-            uri: "https://authz.auth.dog/graphql",
-          },
-    ];
+    // const schemas = [
+    //       {
+    //         id: "mgt",
+    //         uri: "https://mgt.auth.dog/graphql",
+    //       },
+    //       {
+    //         id: "authz",
+    //         uri: "https://authz.auth.dog/graphql",
+    //       },
+    // ];
     
-    const outputPath = "./.hydra/schemaRaw.ts";
 
-    await buildSchemaIntrospection(schemas, outputPath);
+    // await buildSchemaIntrospection(schemas, outputPath);
 
 
-    console.log("Generate Schema action");
+    // console.log("Generate Schema action");
 }

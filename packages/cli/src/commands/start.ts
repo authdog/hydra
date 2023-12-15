@@ -1,7 +1,6 @@
 export const startAction = ({
     port
-}) => {
-    // handle port
+}: any)  => { // handle port
     if (port) {
         console.log(port)
     }

@@ -1,4 +1,14 @@
 const HydraConfig = {
+    schemas: [
+        {
+            id: "mgt",
+            uri: "https://mgt.auth.dog/graphql",
+        },
+        {
+            id: "authz",
+            uri: "https://authz.auth.dog/graphql",
+        },
+    ],
     rateLimiting: {
       default: {
         budget: 100,
@@ -15,4 +25,4 @@ const HydraConfig = {
     jwksUri: "https://id.authdog.com/oidc/.well-known/jwks.json",
 };
 
-export default HydraConfig;
+module.exports.default = HydraConfig;
