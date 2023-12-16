@@ -1,0 +1,19 @@
+{
+    "name": "create-hydra-app",
+    "version": "0.1.0",
+    "description": "",
+    "main": "build/index.js",
+    "scripts": {
+      "start": "node .",
+      "dev": "tsc -w -p tsconfig.json",
+      "build": "tsc -p tsconfig.json",
+      "test": "jest"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+      "typescript": "^5.2.2"
+    },
+    "dependencies": {}
+  }
