@@ -1,7 +1,11 @@
 import { createYoga } from "graphql-yoga";
 import { schema } from "../schema";
 
-export const GraphQLHandler = async (req: Request, env: any, ctx: any): Promise<any> => {
+export const GraphQLHandler = async (
+  req: Request,
+  env: any,
+  ctx: any,
+): Promise<any> => {
   const yoga = createYoga({
     schema,
     context: async (event) => {
