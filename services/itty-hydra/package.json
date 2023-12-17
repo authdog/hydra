@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "description": "",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "build": "node build.mjs",
     "dev": "npx wrangler dev  -c wrangler.base.toml --live-reload --port 3544",
