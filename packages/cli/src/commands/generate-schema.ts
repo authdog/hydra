@@ -14,7 +14,15 @@ export const generateSchemaAction = async ({
   const configPath = path.resolve(rootPath, config); // Construct absolute path for config
   const outputPath = path.resolve(rootPath, ".hydra/schemaRaw.ts"); // Construct absolute path for output
 
-  const demoConfig = require(configPath).default;
+  let demoConfig: any;
+
+  try {
+    // Use `import` instead of `require` for TypeScript support
+    const importedConfig = await import(configPath);
+    demoConfig = importedConfig.default || importedConfig;
+  } catch (error) {
+    throw new Error("Error loading or parsing the config file: " + error);
+  }
 
   console.log(demoConfig);
   const validatedConfig = validateConfig(demoConfig);
@@ -27,6 +35,7 @@ export const generateSchemaAction = async ({
     await buildSchemaIntrospection(validatedConfig.schemas, outputPath);
   } catch (error) {
     console.error(error);
+    throw new Error("Error generating schema");
   }
 
   console.info("Schema generated successfully");
