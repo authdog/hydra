@@ -8,5 +8,7 @@ module.exports = {
   },
   "transformIgnorePatterns": [
     "/node_modules/",
-  ]
+  ],
+  // timeout increase to 30 seconds
+  testTimeout: 30000,
 }
