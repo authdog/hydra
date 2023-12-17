@@ -1,5 +1,11 @@
 # @authdog/hydra-cli
 
+## 0.1.9
+
+### Patch Changes
+
+- 42c7d1c: add support for config with typescript annotations
+
 ## 0.1.8
 
 ### Patch Changes
