@@ -68,16 +68,25 @@ export const buildSchemaIntrospection = async (
   stopSpinner(interval);
 
   // const outputPath = "src/handlers/federation/schemaRawGenerated.ts";
-  const exportStatements = schemaWithIntrospection.map(
-    (s) =>
-      `export const ${s.name} = {
-        name: "${s.name}",
-        url: "${s.url}",
-        introspected: ${JSON.stringify(s.introspected, null, 2)}
-      };`,
-  );
+  // const exportStatements = schemaWithIntrospection.map(
+  //   (s) =>
+  //     `export const ${s.name} = {
+  //       name: "${s.name}",
+  //       url: "${s.url}",
+  //       introspected: ${JSON.stringify(s.introspected, null, 2)}
+  //     };`,
+  // );
 
-  const fileContent = `${exportStatements.join("\n")}\n`;
+  const exportObjects = schemaWithIntrospection.map(s => ({
+    name: s.name,
+    url: s.url,
+    introspected: s.introspected
+  }));
+
+  // const fileContent = `${exportStatements.join("\n")}\n`;
+
+  const fileContent = JSON.stringify(exportObjects, null, 2);
+
 
   const fs = require("fs");
 

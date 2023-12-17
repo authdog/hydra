@@ -4,7 +4,7 @@ import { createCors } from "itty-cors";
 import { NotFound } from "./handlers/notFound";
 import { Health } from "./handlers/health";
 import { GraphQLHandler, HydraHandler } from "@authdog/hydra-core";
-import { HydraConfig } from "./hydra.config";
+import { HydraConfigAcme } from "./hydra.config";
 
 const { preflight, corsify } = createCors();
 
@@ -25,9 +25,11 @@ const handleRequest = (req, env, ctx) => {
   const enrichedContext = {
     ...ctx,
     kv: HYDRA_ACME,
-    hydraConfig: HydraConfig,
+    hydraConfig: HydraConfigAcme,
     // rateLimiter: null,
   };
+
+  
 
   return router
     .handle(req, env, enrichedContext)
