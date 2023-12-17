@@ -1,5 +1,11 @@
 # @authdog/hydra-cli
 
+## 0.1.10
+
+### Patch Changes
+
+- ab7f209: enable pretty logging
+
 ## 0.1.9
 
 ### Patch Changes
