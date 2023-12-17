@@ -4,7 +4,7 @@
   "description": "",
   "main": "build/index.js",
   "bin": {
-    "hydra": "./build/index.js"
+    "hydra": "./index.js"
   },
   "scripts": {
     "start": "node .",
