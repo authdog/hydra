@@ -20,9 +20,12 @@
     "@types/node-fetch": "2.6.9"
   },
   "dependencies": {
+    "cli-spinner": "^0.2.10",
+    "cli-spinners": "^2.9.2",
     "commander": "^11.1.0",
     "figlet": "^1.7.0",
     "graphql-tag": "^2.12.6",
+    "node-console-colors": "^1.1.5",
     "node-fetch": "2.6.9",
     "typescript": "^5.2.2",
     "zod": "^3.22.4"

@@ -5,15 +5,14 @@ import { generateSchemaAction } from "./commands/generate-schema";
 // import { purgeAction } from "./commands/purge";
 
 import figlet from "figlet";
-
-console.log(figlet.textSync("Hydra CLI", { horizontalLayout: "full" }));
+import { actionRunner } from "./utils/errorsHandler";
 
 const program = new Command();
 
 // get version from package.json
 program
   .name("hydra-cli")
-  .description("Hydra CLI")
+  .description(figlet.textSync("Hydra CLI", { horizontalLayout: "full" }))
   .version(require("../package.json").version);
 
 program
@@ -23,7 +22,7 @@ program
     "-c, --config <configPath>",
     "Path to Hydra configuration path, default being <hydra.config.ts>",
   )
-  .action(generateSchemaAction);
+  .action(actionRunner(generateSchemaAction));
 
 // TODO
 // program

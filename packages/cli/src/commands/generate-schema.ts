@@ -1,20 +1,20 @@
+import { hydraConfigPathDefault, hydraSchemaRawPath } from "../__assets__/constants";
+import { logError, logSuccess } from "../utils/cliLogger";
 import { buildSchemaIntrospection } from "../utils/introspectSchemas";
 import { validateConfig } from "../utils/validateConfig";
 import path from "path";
 import ts from "typescript";
-import fs from "fs";
 
 interface IGenerateSchemaAction {
   config?: string;
 }
 
 export const generateSchemaAction = async ({
-  config = "./hydra.config.ts",
+  config = hydraConfigPathDefault,
 }: IGenerateSchemaAction) => {
   const rootPath = process.cwd(); // Get the root directory path
-
   const configPath = path.resolve(rootPath, config); // Construct absolute path for config
-  const outputPath = path.resolve(rootPath, ".hydra/schemaRaw.ts"); // Construct absolute path for output
+  const outputPath = path.resolve(rootPath, hydraSchemaRawPath); // Construct absolute path for output
 
   try {
     // Compiler options (optional)
@@ -31,7 +31,7 @@ export const generateSchemaAction = async ({
     const sourceFile = program.getSourceFile(configPath);
 
     if (!sourceFile) {
-      throw new Error("Source file not found");
+      return logError(`Config [${config}] not found`);
     }
 
     // Emit the transpiled code
@@ -41,24 +41,23 @@ export const generateSchemaAction = async ({
 
     // // Evaluate the transpiled code
     const module_ = eval(outputText);
-
     const demoConfig = module_.default || module_;
-
     const validatedConfig = validateConfig(demoConfig);
 
     if (!validatedConfig) {
-      throw new Error("Invalid config");
+      return logError(`Invalid config [${config}]`);
     }
 
     try {
       await buildSchemaIntrospection(validatedConfig.schemas, outputPath);
     } catch (error) {
-      console.error(error);
-      throw new Error("Error generating schema");
+      return logError("Error generating schema");
     }
 
-    console.info("Schema generated successfully");
+    // console.info(cc.set("bg_green", "Schema generated successfully ✓"));
+    logSuccess("Schema generated successfully");
   } catch (error) {
-    throw new Error("Error transpiling or executing TypeScript code: " + error);
+    // @ts-ignore
+    return logError(error.message);
   }
 };

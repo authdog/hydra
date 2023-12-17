@@ -85,6 +85,12 @@ importers:
 
   packages/cli:
     dependencies:
+      cli-spinner:
+        specifier: ^0.2.10
+        version: 0.2.10
+      cli-spinners:
+        specifier: ^2.9.2
+        version: 2.9.2
       commander:
         specifier: ^11.1.0
         version: 11.1.0
@@ -94,6 +100,9 @@ importers:
       graphql-tag:
         specifier: ^2.12.6
         version: 2.12.6(graphql@16.8.1)
+      node-console-colors:
+        specifier: ^1.1.5
+        version: 1.1.5
       node-fetch:
         specifier: 2.6.9
         version: 2.6.9
@@ -2532,6 +2541,16 @@ packages:
   /cjs-module-lexer@1.2.3:
     resolution: {integrity: sha512-0TNiGstbQmCFwt4akjjBg5pLRTSyj/PkWQ1ZoO2zntmg9yLqSRxwEa4iCfQLGjqhiqBfOJa7W/E8wfGrTDmlZQ==}
     dev: true
+
+  /cli-spinner@0.2.10:
+    resolution: {integrity: sha512-U0sSQ+JJvSLi1pAYuJykwiA8Dsr15uHEy85iCJ6A+0DjVxivr3d+N2Wjvodeg89uP5K6TswFkKBfAD7B3YSn/Q==}
+    engines: {node: '>=0.10'}
+    dev: false
+
+  /cli-spinners@2.9.2:
+    resolution: {integrity: sha512-ywqV+5MmyL4E7ybXgKys4DugZbX0FC6LnwrhjuykIjnK9k8OQacQ7axGKnjDXWNhns0xot3bZI5h55H8yo9cJg==}
+    engines: {node: '>=6'}
+    dev: false
 
   /client-only@0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
@@ -6102,6 +6121,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /node-console-colors@1.1.5:
+    resolution: {integrity: sha512-PvndhaJGOV2vkwu8ugfOgiRkXEyu5AgTlldD3f68w9QYC44yXARQQR4STvXC6CF+ZfyeKbNoLddjR3dx8qdBEQ==}
+    dev: false
 
   /node-fetch@2.6.9:
     resolution: {integrity: sha512-DJm/CJkZkRjKKj4Zi4BsKVZh3ValV5IR5s7LVZnW+6YMh0W1BfNA8XSs6DLMGYlId5F3KnA70uu2qepcR08Qqg==}
