@@ -16,11 +16,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/node-fetch": "^2.6.9",
+    "@types/node-fetch": "2.6.9",
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "node-fetch": "^3.1.0",
+    "node-fetch": "2.6.9",
     "commander": "^11.1.0",
     "graphql-tag": "^2.12.6",
     "zod": "^3.22.4"
