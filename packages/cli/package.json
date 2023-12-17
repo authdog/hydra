@@ -23,5 +23,9 @@
   "dependencies": {
     "graphql-tag": "^2.12.6",
     "zod": "^3.22.4"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   }
 }

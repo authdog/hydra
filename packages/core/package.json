@@ -18,5 +18,9 @@
   "dependencies": {
     "crypto-js": "^4.2.0",
     "graphql-tag": "^2.12.6"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   }
 }
