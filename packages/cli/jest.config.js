@@ -8,8 +8,5 @@ module.exports = {
   },
   "transformIgnorePatterns": [
     "/node_modules/",
-  ],
-  // moduleNameMapper: {
-  //   '^@authdog\/platform-utils$': require.resolve('@authdog/platform-utils'),
-  // }
+  ]
 }

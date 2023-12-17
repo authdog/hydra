@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "",
   "main": "build/index.js",
+  "bin": {
+    "hydra": "./build/index.js"
+  },
   "scripts": {
     "start": "node .",
     "dev": "tsc -w -p tsconfig.json",

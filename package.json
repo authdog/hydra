@@ -7,9 +7,13 @@
     "ship": "turbo run deploy --parallel --filter=@playground/*",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "test": "turbo test --filter=@authdog/* --filter=!@playground/* --concurrency=${TURBO_CONCURRENCY:-2}"
+    "test": "turbo test --filter=@authdog/* --filter=!@playground/* --concurrency=${TURBO_CONCURRENCY:-2}",
+    "changeset": "changeset",
+    "publish-packages": "pnpm build && pnpm changeset publish",
+    "generate-pr": "pnpm build --filter=@authdog/* --filter=!@playground/* && pnpm changeset version"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.1",
     "@types/jest": "^29.5.8",
     "@types/node": "^20.9.0",
     "eslint": "^8.48.0",
