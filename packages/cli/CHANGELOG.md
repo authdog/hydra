@@ -1,5 +1,11 @@
 # @authdog/hydra-cli
 
+## 0.1.11
+
+### Patch Changes
+
+- 43b97b6: add support for schemaRaw.json
+
 ## 0.1.10
 
 ### Patch Changes
