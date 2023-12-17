@@ -1,5 +1,11 @@
 # @authdog/hydra-cli
 
+## 0.1.7
+
+### Patch Changes
+
+- 3da3fb2: fix version display, leveraging package.json
+
 ## 0.1.6
 
 ### Patch Changes
