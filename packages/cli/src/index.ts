@@ -11,7 +11,10 @@ console.log(figlet.textSync("Hydra CLI", { horizontalLayout: "full" }));
 const program = new Command();
 
 // get version from package.json
-program.name("hydra-cli").description("Hydra CLI").version(require("../package.json").version);
+program
+  .name("hydra-cli")
+  .description("Hydra CLI")
+  .version(require("../package.json").version);
 
 program
   .command("generate-schema")

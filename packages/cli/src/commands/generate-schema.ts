@@ -2,7 +2,7 @@ import { buildSchemaIntrospection } from "../utils/introspectSchemas";
 import { validateConfig } from "../utils/validateConfig";
 import path from "path";
 import ts from "typescript";
-import fs from "fs"
+import fs from "fs";
 
 interface IGenerateSchemaAction {
   config?: string;
@@ -17,7 +17,6 @@ export const generateSchemaAction = async ({
   const outputPath = path.resolve(rootPath, ".hydra/schemaRaw.ts"); // Construct absolute path for output
 
   try {
-
     // Compiler options (optional)
     const tsConfig = {
       target: ts.ScriptTarget.ESNext,
@@ -36,7 +35,9 @@ export const generateSchemaAction = async ({
     }
 
     // Emit the transpiled code
-    const { outputText } = ts.transpileModule(sourceFile.getText(), { compilerOptions: tsConfig });
+    const { outputText } = ts.transpileModule(sourceFile.getText(), {
+      compilerOptions: tsConfig,
+    });
 
     // // Evaluate the transpiled code
     const module_ = eval(outputText);
