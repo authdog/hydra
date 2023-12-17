@@ -1,5 +1,11 @@
 # @authdog/hydra-cli
 
+## 0.1.8
+
+### Patch Changes
+
+- 0fa931d: read typescript configuration using import
+
 ## 0.1.7
 
 ### Patch Changes
