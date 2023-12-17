@@ -1,6 +1,7 @@
 {
   "name": "@hydra/docs",
   "version": "0.0.1",
+  "private": true,
   "description": "GraphQL Hydra docs",
   "scripts": {
     "dev": "next dev",
