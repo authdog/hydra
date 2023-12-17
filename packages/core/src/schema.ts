@@ -1,8 +1,22 @@
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { default as fetch } from "node-fetch";
-import * as schemasGenerated from "./schemaRawGenerated";
+let schemaRaw;
 
-const schemas = Object.values(schemasGenerated);
+try {
+  schemaRaw = require(".hydra/schemaRaw");
+} catch (error) {
+  // Handle error when import fails
+  console.error("Error loading schemaRaw:", error);
+  schemaRaw = {}; // Set schemaRaw as an empty object when import fails
+}
+
+// If the schemaRaw is empty, handle it here
+if (!schemaRaw || Object.keys(schemaRaw).length === 0) {
+  console.warn("SchemaRaw is empty or invalid.");
+  // Perform necessary actions or log messages for an empty schemaRaw
+}
+
+const schemas = Object.values(schemaRaw);
 
 import {
   addTypenameKeywordToSchema,
