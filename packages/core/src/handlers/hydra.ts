@@ -5,6 +5,14 @@ import {
 import { GraphQLHandler } from "./graphql";
 
 export const HydraHandler = async (req, env, ctx): Promise<Response> => {
+  if (ctx.hasOwnProperty("kv") === false) {
+    throw new Error("Missing KV store");
+  }
+
+  if (ctx.hasOwnProperty("hydraConfig") === false) {
+    throw new Error("Missing Hydra Config");
+  }
+
   const { kv, hydraConfig } = ctx;
 
   let extractedQueries = [];
@@ -63,7 +71,6 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
   }
 
   const response = await GraphQLHandler(req, env, ctx);
-
   const cacheWritable = cacheKey && !isIntrospection && !isMutation;
 
   if (cacheWritable) {
