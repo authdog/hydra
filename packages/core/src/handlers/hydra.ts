@@ -4,22 +4,21 @@ import {
 } from "../invalidation/invalidation";
 import { GraphQLHandler } from "./graphql";
 
-export const HydraHandler = async (req, env, ctx) => {
+export const HydraHandler = async (req, env, ctx): Promise<Response> => {
   const { kv, hydraConfig } = ctx;
 
   let extractedQueries = [];
   let cacheKey = null;
 
-  // const clonedRequest = req.clone();
+  let isMutation = false;
 
-  // // const requestHeaders = clonedRequest?.headers;
   const requestBody = await req.clone()?.json();
 
   let isIntrospection = true;
   if (requestBody?.operationName !== "IntrospectionQuery") {
     isIntrospection = false;
 
-    // const isMutation = requestBody?.query?.startsWith("mutation");
+    isMutation = requestBody?.query?.startsWith("mutation");
 
     extractedQueries = extractedAllQueryIdentifiersInRawQuery(
       requestBody?.query,
@@ -65,8 +64,9 @@ export const HydraHandler = async (req, env, ctx) => {
 
   const response = await GraphQLHandler(req, env, ctx);
 
-  if (cacheKey) {
-    // @ts-ignore
+  const cacheWritable = cacheKey && !isIntrospection && !isMutation;
+
+  if (cacheWritable) {
     const responseBody = await response?.clone()?.json();
     const responseBodyString = JSON.stringify(responseBody);
     await kv.put(cacheKey, responseBodyString);

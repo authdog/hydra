@@ -1,3 +1,5 @@
+import path from "path";
+import ts from "typescript";
 import {
   hydraConfigPathDefault,
   hydraSchemaRawPath,
@@ -5,8 +7,6 @@ import {
 import { logError, logSuccess } from "../utils/cliLogger";
 import { buildSchemaIntrospection } from "../utils/introspectSchemas";
 import { validateConfig } from "../utils/validateConfig";
-import path from "path";
-import ts from "typescript";
 
 interface IGenerateSchemaAction {
   config?: string;
@@ -57,10 +57,8 @@ export const generateSchemaAction = async ({
       return logError("Error generating schema");
     }
 
-    // console.info(cc.set("bg_green", "Schema generated successfully ✓"));
     logSuccess("Schema generated successfully");
-  } catch (error) {
-    // @ts-ignore
+  } catch (error: any) {
     return logError(error.message);
   }
 };
