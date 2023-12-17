@@ -6,7 +6,8 @@ import { generateSchemaAction } from "./commands/generate-schema";
 
 const program = new Command();
 
-program.name("hydra-cli").description("Hydra CLI").version("0.1.0");
+// get version from package.json
+program.name("hydra-cli").description("Hydra CLI").version(require("../package.json").version);
 
 program
   .command("generate-schema")
