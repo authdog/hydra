@@ -1,8 +1,5 @@
 import { Command } from "commander";
-// import { startAction } from "./commands/start";
-// import { loginAction, loginDescription } from "./commands/login";
 import { generateSchemaAction } from "./commands/generate-schema";
-// import { purgeAction } from "./commands/purge";
 
 import figlet from "figlet";
 import { actionRunner } from "./utils/errorsHandler";

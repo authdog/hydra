@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 import { getIntrospectionQuery, buildClientSchema, printSchema } from "graphql";
-import {initSpinner, stopSpinner} from "./spinners";
+import { initSpinner, stopSpinner } from "./spinners";
 
 export async function introspectRemoteSchema(endpointUrl: string) {
   try {
@@ -23,7 +23,6 @@ export async function introspectRemoteSchema(endpointUrl: string) {
       throw new Error(
         `Failed to fetch introspection query: ${response.status}`,
       );
-
     }
 
     const introspectionResult = await response.json();
@@ -68,7 +67,6 @@ export const buildSchemaIntrospection = async (
 
   stopSpinner(interval);
 
-
   // const outputPath = "src/handlers/federation/schemaRawGenerated.ts";
   const exportStatements = schemaWithIntrospection.map(
     (s) =>
@@ -94,5 +92,4 @@ export const buildSchemaIntrospection = async (
   } catch (err) {
     console.error(err);
   }
-
 };

@@ -1,4 +1,7 @@
-import { hydraConfigPathDefault, hydraSchemaRawPath } from "../__assets__/constants";
+import {
+  hydraConfigPathDefault,
+  hydraSchemaRawPath,
+} from "../__assets__/constants";
 import { logError, logSuccess } from "../utils/cliLogger";
 import { buildSchemaIntrospection } from "../utils/introspectSchemas";
 import { validateConfig } from "../utils/validateConfig";
