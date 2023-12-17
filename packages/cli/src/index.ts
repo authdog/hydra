@@ -4,6 +4,10 @@ import { Command } from "commander";
 import { generateSchemaAction } from "./commands/generate-schema";
 // import { purgeAction } from "./commands/purge";
 
+import figlet from "figlet";
+
+console.log(figlet.textSync("Hydra CLI", { horizontalLayout: "full" }));
+
 const program = new Command();
 
 // get version from package.json

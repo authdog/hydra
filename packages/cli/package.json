@@ -16,14 +16,16 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/figlet": "^1.5.8",
     "@types/node-fetch": "2.6.9"
   },
   "dependencies": {
-    "node-fetch": "2.6.9",
     "commander": "^11.1.0",
+    "figlet": "^1.7.0",
     "graphql-tag": "^2.12.6",
-    "zod": "^3.22.4",
-    "typescript": "^5.2.2"
+    "node-fetch": "2.6.9",
+    "typescript": "^5.2.2",
+    "zod": "^3.22.4"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",

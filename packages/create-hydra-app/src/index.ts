@@ -1,1 +1,0 @@
-console.log("create-hydra-app");
