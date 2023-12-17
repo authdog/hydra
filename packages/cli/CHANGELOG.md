@@ -1,5 +1,11 @@
 # @authdog/hydra-cli
 
+## 0.1.3
+
+### Patch Changes
+
+- d1e326c: fix wrong path
+
 ## 0.1.2
 
 ### Patch Changes
