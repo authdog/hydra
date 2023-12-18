@@ -1,5 +1,11 @@
 # @authdog/hydra-core
 
+## 0.1.3
+
+### Patch Changes
+
+- 2e72f12: cleanup, rollback to local js file generated
+
 ## 0.1.2
 
 ### Patch Changes

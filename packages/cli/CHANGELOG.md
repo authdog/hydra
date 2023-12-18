@@ -1,5 +1,11 @@
 # @authdog/hydra-cli
 
+## 0.1.12
+
+### Patch Changes
+
+- 2e72f12: cleanup, rollback to local js file generated
+
 ## 0.1.11
 
 ### Patch Changes
