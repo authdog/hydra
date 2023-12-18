@@ -6,7 +6,17 @@ import { Health } from "./handlers/health";
 import { GraphQLHandler, HydraHandler } from "@authdog/hydra-core";
 import { HydraConfigAcme } from "./hydra.config";
 
-import { default as rawSchema } from "./.hydra/schemaRaw";
+// import { default as rawSchema } from "./.hydra/schemaRaw";
+let rawSchema = null;
+
+try {
+  rawSchema = require("./.hydra/schemaRaw.json");
+}
+catch (err) {
+  console.log("err", err);
+}
+
+
 
 const { preflight, corsify } = createCors();
 
