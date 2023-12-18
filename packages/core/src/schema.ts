@@ -32,16 +32,13 @@ const extractPrimitiveWithRegExp = (rawSchema: string, regex: RegExp) => {
   return operations;
 };
 
-
 export const getSchema = (schemas: any) => {
-  
   // If the schemaRaw is empty, handle it here
   if (!schemas || schemas.length === 0) {
     console.warn("SchemaRaw is empty or invalid.");
     // Perform necessary actions or log messages for an empty schemaRaw
   }
-  
-  
+
   const queries = [
     ...schemas
       .map(({ introspected, url }) => {
@@ -67,7 +64,7 @@ export const getSchema = (schemas: any) => {
       })
       .flat(),
   ];
-  
+
   const mutations = [
     ...schemas
       .map(({ introspected, url }) => {
@@ -93,20 +90,20 @@ export const getSchema = (schemas: any) => {
       })
       .flat(),
   ];
-  
+
   const resolvers = {
     Query: {},
     Mutation: {},
   };
-  
+
   queries?.forEach(({ id, resolver }) => {
     resolvers.Query[id] = resolver;
   });
-  
+
   mutations?.forEach(({ id, resolver }) => {
     resolvers.Mutation[id] = resolver;
   });
-  
+
   let schema = makeExecutableSchema({
     typeDefs: buildGraphQLSchemaSDL(
       unifyGraphQLSchemasObjects([
@@ -117,7 +114,7 @@ export const getSchema = (schemas: any) => {
   });
 
   return schema;
-}
+};
 
 const fetchGraphQLEndpoint = async (
   endpoint: string,
@@ -161,9 +158,5 @@ const getAuthorizationFromContext = (ctx) => {
   const authorization = ctx?.request?.headers?.get("authorization");
   return authorization;
 };
-
-
-
-
 
 // export { schema };

@@ -52,7 +52,6 @@ tag = "v2"
 new_classes = [ "RateLimiter" ]
 ```
 
-
 ## Setup schema
 
 ### Write

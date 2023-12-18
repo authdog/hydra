@@ -7,7 +7,7 @@ export const GraphQLHandler = async (
   env: any,
   ctx: any,
 ): Promise<any> => {
-  const {rawSchema} = ctx;
+  const { rawSchema } = ctx;
   const yoga = createYoga({
     schema: await getSchema(rawSchema),
     context: async (event) => {

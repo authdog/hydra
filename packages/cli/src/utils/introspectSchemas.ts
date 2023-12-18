@@ -4,7 +4,6 @@ import { initSpinner, stopSpinner } from "./spinners";
 // import { spawn } from "node:child_process";
 import fs from "fs";
 
-
 export async function introspectRemoteSchema(endpointUrl: string) {
   try {
     // Send an introspection query to the GraphQL endpoint
@@ -71,16 +70,17 @@ export const buildSchemaIntrospection = async (
 
   stopSpinner(interval);
 
-  const fileContent = schemaWithIntrospection.map(s => ({
+  const fileContent = schemaWithIntrospection.map((s) => ({
     name: s.name,
     url: s.url,
-    introspected: s.introspected
+    introspected: s.introspected,
   }));
 
-
   // generate a schemaRaw file (.hydra/schemaRaw.js) module.exports = <fileContent>
-  fs.writeFileSync(outputPath, `module.exports = ${JSON.stringify(fileContent, null, 2)}`);
-
+  fs.writeFileSync(
+    outputPath,
+    `module.exports = ${JSON.stringify(fileContent, null, 2)}`,
+  );
 
   // if (namespaceId && namespaceId !== "test") {
   // // write with wrangler child process
@@ -97,6 +97,4 @@ export const buildSchemaIntrospection = async (
   //   console.log(`stdout: ${data}`);
   // });
   // }
-
-
 };

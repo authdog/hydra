@@ -24,11 +24,9 @@ describe("generate schema command", () => {
         //   config: configPath,
         //   // namespaceId: "test",
         // });
-
         // Check if the schema file exists after generation
         //const schemaFileExists = await checkFileExists("./.hydra/schemaRaw.ts");
         //expect(schemaFileExists).toBeTruthy();
-
         // Remove the generated schema file after validation
         //await fs.unlink("./.hydra/schemaRaw.ts");
       } else {
