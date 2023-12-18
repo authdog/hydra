@@ -1,14 +1,15 @@
 import { createYoga } from "graphql-yoga";
 // TODO: add create schema method to build dynamically the schema and persist to KV
-import { schema } from "../schema";
+import { getSchema } from "../schema";
 
 export const GraphQLHandler = async (
   req: Request,
   env: any,
   ctx: any,
 ): Promise<any> => {
+  const {rawSchema} = ctx;
   const yoga = createYoga({
-    schema,
+    schema: await getSchema(rawSchema),
     context: async (event) => {
       const { request } = event;
       const authorization =

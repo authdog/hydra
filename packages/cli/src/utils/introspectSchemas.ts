@@ -1,7 +1,9 @@
 import fetch from "node-fetch";
 import { getIntrospectionQuery, buildClientSchema, printSchema } from "graphql";
 import { initSpinner, stopSpinner } from "./spinners";
-import { spawn } from "node:child_process";
+// import { spawn } from "node:child_process";
+import fs from "fs";
+
 
 export async function introspectRemoteSchema(endpointUrl: string) {
   try {
@@ -75,21 +77,26 @@ export const buildSchemaIntrospection = async (
     introspected: s.introspected
   }));
 
-  if (namespaceId && namespaceId !== "test") {
-  // write with wrangler child process
-  // wrangler kv:key put schema '{"foo": "bar"}' --namespace-id=c63f48a0f29843e8ab8251ef533e1c9c
-  const wrangler = spawn("wrangler", [
-    "kv:key",
-    "put",
-    "schema",
-    JSON.stringify(fileContent),
-    `--namespace-id=${namespaceId}`,
-  ]);
 
-  wrangler.stdout.on("data", (data) => {
-    console.log(`stdout: ${data}`);
-  });
-  }
+  // generate a schemaRaw file (.hydra/schemaRaw.js) module.exports = <fileContent>
+  fs.writeFileSync(outputPath, `module.exports = ${JSON.stringify(fileContent, null, 2)}`);
+
+
+  // if (namespaceId && namespaceId !== "test") {
+  // // write with wrangler child process
+  // // wrangler kv:key put schema '{"foo": "bar"}' --namespace-id=c63f48a0f29843e8ab8251ef533e1c9c
+  // const wrangler = spawn("wrangler", [
+  //   "kv:key",
+  //   "put",
+  //   "schema",
+  //   JSON.stringify(fileContent),
+  //   `--namespace-id=${namespaceId}`,
+  // ]);
+
+  // wrangler.stdout.on("data", (data) => {
+  //   console.log(`stdout: ${data}`);
+  // });
+  // }
 
 
 };

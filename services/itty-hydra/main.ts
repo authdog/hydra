@@ -3,8 +3,10 @@ import { createCors } from "itty-cors";
 // import { withDurables } from "itty-durable";
 import { NotFound } from "./handlers/notFound";
 import { Health } from "./handlers/health";
-// import { GraphQLHandler, HydraHandler } from "@authdog/hydra-core";
+import { GraphQLHandler, HydraHandler } from "@authdog/hydra-core";
 import { HydraConfigAcme } from "./hydra.config";
+
+import {default as rawSchema} from "./.hydra/schemaRaw"
 
 const { preflight, corsify } = createCors();
 
@@ -17,7 +19,9 @@ router
   .get("/health", Health)
   .get("/schema", async (req, env, ctx) => {
 
-    const schema = await ctx.kv.get("schema")
+    const schema = await ctx.rawSchema
+
+    // const schema = await ctx.kv.get("schema")
 
     return new Response(
       JSON.stringify(schema),
@@ -29,17 +33,20 @@ router
 
   })
   // serves playground
-  // .get("/graphql", GraphQLHandler)
-  // .post("/graphql", HydraHandler)
+  .get("/graphql", GraphQLHandler)
+  .post("/graphql", HydraHandler)
   .get("*", NotFound);
 
 const handleRequest = (req, env, ctx) => {
   const { HYDRA_ACME } = env;
 
+  console.log("rawSchema", rawSchema);
+
   const enrichedContext = {
     ...ctx,
     kv: HYDRA_ACME,
     hydraConfig: HydraConfigAcme,
+    rawSchema
     // rateLimiter: null,
   };
 
