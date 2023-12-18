@@ -1,4 +1,5 @@
 import { createYoga } from "graphql-yoga";
+// TODO: add create schema method to build dynamically the schema and persist to KV
 import { schema } from "../schema";
 
 export const GraphQLHandler = async (

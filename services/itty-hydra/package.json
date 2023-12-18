@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "build": "node build.mjs",
-    "dev": "npx wrangler dev  -c wrangler.base.toml --live-reload --port 3546",
+    "dev": "npx wrangler dev  -c wrangler.base.toml --live-reload --port 3565",
     "deploy": "npx wrangler -c wrangler.base.toml deploy --minify"
   },
   "keywords": [],

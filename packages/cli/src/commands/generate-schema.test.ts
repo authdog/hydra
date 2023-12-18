@@ -10,7 +10,7 @@ const checkFileExists = (file: any) => {
 
 describe("generate schema command", () => {
   it("should validate a valid config object without throwing errors", async () => {
-    const configPath = "./src/__assets__/hydra.config.ts";
+    const configPath = "./src/assets/hydra.config.ts";
 
     try {
       // await fs.unlink("./.hydra/schemaRaw.ts");
@@ -22,6 +22,7 @@ describe("generate schema command", () => {
         // Generate schema using the specified configuration
         await generateSchemaAction({
           config: configPath,
+          namespaceId: "test",
         });
 
         // Check if the schema file exists after generation

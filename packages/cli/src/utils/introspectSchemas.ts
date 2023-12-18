@@ -1,6 +1,7 @@
 import fetch from "node-fetch";
 import { getIntrospectionQuery, buildClientSchema, printSchema } from "graphql";
 import { initSpinner, stopSpinner } from "./spinners";
+import { spawn } from "node:child_process";
 
 export async function introspectRemoteSchema(endpointUrl: string) {
   try {
@@ -48,6 +49,7 @@ interface GraphQLSchema {
 export const buildSchemaIntrospection = async (
   schemas: GraphQLSchema[],
   outputPath: string,
+  namespaceId: string,
 ) => {
   let schemaWithIntrospection = [];
 
@@ -67,38 +69,27 @@ export const buildSchemaIntrospection = async (
 
   stopSpinner(interval);
 
-  // const outputPath = "src/handlers/federation/schemaRawGenerated.ts";
-  // const exportStatements = schemaWithIntrospection.map(
-  //   (s) =>
-  //     `export const ${s.name} = {
-  //       name: "${s.name}",
-  //       url: "${s.url}",
-  //       introspected: ${JSON.stringify(s.introspected, null, 2)}
-  //     };`,
-  // );
-
-  const exportObjects = schemaWithIntrospection.map(s => ({
+  const fileContent = schemaWithIntrospection.map(s => ({
     name: s.name,
     url: s.url,
     introspected: s.introspected
   }));
 
-  // const fileContent = `${exportStatements.join("\n")}\n`;
+  if (namespaceId && namespaceId !== "test") {
+  // write with wrangler child process
+  // wrangler kv:key put schema '{"foo": "bar"}' --namespace-id=c63f48a0f29843e8ab8251ef533e1c9c
+  const wrangler = spawn("wrangler", [
+    "kv:key",
+    "put",
+    "schema",
+    JSON.stringify(fileContent),
+    `--namespace-id=${namespaceId}`,
+  ]);
 
-  const fileContent = JSON.stringify(exportObjects, null, 2);
-
-
-  const fs = require("fs");
-
-  try {
-    // define .hydra folder if it doesn't exist
-    if (!fs.existsSync(".hydra")) {
-      fs.mkdirSync(".hydra");
-    }
-
-    fs.writeFileSync(outputPath, fileContent);
-    console.log(`${outputPath} written`);
-  } catch (err) {
-    console.error(err);
+  wrangler.stdout.on("data", (data) => {
+    console.log(`stdout: ${data}`);
+  });
   }
+
+
 };

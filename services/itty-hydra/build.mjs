@@ -25,8 +25,7 @@ try {
       NodeGlobalsPolyfillPlugin({
         process: true,
         buffer: true,
-        global: true,
-        // define: { 'process.env.var': '"hello"' }, // inject will override define, to keep env vars you must also pass define here https://github.com/evanw/esbuild/issues/660
+        global: true
       }),
       NodeModulesPolyfillPlugin({
         util: true

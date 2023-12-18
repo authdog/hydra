@@ -51,3 +51,14 @@ class_name = "RateLimiter"
 tag = "v2"
 new_classes = [ "RateLimiter" ]
 ```
+
+
+## Setup schema
+
+### Write
+
+- `wrangler kv:key put  schema '{ "foo": "bar" }' --namespace-id=c63f48a0f29843e8ab8251ef533e1c9c`
+
+### Read
+
+- `wrangler kv:key get schema --namespace-id=c63f48a0f29843e8ab8251ef533e1c9c`

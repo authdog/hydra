@@ -8,6 +8,7 @@
   },
   "scripts": {
     "start": "node .",
+    "dev-gen-schema": "pnpm start  generate-schema -c src/assets/hydra.config.ts -nid c63f48a0f29843e8ab8251ef533e1c9c",
     "dev": "tsc -w -p tsconfig.json",
     "build": "tsc -p tsconfig.json",
     "test": "jest"

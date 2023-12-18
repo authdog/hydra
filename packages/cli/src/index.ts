@@ -19,6 +19,10 @@ program
     "-c, --config <configPath>",
     "Path to Hydra configuration path, default being <hydra.config.ts>",
   )
+  .option(
+    "-nid, --namespace-id <namespaceId>",
+    "Cloudflare KV Namespace ID",
+  )
   .action(actionRunner(generateSchemaAction));
 
 // TODO
