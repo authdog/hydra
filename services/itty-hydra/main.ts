@@ -10,7 +10,7 @@ import { HydraConfigAcme } from "./hydra.config";
 let rawSchema = null;
 
 try {
-  rawSchema = require("./.hydra/schemaRaw.json");
+  rawSchema = require("./.hydra/schemaRaw");
 }
 catch (err) {
   console.log("err", err);
@@ -46,8 +46,6 @@ router
 
 const handleRequest = (req, env, ctx) => {
   const { HYDRA_ACME } = env;
-
-  console.log("rawSchema", rawSchema);
 
   const enrichedContext = {
     ...ctx,
