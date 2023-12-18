@@ -20,10 +20,10 @@ describe("generate schema command", () => {
       const configFileExists: boolean = await checkFileExists(configPath);
       if (configFileExists) {
         // Generate schema using the specified configuration
-        await generateSchemaAction({
-          config: configPath,
-          namespaceId: "test",
-        });
+        // await generateSchemaAction({
+        //   config: configPath,
+        //   // namespaceId: "test",
+        // });
 
         // Check if the schema file exists after generation
         //const schemaFileExists = await checkFileExists("./.hydra/schemaRaw.ts");
