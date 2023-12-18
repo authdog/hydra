@@ -13,11 +13,11 @@ const config: DocsThemeConfig = {
     link: "https://github.com/authdog/hydra",
   },
   chat: {
-    link: "https://discord.com",
+    link: "https://corp.auth.dog/discord",
   },
   docsRepositoryBase: "https://github.com/authdog/hydra/docs",
   footer: {
-    text: "Hydra docs",
+    text: `Hydra is an Open Source product of Authdog, LLC. - © ${new Date().getFullYear()} Authdog, LLC.`,
   },
 };
 

@@ -133,12 +133,6 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
 
-  packages/create-hydra-app:
-    devDependencies:
-      typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
-
   services/itty-hydra:
     dependencies:
       '@authdog/hydra-core':
