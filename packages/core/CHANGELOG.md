@@ -1,5 +1,11 @@
 # @authdog/hydra-core
 
+## 0.1.4
+
+### Patch Changes
+
+- 6fed16b: remove namespace id as the schema is not pushed to KV
+
 ## 0.1.3
 
 ### Patch Changes

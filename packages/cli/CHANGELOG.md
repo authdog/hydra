@@ -1,5 +1,11 @@
 # @authdog/hydra-cli
 
+## 0.1.13
+
+### Patch Changes
+
+- 6fed16b: remove namespace id as the schema is not pushed to KV
+
 ## 0.1.12
 
 ### Patch Changes
