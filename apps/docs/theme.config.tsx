@@ -17,8 +17,13 @@ const config: DocsThemeConfig = {
   },
   docsRepositoryBase: "https://github.com/authdog/hydra/docs",
   footer: {
-    text: `Hydra is an Open Source product of Authdog, LLC. - © ${new Date().getFullYear()} Authdog, LLC.`,
+    component: (
+      <div style={{ textAlign: "center", padding: '2em' }}>
+        ©{new Date().getFullYear()}&nbsp;<a href="https://www.authdog.com">Authdog</a>, LLC.
+      </div>
+    )
   },
+  faviconGlyph: "🐉"
 };
 
 export default config;
