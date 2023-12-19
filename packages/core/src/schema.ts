@@ -6,8 +6,6 @@ import {
   unifyGraphQLSchemasObjects,
 } from "./schemaUtils";
 
-let schemas = [];
-
 // extract everything between type Query {}
 const queryRegex = /type Query {([\s\S]*?)}/;
 const mutationRegex = /type Mutation {([\s\S]*?)}/;
@@ -158,5 +156,3 @@ const getAuthorizationFromContext = (ctx) => {
   const authorization = ctx?.request?.headers?.get("authorization");
   return authorization;
 };
-
-// export { schema };
