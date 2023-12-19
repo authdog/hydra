@@ -1,6 +1,8 @@
+import { Cards, Card } from 'nextra/components'
+
 # What is Hydra?
 
-Hydra is a lightweight framework written in TypeScript designed to solve Edge caching challenges for GraphQL endpoints such as automated caching and invalidation of queries, built-in security.
+Hydra is a lightweight framework written in TypeScript designed to solve Edge caching challenges for GraphQL endpoints such as automated caching and invalidation of relevant cached queries, built-in security.
 
 The core aspects of Hydra are:
 
@@ -11,6 +13,22 @@ The core aspects of Hydra are:
 - Automated cache segmentation
 - Cloudflare opinionated (KV, Durable Objects)
 
+
 Most Hydra operations can be achieved through Hydra CLI.
 
-We'll walkthrough the installation process in the next section.
+
+## How does it work?
+
+Assuming `hydra CLI` is installed in your environment, the initial step is generally to generate a dump of the remote endpoints from a given configuration `hydra.config.ts` in the current project.
+Once this dump has been successfully generated, it'll be accessible in `.hydra/schemaRaw.js`.
+Then this generated file will be consumed by Hydra handlers to dynamically generate a JIT unified GraphQL schema.
+
+
+## Appendix
+
+
+<Cards>
+  <Card title="CLI Setup" href="/get-started/installation" />
+  <Card title="CLI Commands" href="/cli/commands" />
+  <Card title="Hydra Configuration" href="/appendix/hydra-configuration" />
+</Cards>

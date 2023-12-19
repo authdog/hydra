@@ -2,9 +2,10 @@ import React from "react";
 import { DocsThemeConfig } from "nextra-theme-docs";
 import { GiHydra } from "react-icons/gi";
 
+
 const config: DocsThemeConfig = {
   logo: (
-    <span style={{ display: "flex" }}>
+    <span className="logo-area" style={{ display: "flex" }}>
       <GiHydra style={{ fontSize: "25px" }} />
       &nbsp;GraphQL Hydra
     </span>
@@ -15,7 +16,12 @@ const config: DocsThemeConfig = {
   chat: {
     link: "https://corp.auth.dog/discord",
   },
-  docsRepositoryBase: "https://github.com/authdog/hydra/docs",
+  editLink: {
+    text: ""
+  },
+  feedback: {
+    content: null
+  },
   footer: {
     component: (
       <div style={{ textAlign: "center", padding: '2em' }}>
