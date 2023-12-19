@@ -2,7 +2,6 @@ import React from "react";
 import { DocsThemeConfig } from "nextra-theme-docs";
 import { GiHydra } from "react-icons/gi";
 
-
 const config: DocsThemeConfig = {
   logo: (
     <span className="logo-area" style={{ display: "flex" }}>
@@ -17,19 +16,20 @@ const config: DocsThemeConfig = {
     link: "https://corp.auth.dog/discord",
   },
   editLink: {
-    text: ""
+    text: "",
   },
   feedback: {
-    content: null
+    content: null,
   },
   footer: {
     component: (
-      <div style={{ textAlign: "center", padding: '2em' }}>
-        ©{new Date().getFullYear()}&nbsp;<a href="https://www.authdog.com">Authdog</a>, LLC.
+      <div style={{ textAlign: "center", padding: "2em" }}>
+        ©{new Date().getFullYear()}&nbsp;
+        <a href="https://www.authdog.com">Authdog</a>, LLC.
       </div>
-    )
+    ),
   },
-  faviconGlyph: "🐉"
+  faviconGlyph: "🐉",
 };
 
 export default config;

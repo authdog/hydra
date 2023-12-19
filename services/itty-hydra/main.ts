@@ -11,12 +11,9 @@ let rawSchema = null;
 
 try {
   rawSchema = require("./.hydra/schemaRaw");
-}
-catch (err) {
+} catch (err) {
   console.log("err", err);
 }
-
-
 
 const { preflight, corsify } = createCors();
 
