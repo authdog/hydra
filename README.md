@@ -1,24 +1,12 @@
-# Hydra Monorepo
+# Hydra
 
 [![adog-hydra-ci](https://github.com/authdog/hydra/actions/workflows/ci.yml/badge.svg)](https://github.com/authdog/hydra/actions/workflows/ci.yml)
-[![adog-hydra-docs](https://github.com/authdog/hydra/actions/workflows/docs.yml/badge.svg)](https://github.com/authdog/hydra/actions/workflows/docs.yml)
+[![adog-hydra-docs](https://github.com/authdog/hydra/actions/workflows/deploy-docs.yml/badge.svg)](https://github.com/authdog/hydra/actions/workflows/deploy-docs.yml)
+[![adog-hydra-lib-publish](https://github.com/authdog/hydra/actions/workflows/lib-publish.yml/badge.svg)](https://github.com/authdog/hydra/actions/workflows/lib-publish.yml)
 
-Hydra is a edge caching service that provides a unified, as a lightweight set of utilities designed for building high performance, scalable federated GraphQL APIs.
+## What is Hydra?
 
-## Get Started
+Hydra is a lightweight framework written in TypeScript designed to solve Edge caching challenges for GraphQL endpoints such as automated caching and invalidation of relevant cached queries, built-in security.
 
-### Install
 
-```bash
-
-pnpm install
-
-```
-
-### Local development
-
-```bash
-
-pnpm run dev
-
-```
+To get started with Hydra, follow this [link](https://hydra.authdog.com).
