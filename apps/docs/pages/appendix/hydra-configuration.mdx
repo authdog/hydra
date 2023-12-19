@@ -1,1 +1,97 @@
 # Hydra Configuration
+
+Here's a sample Hydra configuration file:
+
+```javascript filename="hydra.config.ts" copy
+const HydraConfigAcme = {
+  schemas: [
+    {
+      id: "mgt",
+      uri: "https://mgt.auth.dog/graphql",
+    },
+    {
+      id: "authz",
+      uri: "https://authz.auth.dog/graphql",
+    },
+  ],
+  rateLimiting: {
+    default: {
+      budget: 100,
+    },
+  },
+  publicQueries: [
+    {
+      name: "health",
+    },
+    {
+      name: "hydraDevQuery",
+    },
+  ],
+  jwksUri: "https://id.authdog.com/oidc/.well-known/jwks.json",
+};
+
+export default HydraConfigAcme;
+```
+
+Let's walkthrough each field to better understand their role.
+
+
+## schemas
+
+`schemas` field describe the remote GraphQL endpoints with respective schemas to be consumed by Hydra.
+
+- `id` is a unique identifier for the endpoint
+- `uri` is the remote URI of the GraphQL endpoint
+
+
+```javascript copy
+schemas: [
+    {
+      id: "mgt",
+      uri: "https://mgt.auth.dog/graphql",
+    },
+    {
+      id: "authz",
+      uri: "https://authz.auth.dog/graphql",
+    },
+]
+```
+
+## rateLimiting `experimental`
+
+`rateLimiting` defines rate limiting parameters of queries. It requires durable objects enabled on your Cloudflare account.
+
+`default` subfield defines the default rate limiting budget, here `budget` is 100, meaning all queries will be callable 100 times per minutes, from a given IP address.
+More facets will be added in the future.
+
+```javascript copy
+rateLimiting: {
+    default: {
+        budget: 100,
+    },
+},
+```
+
+## publicQueries
+
+`publicQueries` field defines the public queries from the schema, that don't require authentication.
+If some of your queries are public, but not specified in this list, and consumer is not passing a valid authorization, Hydra will return an unauthorized error (401) by default.
+
+```javascript copy
+publicQueries: [
+    {
+      name: "health",
+    },
+    {
+      name: "hydraDevQuery",
+    },
+]
+```
+
+## jwksUri
+
+`jwksUri` is a remote OpenID endpoint used to validate Hydra endpoint consumer's identity.
+
+```javascript copy
+jwksUri: "https://id.authdog.com/oidc/.well-known/jwks.json"
+```
