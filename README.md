@@ -8,6 +8,6 @@
 
 ## What is Hydra?
 
-Hydra is a lightweight framework written in TypeScript designed to solve Edge caching challenges for GraphQL endpoints such as automated caching and invalidation of relevant cached queries, built-in security.
+Hydra is a lightweight framework written in TypeScript designed to solve Edge caching challenges for GraphQL endpoints such as automated queries payload caching and mutation based invalidation with built-in security.
 
 To get started with Hydra, follow this [link](https://hydra.authdog.com).
