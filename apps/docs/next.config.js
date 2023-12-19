@@ -8,6 +8,3 @@ module.exports = withNextra({
     unoptimized: true,
   }
 })
-module.exports = {
-  basePath: '/hydra',
-};
