@@ -44,13 +44,13 @@ export async function introspectRemoteSchema(endpointUrl: string) {
 interface GraphQLSchema {
   id: string;
   uri: string;
+  // TODO: investigate distribution of GraphQL engines requiring tokens from introspection
   // token?: string; // some schemas require a token to be introspected
 }
 
 export const buildSchemaIntrospection = async (
   schemas: GraphQLSchema[],
   outputPath: string,
-  namespaceId: string,
 ) => {
   let schemaWithIntrospection = [];
 
@@ -81,20 +81,4 @@ export const buildSchemaIntrospection = async (
     outputPath,
     `module.exports = ${JSON.stringify(fileContent, null, 2)}`,
   );
-
-  // if (namespaceId && namespaceId !== "test") {
-  // // write with wrangler child process
-  // // wrangler kv:key put schema '{"foo": "bar"}' --namespace-id=c63f48a0f29843e8ab8251ef533e1c9c
-  // const wrangler = spawn("wrangler", [
-  //   "kv:key",
-  //   "put",
-  //   "schema",
-  //   JSON.stringify(fileContent),
-  //   `--namespace-id=${namespaceId}`,
-  // ]);
-
-  // wrangler.stdout.on("data", (data) => {
-  //   console.log(`stdout: ${data}`);
-  // });
-  // }
 };

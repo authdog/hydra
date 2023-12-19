@@ -10,12 +10,10 @@ import { validateConfig } from "../utils/validateConfig";
 
 interface IGenerateSchemaAction {
   config?: string;
-  namespaceId: string;
 }
 
 export const generateSchemaAction = async ({
   config = hydraConfigPathDefault,
-  namespaceId,
 }: IGenerateSchemaAction) => {
   const rootPath = process.cwd(); // Get the root directory path
   const configPath = path.resolve(rootPath, config); // Construct absolute path for config
@@ -46,11 +44,7 @@ export const generateSchemaAction = async ({
       return logError(`Invalid config [${config}]`);
     }
     try {
-      await buildSchemaIntrospection(
-        validatedConfig.schemas,
-        outputPath,
-        namespaceId,
-      );
+      await buildSchemaIntrospection(validatedConfig.schemas, outputPath);
     } catch (error: any) {
       return logError(error.message);
     }
