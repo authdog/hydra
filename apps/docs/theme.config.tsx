@@ -6,8 +6,7 @@ import { useRouter } from "next/router";
 const config: DocsThemeConfig = {
   logo: (
     <span className="logo-area" style={{ display: "flex" }}>
-      <GiHydra style={{ fontSize: "25px" }} />
-      &nbsp;GraphQL Hydra
+      <GiHydra style={{ fontSize: "25px" }} />&nbsp;GraphQL Hydra
     </span>
   ),
   project: {
@@ -38,7 +37,7 @@ const config: DocsThemeConfig = {
         titleTemplate: "Hydra Docs — %s",
       };
     }
-  },
+  }
 };
 
 export default config;
