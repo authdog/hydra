@@ -1,7 +1,6 @@
 import fetch from "node-fetch";
 import { getIntrospectionQuery, buildClientSchema, printSchema } from "graphql";
 import { initSpinner, stopSpinner } from "./spinners";
-// import { spawn } from "node:child_process";
 import fs from "fs";
 
 export async function introspectRemoteSchema(endpointUrl: string) {
@@ -75,6 +74,11 @@ export const buildSchemaIntrospection = async (
     url: s.url,
     introspected: s.introspected,
   }));
+
+  // create a .hydra directory if it doesn't exist
+  if (!fs.existsSync(".hydra")) {
+    fs.mkdirSync(".hydra");
+  }
 
   // generate a schemaRaw file (.hydra/schemaRaw.js) module.exports = <fileContent>
   fs.writeFileSync(
