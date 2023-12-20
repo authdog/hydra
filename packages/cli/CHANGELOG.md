@@ -1,5 +1,11 @@
 # @authdog/hydra-cli
 
+## 0.1.15
+
+### Patch Changes
+
+- 77d746e: create .hydra folder if missing
+
 ## 0.1.14
 
 ### Patch Changes
