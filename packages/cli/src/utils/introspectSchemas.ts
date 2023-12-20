@@ -2,6 +2,7 @@ import fetch from "node-fetch";
 import { getIntrospectionQuery, buildClientSchema, printSchema } from "graphql";
 import { initSpinner, stopSpinner } from "./spinners";
 import fs from "fs";
+import { logError } from "./cliLogger";
 
 export async function introspectRemoteSchema(endpointUrl: string) {
   try {
@@ -35,8 +36,8 @@ export async function introspectRemoteSchema(endpointUrl: string) {
     // Create a multi-line string enclosed within backticks
     const formattedSchemaString = `${schemaString}`;
     return formattedSchemaString;
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    logError(error.message);
   }
 }
 

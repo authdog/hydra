@@ -46,10 +46,6 @@ export const validateConfig = (config: IHydraConfig): IHydraConfig => {
     const validatedConfig = hydraConfigSchema.parse(config);
     return validatedConfig;
   } catch (error) {
-    if (error instanceof ZodError) {
-      // Handle validation errors here
-      console.error("Validation error:", error.errors);
-    }
     throw error;
   }
 };

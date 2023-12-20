@@ -75,16 +75,16 @@ describe("validateConfig function", () => {
     expect(() => validateConfig(missingSchemasConfig)).toThrow();
   });
 
-  it("should log validation errors to the console for an invalid config object", () => {
-    const consoleErrorSpy = jest.spyOn(console, "error");
-    consoleErrorSpy.mockImplementation(() => {}); // Mock console.error to do nothing
+  // it("should log validation errors to the console for an invalid config object", () => {
+  //   const consoleErrorSpy = jest.spyOn(console, "error");
+  //   consoleErrorSpy.mockImplementation(() => {}); // Mock console.error to do nothing
 
-    try {
-      validateConfig(invalidConfig);
-    } catch (error) {
-      expect(consoleErrorSpy).toHaveBeenCalled();
-    }
+  //   try {
+  //     validateConfig(invalidConfig);
+  //   } catch (error) {
+  //     expect(consoleErrorSpy).toHaveBeenCalled();
+  //   }
 
-    consoleErrorSpy.mockRestore(); // Restore console.error
-  });
+  //   consoleErrorSpy.mockRestore(); // Restore console.error
+  // });
 });
