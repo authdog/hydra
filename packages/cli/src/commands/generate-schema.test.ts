@@ -11,24 +11,29 @@ const checkFileExists = (file: any) => {
 describe("generate schema command", () => {
   it("should validate a valid config object without throwing errors", async () => {
     const configPath = "./src/assets/hydra.config.ts";
+    const defaultHydraSchemaRawPath = "./.hydra/schemaRaw.js";
 
     try {
-      // await fs.unlink("./.hydra/schemaRaw.ts");
+
+      // check if .hydra/schemaRaw.js exists
+      const schemaFileExistsBeforeCommand = await checkFileExists(defaultHydraSchemaRawPath);
+      if (schemaFileExistsBeforeCommand) {
+        // remove the file if it exists
+        await fs.unlink(defaultHydraSchemaRawPath);
+      }
 
       // Ensure the file exists before attempting to generate the schema
-      // @ts-ignore
       const configFileExists: boolean = await checkFileExists(configPath);
       if (configFileExists) {
         // Generate schema using the specified configuration
-        // await generateSchemaAction({
-        //   config: configPath,
-        //   // namespaceId: "test",
-        // });
+        await generateSchemaAction({
+          config: configPath,
+        });
         // Check if the schema file exists after generation
-        //const schemaFileExists = await checkFileExists("./.hydra/schemaRaw.ts");
-        //expect(schemaFileExists).toBeTruthy();
+        const schemaFileExistsAfterCommand = await checkFileExists(defaultHydraSchemaRawPath);
+        expect(schemaFileExistsAfterCommand).toBeTruthy();
         // Remove the generated schema file after validation
-        //await fs.unlink("./.hydra/schemaRaw.ts");
+        await fs.unlink(defaultHydraSchemaRawPath);
       } else {
         // Handle error if the config file doesn't exist
         throw new Error(`Config file not found at ${configPath}`);
