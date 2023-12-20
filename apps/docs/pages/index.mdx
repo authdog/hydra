@@ -1,10 +1,14 @@
 import { Cards, Card } from 'nextra/components'
+import { HiMiniCommandLine } from "react-icons/hi2";
+import { GiHydra } from "react-icons/gi";
+import { GrConfigure } from "react-icons/gr";
+
 
 # What is Hydra?
 
 Hydra is a lightweight framework written in TypeScript designed to solve Edge caching challenges for GraphQL endpoints such as automated caching and invalidation of relevant cached queries, built-in security.
 
-The core aspects of Hydra are:
+## Core aspects
 
 - Self-hosted framework
 - Operates natively with Authdog backend (OpenID, Authz)
@@ -19,16 +23,23 @@ Most Hydra operations can be achieved through Hydra CLI.
 
 ## How does it work?
 
+Hydra acts as an Edge Gateway for GraphQL, meaning Hydra will generate its own unified GraphQL schema from existing GraphQL schema.
+Requests sent to a Hydra endpoint will automatically cache the queries payload. Queries have dedicated types with their ids stored as metadata in KV.
+If a given Mutation returns a type with ids in KV, it'll automatically invalidate any matching query in KV with a similar type.
+
+
+## Setup Process
+
 Assuming `hydra CLI` is installed in your environment, the initial step is generally to generate a dump of the remote endpoints from a given configuration `hydra.config.ts` in the current project.
 Once this dump has been successfully generated, it'll be accessible in `.hydra/schemaRaw.js`.
 Then this generated file will be consumed by Hydra handlers to dynamically generate a JIT unified GraphQL schema.
 
 
-## Appendix
+## Quick Links
 
 
 <Cards>
-  <Card title="CLI Setup" href="/get-started/installation" />
-  <Card title="CLI Commands" href="/cli/commands" />
-  <Card title="Hydra Configuration" href="/appendix/hydra-configuration" />
+  <Card icon={<GrConfigure style={{ fontSize: '42px' }} />} title="CLI Setup" href="/get-started/installation" />
+  <Card icon={<HiMiniCommandLine style={{ fontSize: '42px' }} />} title="CLI Commands" href="/cli/commands" />
+  <Card icon={<GiHydra style={{ fontSize: '42px' }} />} title="Hydra Configuration" href="/appendix/hydra-configuration" />
 </Cards>

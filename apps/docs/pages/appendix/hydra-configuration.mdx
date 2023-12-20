@@ -1,5 +1,13 @@
 # Hydra Configuration
 
+## Purpose
+
+`hydra.config.ts` is a configuration file living in your Hydra repository.
+this file is consumed by Hydra CLI to generate a dump of remote endpoints. Also consumed by Hydra's handlers to define the caching and security configuration behaviour.
+
+
+## Config Structure
+
 Here's a sample Hydra configuration file:
 
 ```javascript filename="hydra.config.ts" copy
@@ -36,7 +44,7 @@ export default HydraConfigAcme;
 Let's walkthrough each field to better understand their role.
 
 
-## schemas
+### schemas
 
 `schemas` field describe the remote GraphQL endpoints with respective schemas to be consumed by Hydra.
 
@@ -57,7 +65,7 @@ schemas: [
 ]
 ```
 
-## rateLimiting (experimental)
+### rateLimiting (experimental)
 
 `rateLimiting` defines rate limiting parameters of queries. It requires durable objects enabled on your Cloudflare account.
 
@@ -72,7 +80,7 @@ rateLimiting: {
 },
 ```
 
-## publicQueries
+### publicQueries
 
 `publicQueries` field defines the public queries from the schema, that don't require authentication.
 If some of your queries are public, but not specified in this list, and consumer is not passing a valid authorization, Hydra will return an unauthorized error (401) by default.
@@ -88,7 +96,7 @@ publicQueries: [
 ]
 ```
 
-## jwksUri
+### jwksUri
 
 `jwksUri` is a remote OpenID endpoint used to validate Hydra endpoint consumer's identity.
 

@@ -1,3 +1,5 @@
+import { Tabs } from 'nextra/components'
+
 # Commands
 
 Hydra offers a number of commands to manage your Hydra worker.
@@ -8,18 +10,44 @@ Hydra offers a number of commands to manage your Hydra worker.
 
 ## version
 
-```bash copy
-hydra -V
-```
+
+<Tabs items={['default']}>
+  <Tabs.Tab>
+    ```bash copy
+    hydra -V
+    ```
+  </Tabs.Tab>
+</Tabs>
+
 
 ## help
 
-```bash copy
-hydra -h
-```
+<Tabs items={['default']}>
+  <Tabs.Tab>
+    ```bash copy
+    hydra -h
+    ```
+  </Tabs.Tab>
+</Tabs>
+
 
 ## generate-schema
 
-```bash copy
-hydra generate-schema
-```
+<Tabs items={['default', 'custom config path']}>
+  <Tabs.Tab>
+    ```bash copy
+    hydra generate-schema
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```bash copy
+    hydra generate-schema -c config/hydra.config.ts
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+`-c`, `--config`: Path to Hydra configuration path, default being Path to Hydra configuration path, default being `<hydra.config.ts>`
+
+
+
+

@@ -1,0 +1,21 @@
+# Concepts
+
+## Caching
+
+In short Hydra's caching provides a way to read data stored in a cache automatically, instead of consuming data from the actual downstream APIs.
+Thus access to payload is significantly faster if a corresponding payload exists in cache for a given query.
+
+## Cache Keys Segmentation
+
+Keys are segmented in the cache to permit caching in different contexts (e.g.: queries cached for a given user, queries cached with specific variables)
+
+Cache keys contains informations about the query, respectively
+
+- `user:query:variables` for authenticated queries
+- `query:variables` for public queries
+
+### Composites
+
+- `user` is a hash of a given authenticated user identifier.
+- `query` is a hash of a given GraphQL query.
+- `variables` is a hash of a given GraphQL query variables stored as an array of key/value

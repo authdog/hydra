@@ -1,0 +1,10 @@
+# Known Limitations
+
+## Types Collision
+
+If more than one GraphQL is being used, there's a chance of collision for types.
+In the future, this might be addressed with namespaces for remote schemas.
+
+## Cache value size
+
+- Cloudflare Worker KV value has an arbitrary maximum size of 25 MiB. ([reference](https://developers.cloudflare.com/workers/platform/storage-options/#comparison))
