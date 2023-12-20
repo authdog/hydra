@@ -14,9 +14,10 @@ describe("generate schema command", () => {
     const defaultHydraSchemaRawPath = "./.hydra/schemaRaw.js";
 
     try {
-
       // check if .hydra/schemaRaw.js exists
-      const schemaFileExistsBeforeCommand = await checkFileExists(defaultHydraSchemaRawPath);
+      const schemaFileExistsBeforeCommand = await checkFileExists(
+        defaultHydraSchemaRawPath,
+      );
       if (schemaFileExistsBeforeCommand) {
         // remove the file if it exists
         await fs.unlink(defaultHydraSchemaRawPath);
@@ -30,7 +31,9 @@ describe("generate schema command", () => {
           config: configPath,
         });
         // Check if the schema file exists after generation
-        const schemaFileExistsAfterCommand = await checkFileExists(defaultHydraSchemaRawPath);
+        const schemaFileExistsAfterCommand = await checkFileExists(
+          defaultHydraSchemaRawPath,
+        );
         expect(schemaFileExistsAfterCommand).toBeTruthy();
         // Remove the generated schema file after validation
         await fs.unlink(defaultHydraSchemaRawPath);
