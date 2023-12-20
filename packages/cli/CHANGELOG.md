@@ -1,5 +1,11 @@
 # @authdog/hydra-cli
 
+## 0.1.14
+
+### Patch Changes
+
+- c9f8a6d: use schemaRaw.js
+
 ## 0.1.13
 
 ### Patch Changes
