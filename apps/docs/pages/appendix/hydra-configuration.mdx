@@ -1,9 +1,24 @@
+import { FileTree } from 'nextra/components'
+
 # Hydra Configuration
 
 ## Purpose
 
 `hydra.config.ts` is a configuration file living in your Hydra repository.
 this file is consumed by Hydra CLI to generate a dump of remote endpoints. Also consumed by Hydra's handlers to define the caching and security configuration behaviour.
+Schema dump is by default located in `.hydra/schemaRaw.js`
+
+ 
+<FileTree>
+  <FileTree.Folder name="sample_hydra_project" defaultOpen>
+    <FileTree.File name="hydra.config.ts" />
+    <FileTree.File name="package.json" />
+    <FileTree.File name="index.ts" />
+    <FileTree.Folder name=".hydra">
+      <FileTree.File name="schemaRaw.js" />
+    </FileTree.Folder>
+  </FileTree.Folder>
+</FileTree>
 
 
 ## Config Structure

@@ -6,9 +6,6 @@ import { logError } from "./cliLogger";
 
 export async function introspectRemoteSchema(endpointUrl: string) {
   try {
-    // Send an introspection query to the GraphQL endpoint
-    // animate cliSpinners.dots in the console
-
     const response = await fetch(endpointUrl, {
       method: "POST",
       headers: {
