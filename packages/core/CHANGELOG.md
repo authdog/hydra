@@ -1,5 +1,11 @@
 # @authdog/hydra-core
 
+## 0.1.5
+
+### Patch Changes
+
+- 4cc5c70: bump packages versions
+
 ## 0.1.4
 
 ### Patch Changes

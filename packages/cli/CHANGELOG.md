@@ -1,5 +1,11 @@
 # @authdog/hydra-cli
 
+## 0.1.16
+
+### Patch Changes
+
+- 4cc5c70: bump packages versions
+
 ## 0.1.15
 
 ### Patch Changes
