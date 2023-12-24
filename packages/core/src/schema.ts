@@ -48,13 +48,29 @@ export const getSchema = (schemas: any) => {
                 const queryBody = ctx?.params?.query;
                 const variables = ctx?.params?.variables;
                 const authorization = getAuthorizationFromContext(ctx);
-                return await fetchGraphQLEndpoint(
-                  url,
-                  addTypenameKeywordToSchema(queryBody),
-                  variables,
-                  operationName,
-                  { Authorization: authorization },
-                );
+
+
+                console.log("queryBody", queryBody);
+                console.log("variables", variables);
+                console.log("authorization", authorization);
+
+                let payload;
+                
+                try {
+                  payload = await fetchGraphQLEndpoint(
+                    url,
+                    addTypenameKeywordToSchema(queryBody),
+                    variables,
+                    operationName,
+                    { Authorization: authorization },
+                  );
+
+                  return payload;
+
+                } catch(e) {
+                 throw new Error(e); 
+                }
+
               },
             };
           },

@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  node-fetch: 2.6.7
+
 importers:
 
   .:
@@ -21,8 +24,8 @@ importers:
         specifier: ^2.1.0
         version: 2.1.0(itty-router@4.0.23)
       node-fetch:
-        specifier: 2.7.0
-        version: 2.7.0
+        specifier: 2.6.7
+        version: 2.6.7
       react-icons:
         specifier: ^4.12.0
         version: 4.12.0(react@18.2.0)
@@ -107,8 +110,8 @@ importers:
         specifier: ^1.1.5
         version: 1.1.5
       node-fetch:
-        specifier: 2.6.9
-        version: 2.6.9
+        specifier: 2.6.7
+        version: 2.6.7
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -131,6 +134,12 @@ importers:
       graphql-tag:
         specifier: ^2.12.6
         version: 2.12.6(graphql@16.8.1)
+      keylab:
+        specifier: ^0.1.30
+        version: 0.1.30
+      node-fetch:
+        specifier: 2.6.7
+        version: 2.6.7
     devDependencies:
       typescript:
         specifier: ^5.2.2
@@ -151,8 +160,8 @@ importers:
         specifier: ^0.1.30
         version: 0.1.30
       node-fetch:
-        specifier: '2.7'
-        version: 2.7.0
+        specifier: 2.6.7
+        version: 2.6.7
     devDependencies:
       '@esbuild-plugins/node-globals-polyfill':
         specifier: 0.2.3
@@ -6148,20 +6157,8 @@ packages:
     resolution: {integrity: sha512-PvndhaJGOV2vkwu8ugfOgiRkXEyu5AgTlldD3f68w9QYC44yXARQQR4STvXC6CF+ZfyeKbNoLddjR3dx8qdBEQ==}
     dev: false
 
-  /node-fetch@2.6.9:
-    resolution: {integrity: sha512-DJm/CJkZkRjKKj4Zi4BsKVZh3ValV5IR5s7LVZnW+6YMh0W1BfNA8XSs6DLMGYlId5F3KnA70uu2qepcR08Qqg==}
-    engines: {node: 4.x || >=6.0.0}
-    peerDependencies:
-      encoding: ^0.1.0
-    peerDependenciesMeta:
-      encoding:
-        optional: true
-    dependencies:
-      whatwg-url: 5.0.0
-    dev: false
-
-  /node-fetch@2.7.0:
-    resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
+  /node-fetch@2.6.7:
+    resolution: {integrity: sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==}
     engines: {node: 4.x || >=6.0.0}
     peerDependencies:
       encoding: ^0.1.0

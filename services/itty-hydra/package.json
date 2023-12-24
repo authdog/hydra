@@ -7,7 +7,7 @@
   "scripts": {
     "build": "node build.mjs",
     "dev": "npx wrangler dev  -c wrangler.base.toml --live-reload --port 3566",
-    "deploy": "npx wrangler -c wrangler.base.toml deploy --minify"
+    "ship": "npx wrangler -c wrangler.base.toml deploy --minify"
   },
   "keywords": [],
   "author": "",

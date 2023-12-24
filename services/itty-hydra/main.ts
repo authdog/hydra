@@ -44,6 +44,8 @@ router
 const handleRequest = (req, env, ctx) => {
   const { HYDRA_ACME } = env;
 
+  // console.log("rawSchema", rawSchema);
+
   const enrichedContext = {
     ...ctx,
     kv: HYDRA_ACME,
