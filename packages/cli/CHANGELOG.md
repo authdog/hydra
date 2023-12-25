@@ -1,5 +1,11 @@
 # @authdog/hydra-cli
 
+## 0.1.17
+
+### Patch Changes
+
+- 6e6ed6a: cleanup hydra handler
+
 ## 0.1.16
 
 ### Patch Changes
