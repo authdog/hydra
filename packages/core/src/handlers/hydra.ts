@@ -18,8 +18,9 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
     throw new Error("Missing Hydra Config");
   }
 
-  const { kv, hydraConfig } = ctx;    let cacheKey = null;
-  const { RateLimiter } = req;
+  const { kv, hydraConfig, rateLimiter } = ctx;
+  let cacheKey = null;
+  // const { RateLimiter } = req;
   // get ip address
   const ip =
     req.headers.get("cf-connecting-ip") ||
@@ -42,7 +43,7 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
   };
 
   const facetId = ip;
-  // const ratelimiterId = getRatelimiterObjectId();
+  const ratelimiterId = getRatelimiterObjectId();
   // const rateLimiterInstance = RateLimiter.get(ratelimiterId);
 
   // await rateLimiterInstance.incrementFacetValue(facetId);
