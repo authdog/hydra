@@ -7,7 +7,7 @@ import {
 import { addTypenameKeywordToSchema, removeTypename } from "../schemaUtils";
 import { readStream } from "../utils/stream";
 import { GraphQLHandler } from "./graphql";
-import  {checkTokenValidness} from "keylab";
+import { checkTokenValidness } from "keylab";
 
 export const HydraHandler = async (req, env, ctx): Promise<Response> => {
   if (ctx.hasOwnProperty("kv") === false) {
@@ -88,8 +88,9 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
 
   let extractedQueries = [];
 
-  let isIntrospection = requestBody?.operationName === "IntrospectionQuery"
-    || requestBody?.query?.indexOf("_schema") > -1;
+  let isIntrospection =
+    requestBody?.operationName === "IntrospectionQuery" ||
+    requestBody?.query?.indexOf("_schema") > -1;
 
   if (isIntrospection) {
     return await GraphQLHandler(req, env, ctx);
@@ -98,7 +99,6 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
   if (!isIntrospection && !isMutation) {
     // isIntrospection = false;
     // console.log("is not introspection")
-
 
     // TODO: fix this, it excludes variables
     extractedQueries = extractedAllQueryIdentifiersInRawQuery(
@@ -213,7 +213,6 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
         })
       : null;
 
-
     if (cachedPayload) {
       return new Response(
         JSON.stringify({
@@ -252,7 +251,7 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
 
     payload = await GraphQLHandler(newRequest, env, ctx);
 
-    console.log("payload dump", payload)
+    console.log("payload dump", payload);
 
     if (isMutation) {
       const { data } = await payload.clone().json();
@@ -322,7 +321,6 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
     const { data } = rawJsonPayload;
     const aggregated = aggregateTypesWithIds(data);
 
-
     await kvNamespace.put(cacheKey, JSON.stringify(data), {
       expirationTtl: 60,
       metadata: {
@@ -362,7 +360,6 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
       });
     });
     await Promise.all(promises);
-
   }
 
   const streamData: any = await readStream(payload?.body?.getReader());
@@ -379,4 +376,4 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
   });
 
   return payload;
-}
+};

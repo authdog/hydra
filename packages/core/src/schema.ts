@@ -49,13 +49,12 @@ export const getSchema = (schemas: any) => {
                 const variables = ctx?.params?.variables;
                 const authorization = getAuthorizationFromContext(ctx);
 
-
                 console.log("queryBody", queryBody);
                 console.log("variables", variables);
                 console.log("authorization", authorization);
 
                 let payload;
-                
+
                 try {
                   payload = await fetchGraphQLEndpoint(
                     url,
@@ -69,12 +68,9 @@ export const getSchema = (schemas: any) => {
 
                   // {health} returns an additional {data : {health: {}}} level, I don't want that
                   return payload;
-
-
-                } catch(e) {
-                 throw new Error(e); 
+                } catch (e) {
+                  throw new Error(e);
                 }
-
               },
             };
           },
