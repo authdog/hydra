@@ -43,7 +43,7 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
   };
 
   const facetId = ip;
-  const ratelimiterId = getRatelimiterObjectId();
+  // const ratelimiterId = getRatelimiterObjectId();
   // const rateLimiterInstance = RateLimiter.get(ratelimiterId);
 
   // await rateLimiterInstance.incrementFacetValue(facetId);
