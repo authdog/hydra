@@ -65,7 +65,11 @@ export const getSchema = (schemas: any) => {
                     { Authorization: authorization },
                   );
 
+                  // return payload;
+
+                  // {health} returns an additional {data : {health: {}}} level, I don't want that
                   return payload;
+
 
                 } catch(e) {
                  throw new Error(e); 

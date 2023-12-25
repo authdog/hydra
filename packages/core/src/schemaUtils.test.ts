@@ -7,6 +7,7 @@ import {
   buildGraphQLSchemaSDL,
   extractScalarLines,
   addTypenameKeywordToSchema,
+  removeTypename
 } from "./schemaUtils";
 
 describe("Should import types primitives from schema", () => {
@@ -755,5 +756,43 @@ describe("Should inject __typename to queries if missing", () => {
       }
     }`;
     expect(generated1).toEqual(expected1);
+  });
+});
+
+describe("Should remove __typename from object", () => {
+  it("remove __typename from object", () => {
+
+    const inputData = {
+      "data": {
+        "health": "ok",
+        "userInfo": {
+          "id": "81a04902-90d9-4605-81e6-f0ddd228bca6",
+          "name": {
+            "__typename": "AccountUserName",
+            "id": null,
+            "formatted": "David B."
+          },
+          "__typename": "AccountUser"
+        }
+      }
+    };
+
+    const expectedData = {
+      "data": {
+        "health": "ok",
+        "userInfo": {
+          "id": "81a04902-90d9-4605-81e6-f0ddd228bca6",
+          "name": {
+            "id": null,
+            "formatted": "David B."
+          },
+        }
+      }
+    };
+
+    const result = removeTypename(inputData);
+
+    expect(result).toEqual(expectedData);
+
   });
 });

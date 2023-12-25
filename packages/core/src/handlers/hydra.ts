@@ -4,7 +4,8 @@ import {
   generateGraphQLCacheKey,
   splitAggregatedTypesWithIds,
 } from "../invalidation/invalidation";
-import { addTypenameKeywordToSchema } from "../schemaUtils";
+import { addTypenameKeywordToSchema, removeTypename } from "../schemaUtils";
+import { readStream } from "../utils/stream";
 import { GraphQLHandler } from "./graphql";
 import  {checkTokenValidness} from "keylab";
 
@@ -89,8 +90,6 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
   let isIntrospection = requestBody?.operationName === "IntrospectionQuery"
     || requestBody?.query?.indexOf("_schema") > -1;
 
-  // console.log("requestBody", requestBody);
-
   if (isIntrospection) {
     return await GraphQLHandler(req, env, ctx);
   }
@@ -122,8 +121,6 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
     let authorization =
       requestHeaders?.get("authorization") ||
       requestHeaders?.get("Authorization");
-    // || requestBody?.extension?.headers?.authorization
-    // || requestBody?.extension?.headers?.Authorization
 
     if (authorization) {
       authorization = authorization?.replace("Bearer ", "");
@@ -195,8 +192,6 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
         }
       }
 
-      console.log("userId", userId);
-
       cacheKey = await generateGraphQLCacheKey({
         query: requestBody?.query,
         userId,
@@ -217,12 +212,11 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
         })
       : null;
 
-    console.log("cachedPayload", cachedPayload);
 
     if (cachedPayload) {
       return new Response(
         JSON.stringify({
-          data: JSON.parse(cachedPayload),
+          data: removeTypename(JSON.parse(cachedPayload)),
         }),
         {
           status: 200,
@@ -231,6 +225,7 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
             "x-hydra-cached": "true",
             "x-hydra-rate-budget": String(remainingRateBudget),
             "x-hydra-rate-threshold": String(defaultRateLimitingBudget),
+            // "x-hydra-cache-key": cacheKey,
           },
         },
       );
@@ -255,6 +250,8 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
     });
 
     payload = await GraphQLHandler(newRequest, env, ctx);
+
+    console.log("payload dump", payload)
 
     if (isMutation) {
       const { data } = await payload.clone().json();
@@ -315,7 +312,7 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
   if (!isIntrospection && !isMutation && cacheKey && payload) {
     const rawJsonPayload = await payload.clone().json();
 
-    console.log("rawJsonPayload", rawJsonPayload)
+    // console.log("rawJsonPayload", rawJsonPayload)
 
     if (rawJsonPayload?.errors) {
       throw new Error(JSON.stringify(rawJsonPayload?.errors));
@@ -324,22 +321,20 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
     const { data } = rawJsonPayload;
     const aggregated = aggregateTypesWithIds(data);
 
-    console.log("aggregated", aggregated)
 
-
-    // await kvNamespace.put(cacheKey, JSON.stringify(data), {
-    //   expirationTtl: 60,
-    //   metadata: {
-    //     types: [
-    //       ...aggregated?.map((item) => {
-    //         return {
-    //           name: item.name,
-    //           ids: Array.from(new Set(item.ids.slice(0, 5))),
-    //         };
-    //       }),
-    //     ],
-    //   },
-    // });
+    await kvNamespace.put(cacheKey, JSON.stringify(data), {
+      expirationTtl: 60,
+      metadata: {
+        types: [
+          ...aggregated?.map((item) => {
+            return {
+              name: item.name,
+              ids: Array.from(new Set(item.ids.slice(0, 5))),
+            };
+          }),
+        ],
+      },
+    });
 
     const chunks = splitAggregatedTypesWithIds(aggregated, 5);
 
@@ -350,24 +345,37 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
       };
     });
 
-    // const promises = keys?.map(async ({ key, payload }, idx: number) => {
-    //   await kvNamespace.put(key, JSON.stringify({}), {
-    //     expirationTtl: 60,
-    //     metadata: {
-    //       types: [
-    //         ...payload?.map((item) => {
-    //           return {
-    //             name: item.name,
-    //             ids: Array.from(new Set(item.ids)),
-    //           };
-    //         }),
-    //       ],
-    //     },
-    //   });
-    // });
-    // await Promise.all(promises);
+    const promises = keys?.map(async ({ key, payload }, idx: number) => {
+      await kvNamespace.put(key, JSON.stringify({}), {
+        expirationTtl: 60,
+        metadata: {
+          types: [
+            ...payload?.map((item) => {
+              return {
+                name: item.name,
+                ids: Array.from(new Set(item.ids)),
+              };
+            }),
+          ],
+        },
+      });
+    });
+    await Promise.all(promises);
 
   }
+
+  const streamData: any = await readStream(payload?.body?.getReader());
+  const finalPayload = removeTypename(JSON.parse(streamData));
+
+  payload = new Response(JSON.stringify(finalPayload), {
+    status: 200,
+    headers: {
+      "content-type": "application/json;charset=UTF-8",
+      "x-hydra-rate-budget": String(remainingRateBudget),
+      "x-hydra-rate-threshold": String(defaultRateLimitingBudget),
+      // "x-hydra-cache-key": cacheKey,
+    },
+  });
 
   return payload;
 }

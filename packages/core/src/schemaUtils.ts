@@ -490,3 +490,27 @@ export const addTypenameKeywordToSchema = (schema: string) => {
   );
   return replacedSchema;
 };
+
+interface DataObject {
+  [key: string]: any;
+}
+
+export const removeTypename = (obj: DataObject): any => {
+  if (obj && typeof obj === 'object') {
+    // Remove __typename field if it exists
+    if (obj.hasOwnProperty('__typename')) {
+      delete obj['__typename'];
+    }
+
+    // Iterate through object keys and recursively remove __typename fields
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        if (typeof obj[key] === 'object' && obj[key] !== null) {
+          obj[key] = removeTypename(obj[key]);
+        }
+      }
+    }
+  }
+  return obj;
+
+}
