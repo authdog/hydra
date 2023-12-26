@@ -1,5 +1,11 @@
 # @authdog/hydra-core
 
+## 0.1.7
+
+### Patch Changes
+
+- 4de93a9: isolate rate limiter logic
+
 ## 0.1.6
 
 ### Patch Changes
