@@ -1,6 +1,6 @@
 import { Router } from "itty-router";
 import { createCors } from "itty-cors";
-// import { withDurables } from "itty-durable";
+import { withDurables } from "itty-durable";
 import { NotFound } from "./handlers/notFound";
 import { Health } from "./handlers/health";
 import { GraphQLHandler, HydraHandler } from "@authdog/hydra-core";
@@ -19,24 +19,10 @@ const { preflight, corsify } = createCors();
 
 const router = Router();
 router
-  // .all("*", withDurables())
+  .all("*", withDurables())
   .options("*", preflight)
   .get("/", Health)
   .get("/health", Health)
-  .get("/schema", async (req, env, ctx) => {
-    const schema = await ctx.rawSchema;
-
-    // const schema = await ctx.kv.get("schema")
-
-    return new Response(JSON.stringify(schema), {
-      status: 200,
-      headers: {
-        "content-type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    });
-  })
-  // serves playground
   .get("/graphql", GraphQLHandler)
   .post("/graphql", HydraHandler)
   .get("*", NotFound);

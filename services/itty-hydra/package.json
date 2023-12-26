@@ -15,6 +15,7 @@
   "dependencies": {
     "@authdog/hydra-core": "workspace:*",
     "itty-cors": "^0.3.6",
+    "itty-durable": "^2.1.0",
     "itty-router": "^4.0.23",
     "keylab": "^0.1.30",
     "node-fetch": "2.7"

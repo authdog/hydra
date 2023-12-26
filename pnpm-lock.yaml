@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 overrides:
   node-fetch: 2.6.7
 
@@ -153,6 +149,9 @@ importers:
       itty-cors:
         specifier: ^0.3.6
         version: 0.3.6
+      itty-durable:
+        specifier: ^2.1.0
+        version: 2.1.0(itty-router@4.0.23)
       itty-router:
         specifier: ^4.0.23
         version: 4.0.23
@@ -8041,3 +8040,7 @@ packages:
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: false
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
