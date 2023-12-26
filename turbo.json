@@ -19,6 +19,11 @@
     "test": {
       "outputs": ["coverage/**"],
       "cache": true
+    },
+    "ship": {
+      "dependsOn": ["^build", "^test"],
+      "outputs": ["coverage/**"],
+      "cache": true
     }
   }
 }

@@ -11,7 +11,7 @@ export const HydraConfigAcme = {
   ],
   rateLimiting: {
     default: {
-      budget: 100,
+      budget: 20,
     },
   },
   publicQueries: [

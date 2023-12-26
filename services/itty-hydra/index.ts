@@ -1,6 +1,5 @@
 import { workerResolver } from "./main";
-// import { queueHandler } from "./queue";
-// export { RateLimiter } from "./do/RateLimiter";
+export { HydraRateLimiter } from "@authdog/hydra-core";
 
 const handler = {
   fetch: workerResolver.fetch,

@@ -251,8 +251,6 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
 
     payload = await GraphQLHandler(newRequest, env, ctx);
 
-    console.log("payload dump", payload);
-
     if (isMutation) {
       const { data } = await payload.clone().json();
       const aggregatedIds = aggregateTypesWithIds(data);

@@ -5,7 +5,7 @@
     "dev": "turbo run dev --filter=@playground/*",
     "dev_docs": "turbo run dev --filter=@authdog/hydra-docs",
     "build_docs": "turbo run build --filter=@authdog/hydra-docs",
-    "ship": "turbo run deploy --parallel --filter=@playground/*",
+    "ship": "turbo run ship --parallel --filter=@playground/*",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "test": "turbo test --filter=@authdog/* --filter=!@playground/* --concurrency=${TURBO_CONCURRENCY:-2}",

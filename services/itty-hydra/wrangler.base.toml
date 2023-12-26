@@ -8,6 +8,15 @@ kv_namespaces = [
     { binding = "HYDRA_ACME", id = "c63f48a0f29843e8ab8251ef533e1c9c" }    
 ]
 
+[durable_objects]
+bindings = [
+  { name = "HydraRateLimiter", class_name = "HydraRateLimiter" }
+]
+
+[[migrations]]
+tag = "v1"
+new_classes = ["HydraRateLimiter"]
+
 [build]
 command = "npm run build"
 

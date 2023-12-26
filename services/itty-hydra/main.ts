@@ -1,17 +1,20 @@
 import { Router } from "itty-router";
 import { createCors } from "itty-cors";
-import { withDurables } from "itty-durable";
 import { NotFound } from "./handlers/notFound";
 import { Health } from "./handlers/health";
-import { GraphQLHandler, HydraHandler } from "@authdog/hydra-core";
+import {
+  GraphQLHandler,
+  HydraHandler,
+  fetchWithRateLimiter,
+} from "@authdog/hydra-core";
 import { HydraConfigAcme } from "./hydra.config";
 
-// import { default as rawSchema } from "./.hydra/schemaRaw";
 let rawSchema = null;
 
 try {
   rawSchema = require("./.hydra/schemaRaw");
 } catch (err) {
+  // TODO: display errors/instruction for hydra generate-schema
   console.log("err", err);
 }
 
@@ -19,25 +22,38 @@ const { preflight, corsify } = createCors();
 
 const router = Router();
 router
-  .all("*", withDurables())
   .options("*", preflight)
   .get("/", Health)
   .get("/health", Health)
   .get("/graphql", GraphQLHandler)
   .post("/graphql", HydraHandler)
-  .get("*", NotFound);
+  .get("/counter", async (req, { HydraRateLimiter }) => {
+    try {
+      const jsonResponse = await fetchWithRateLimiter(
+        req,
+        HydraRateLimiter,
+        "testFacet",
+      );
+      return new Response(JSON.stringify(jsonResponse), {
+        status: 200,
+        headers: {
+          "content-type": "text/plain",
+        },
+      });
+    } catch (error) {
+      // Handle any errors that might occur during the process
+      return new Response("Internal Server Error", { status: 500 });
+    }
+  })
+  .all("*", NotFound);
 
-const handleRequest = (req, env, ctx) => {
-  const { HYDRA_ACME } = env;
-
-  // console.log("rawSchema", rawSchema);
-
+const handleRequest = async (req, env, ctx) => {
   const enrichedContext = {
     ...ctx,
-    kv: HYDRA_ACME,
+    kv: env?.HYDRA_ACME,
     hydraConfig: HydraConfigAcme,
     rawSchema,
-    // rateLimiter: null,
+    rateLimiter: null,
   };
 
   return router
