@@ -10,6 +10,21 @@ import { GraphQLHandler } from "./graphql";
 import { checkTokenValidness } from "keylab";
 import { fetchWithRateLimiter } from "../do/utils";
 
+const fetchRateLimiterWithFacet = async (req, rateLimiter, facetId, timestamp) => {
+  let id = rateLimiter.idFromName(`HydraRateLimiter_${timestamp}`);
+      let stub = rateLimiter.get(id);
+      const url = new URL(req.url);
+      url.pathname = "/increment";
+      url.searchParams.set("facet", facetId);
+    
+      const modifiedRequest = new Request(url.toString(), req?.clone());
+      const response = await stub.fetch(modifiedRequest);
+      const rateCountBody = await response.json();
+      const {value: rateCount} = rateCountBody;
+      return rateCount;
+}
+
+
 export const HydraHandler = async (req, env, ctx): Promise<Response> => {
   if (ctx.hasOwnProperty("kv") === false) {
     throw new Error("Missing KV store");
@@ -47,7 +62,6 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
   const defaultRateLimitingBudget = hydraConfig.rateLimiting.default.budget;
   let remainingRateBudget = -1;
 
-  console.log("rateLimiter", rateLimiter)
 
   const kvNamespace = kv;
   const requestHeaders = req.clone()?.headers;
@@ -59,49 +73,10 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
   requestBody?.operationName === "IntrospectionQuery" ||
   requestBody?.query?.indexOf("_schema") > -1;
 
-  if (rateLimiter && !isIntrospection && !isMutation) {
-
-    const timestamp = new Date().toISOString().slice(0, 16).replace(/[-:T]/g, "");
-    let id = rateLimiter.idFromName(`HydraRateLimiter_${timestamp}`);
-    let stub = rateLimiter.get(id);
-    const url = new URL(req.url);
-    url.pathname = "/increment";
-    url.searchParams.set("facet", facetId);
-  
-    const modifiedRequest = new Request(url.toString(), req?.clone());
-    const response = await stub.fetch(modifiedRequest);
-    const rateCountBody = await response.json();
-    const {value: rateCount} = rateCountBody;
-
-    if (Number(rateCount) > defaultRateLimitingBudget) {
-      const errorResponse = {
-        errors: [
-          {
-            message: "Too many requests",
-            extensions: {
-              code: "TOO_MANY_REQUESTS",
-              statusCode: 429,
-            },
-          },
-        ],
-      };
-
-      return new Response(JSON.stringify(errorResponse), {
-        status: 429,
-        headers: {
-          "content-type": "application/json;charset=UTF-8",
-          "x-hydra-rate-budget": "0",
-          "x-hydra-rate-threshold": Number(
-            defaultRateLimitingBudget,
-          ).toString(),
-        },
-      });
-    }
-  }
-
-
 
   let extractedQueries = [];
+
+
 
 
   if (isIntrospection) {
@@ -109,14 +84,62 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
   }
 
   if (!isIntrospection && !isMutation) {
-    // isIntrospection = false;
-    // console.log("is not introspection")
 
     // TODO: fix this, it excludes variables
     extractedQueries = extractedAllQueryIdentifiersInRawQuery(
       requestBody?.query,
     );
+    
+    if (rateLimiter && !isIntrospection && !isMutation) {
 
+      const timestamp = new Date().toISOString().slice(0, 16).replace(/[-:T]/g, "");
+      const facetQueriesIds = extractedQueries.map((query) => {
+        return `${facetId}_${query}`;
+      })
+
+      // TODO: generate map query -> rateCount
+      const rateCounts = await Promise.all(facetQueriesIds.map(async (facetQueryId) => {
+        const rateCount = await fetchRateLimiterWithFacet(req, rateLimiter, facetQueryId, timestamp);
+        return rateCount;
+      }));
+
+      let hasAtLeastOneExceeded = false;
+
+      rateCounts.map((rateCount) => {
+        // TODO: read from config budget for given query
+        if (Number(rateCount) > defaultRateLimitingBudget) {
+          hasAtLeastOneExceeded = true;
+          return true;
+        }
+      })
+  
+      if (hasAtLeastOneExceeded) {
+        const errorResponse = {
+          errors: [
+            {
+              message: "Too many requests",
+              extensions: {
+                code: "TOO_MANY_REQUESTS",
+                statusCode: 429,
+              },
+            },
+          ],
+        };
+  
+        return new Response(JSON.stringify(errorResponse), {
+          status: 429,
+          headers: {
+            "content-type": "application/json;charset=UTF-8",
+            "x-hydra-rate-budget": "0",
+            "x-hydra-rate-threshold": Number(
+              defaultRateLimitingBudget,
+            ).toString(),
+          },
+        });
+      }
+    }
+
+    
     const variables = JSON.stringify(requestBody?.variables);
 
     // console.log("isMutation", isMutation);
