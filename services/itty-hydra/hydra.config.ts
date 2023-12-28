@@ -13,6 +13,10 @@ export const HydraConfigAcme = {
     default: {
       budget: 20,
     },
+    health: {
+      budget: 5,
+      unit: "minute",
+    }
   },
   publicQueries: [
     {

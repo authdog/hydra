@@ -75,6 +75,44 @@ describe("validateConfig function", () => {
     expect(() => validateConfig(missingSchemasConfig)).toThrow();
   });
 
+
+  const validConfigWithCustomRateLimitingBudget: any = {
+    schemas: [
+      {
+        id: "mgt",
+        uri: "https://mgt.auth.dog/graphql",
+      },
+      {
+        id: "authz",
+        uri: "https://authz.auth.dog/graphql",
+      },
+    ],
+    rateLimiting: {
+      default: {
+        budget: 100,
+      },
+      health: {
+        budget: 5,
+        unit: "minute",
+      }
+    },
+    publicQueries: [
+      {
+        name: "health",
+      },
+      {
+        name: "hydraDevQuery",
+      },
+    ],
+    jwksUri: "https://id.authdog.com/oidc/.well-known/jwks.json",
+  };
+
+  it("should validate a valid config object with custom rate limiting budgets without throwing errors", () => {
+    expect(() => validateConfig(validConfigWithCustomRateLimitingBudget)).not.toThrow();
+  });
+
+
+
   // it("should log validation errors to the console for an invalid config object", () => {
   //   const consoleErrorSpy = jest.spyOn(console, "error");
   //   consoleErrorSpy.mockImplementation(() => {}); // Mock console.error to do nothing

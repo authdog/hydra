@@ -12,7 +12,20 @@ const HydraConfig = {
   rateLimiting: {
     default: {
       budget: 100,
+      unit: "minute",
     },
+    queries: [
+      {
+        id: "health",
+        budget: 5,
+        unit: "minute",
+      },
+      {
+        id: "hydraDevQuery",
+        budget: 50,
+        unit: "hour",
+      },
+    ]
   },
   publicQueries: [
     {

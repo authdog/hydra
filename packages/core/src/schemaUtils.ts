@@ -44,32 +44,6 @@ interface SchemaConfig {
   scalars: Scalar[];
 }
 
-// export function unifySchemas(
-//   managementSchema: string,
-//   authzSchema: string
-// ): string {
-//   // Combine the two schemas
-//   const unifiedSchema = `
-//       ${managementSchema}
-
-//       # Merge the Query and Mutation types
-//       extend type Query {
-//         ${authzSchema.match(TYPE_QUERY_REGEXP)[1]}
-//       }
-
-//       extend type Mutation {
-//         ${authzSchema.match(TYPE_MUTATION_REGEXP)[1]}
-//       }
-//     `;
-
-//   return unifiedSchema;
-// }
-
-// export const extractPrimitiveWithRegExp = (
-//   rawSchema: string,
-//   regex: RegExp
-// ) => {};
-
 export const extractTypesBlocks = (rawSchema: string) => {
   // extract as array of strings everything between type <string> {}
   // e.g.:

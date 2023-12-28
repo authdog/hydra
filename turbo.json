@@ -4,7 +4,15 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "outputs": ["dist/**", ".next/**"]
+    },
+    "@authdog/hydra-core#build": {
+      "dependsOn": ["^build"],
+      "outputs": ["@authdog/hydra-core/**"]
+    },
+    "@authdog/hydra-cli#build": {
+      "dependsOn": ["@authdog/hydra-core#build"],
+      "outputs": ["@authdog/hydra-cli/**"]
     },
     "lint": {},
     "dev": {

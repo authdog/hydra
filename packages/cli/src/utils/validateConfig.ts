@@ -1,20 +1,5 @@
-import { ZodError, z } from "zod";
-
-interface IHydraConfig {
-  schemas: {
-    id: string;
-    uri: string;
-  }[];
-  rateLimiting?: {
-    default: {
-      budget: number;
-    };
-  };
-  publicQueries?: {
-    name: string;
-  }[];
-  jwksUri: string;
-}
+import { z } from "zod";
+import {IHydraConfig} from "@authdog/hydra-core"
 
 const remoteGraphQLSchemaSchema = z.object({
   id: z.string(),
@@ -26,7 +11,15 @@ const schemasSchema = z.array(remoteGraphQLSchemaSchema);
 const rateLimitingSchema = z.object({
   default: z.object({
     budget: z.number(),
+    unit: z.enum(["minute", "hour"]).optional(),
   }),
+  queries: z.array(
+    z.object({
+      id: z.string(),
+      budget: z.number(),
+      unit: z.enum(["minute", "hour"]).optional(),
+    })
+  ).optional(),
 });
 
 const publicQuerySchema = z.object({
