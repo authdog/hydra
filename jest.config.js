@@ -14,7 +14,7 @@ module.exports = {
       "packages/core",
     ],
     moduleNameMapper: {
-      '^@authdog/hydra-core$': '<rootDir>/packages/core/src',
+      '^@authdog/hydra-core$': '<rootDir>/packages/core',
     },
     testMatch: [
       '**/**/*.test.(ts|js)',
