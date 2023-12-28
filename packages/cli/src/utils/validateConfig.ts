@@ -1,6 +1,8 @@
 import { z } from "zod";
 import {IHydraConfig} from "@authdog/hydra-core"
 
+const rateLimitingUnitSchema = z.enum(["minute", "hour"]);
+
 const remoteGraphQLSchemaSchema = z.object({
   id: z.string(),
   uri: z.string().url(),
@@ -11,13 +13,13 @@ const schemasSchema = z.array(remoteGraphQLSchemaSchema);
 const rateLimitingSchema = z.object({
   default: z.object({
     budget: z.number(),
-    unit: z.enum(["minute", "hour"]).optional(),
+    unit: rateLimitingUnitSchema.optional(),
   }),
   queries: z.array(
     z.object({
       id: z.string(),
       budget: z.number(),
-      unit: z.enum(["minute", "hour"]).optional(),
+      unit: rateLimitingUnitSchema.optional(),
     })
   ).optional(),
 });
