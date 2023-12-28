@@ -48,12 +48,14 @@ router
   .all("*", NotFound);
 
 const handleRequest = async (req, env, ctx) => {
+
+
   const enrichedContext = {
     ...ctx,
     kv: env?.HYDRA_ACME,
     hydraConfig: HydraConfigAcme,
     rawSchema,
-    rateLimiter: null,
+    rateLimiter: env?.HydraRateLimiter ?? null,
   };
 
   return router

@@ -23,7 +23,7 @@
     "ship": {
       "dependsOn": ["^build", "^test"],
       "outputs": ["coverage/**"],
-      "cache": true
+      "cache": false
     }
   }
 }

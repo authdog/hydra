@@ -8,6 +8,7 @@ import { addTypenameKeywordToSchema, removeTypename } from "../schemaUtils";
 import { readStream } from "../utils/stream";
 import { GraphQLHandler } from "./graphql";
 import { checkTokenValidness } from "keylab";
+import { fetchWithRateLimiter } from "../do/utils";
 
 export const HydraHandler = async (req, env, ctx): Promise<Response> => {
   if (ctx.hasOwnProperty("kv") === false) {
@@ -43,42 +44,10 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
   };
 
   const facetId = ip;
-  // const ratelimiterId = getRatelimiterObjectId();
-  // const rateLimiterInstance = RateLimiter.get(ratelimiterId);
-
-  // await rateLimiterInstance.incrementFacetValue(facetId);
-
-  // const rateCount = await readStream(
-  //   (await rateLimiterInstance.getFacetValue(facetId)).body.getReader(),
-  // );
-
   const defaultRateLimitingBudget = hydraConfig.rateLimiting.default.budget;
-  const remainingRateBudget = -1; // defaultRateLimitingBudget - Number(rateCount);
+  let remainingRateBudget = -1;
 
-  // if (Number(rateCount) > defaultRateLimitingBudget) {
-  //   const errorResponse = {
-  //     errors: [
-  //       {
-  //         message: "Too many requests",
-  //         extensions: {
-  //           code: "TOO_MANY_REQUESTS",
-  //           statusCode: 429,
-  //         },
-  //       },
-  //     ],
-  //   };
-
-  //   return new Response(JSON.stringify(errorResponse), {
-  //     status: 429,
-  //     headers: {
-  //       "content-type": "application/json;charset=UTF-8",
-  //       "x-hydra-rate-budget": "0",
-  //       "x-hydra-rate-threshold": Number(
-  //         defaultRateLimitingBudget,
-  //       ).toString(),
-  //     },
-  //   });
-  // }
+  console.log("rateLimiter", rateLimiter)
 
   const kvNamespace = kv;
   const requestHeaders = req.clone()?.headers;
@@ -86,11 +55,54 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
 
   const isMutation = requestBody?.query?.startsWith("mutation");
 
+  let isIntrospection =
+  requestBody?.operationName === "IntrospectionQuery" ||
+  requestBody?.query?.indexOf("_schema") > -1;
+
+  if (rateLimiter && !isIntrospection && !isMutation) {
+
+    const timestamp = new Date().toISOString().slice(0, 16).replace(/[-:T]/g, "");
+    let id = rateLimiter.idFromName(`HydraRateLimiter_${timestamp}`);
+    let stub = rateLimiter.get(id);
+    const url = new URL(req.url);
+    url.pathname = "/increment";
+    url.searchParams.set("facet", facetId);
+  
+    const modifiedRequest = new Request(url.toString(), req?.clone());
+    const response = await stub.fetch(modifiedRequest);
+    const rateCountBody = await response.json();
+    const {value: rateCount} = rateCountBody;
+
+    if (Number(rateCount) > defaultRateLimitingBudget) {
+      const errorResponse = {
+        errors: [
+          {
+            message: "Too many requests",
+            extensions: {
+              code: "TOO_MANY_REQUESTS",
+              statusCode: 429,
+            },
+          },
+        ],
+      };
+
+      return new Response(JSON.stringify(errorResponse), {
+        status: 429,
+        headers: {
+          "content-type": "application/json;charset=UTF-8",
+          "x-hydra-rate-budget": "0",
+          "x-hydra-rate-threshold": Number(
+            defaultRateLimitingBudget,
+          ).toString(),
+        },
+      });
+    }
+  }
+
+
+
   let extractedQueries = [];
 
-  let isIntrospection =
-    requestBody?.operationName === "IntrospectionQuery" ||
-    requestBody?.query?.indexOf("_schema") > -1;
 
   if (isIntrospection) {
     return await GraphQLHandler(req, env, ctx);
