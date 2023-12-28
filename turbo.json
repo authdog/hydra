@@ -14,6 +14,10 @@
       "dependsOn": ["@authdog/hydra-core#build"],
       "outputs": ["@authdog/hydra-cli/**"]
     },
+    "@authdog/hydra-cli#test": {
+      "dependsOn": ["@authdog/hydra-core#build"],
+      "outputs": ["@authdog/hydra-cli/**"]
+    },
     "lint": {},
     "dev": {
       "cache": false,
