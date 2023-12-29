@@ -11,7 +11,7 @@
       "outputs": ["@authdog/hydra-core#build"]
     },
     "@authdog/hydra-cli#build": {
-      "dependsOn": ["@authdog/hydra-core#build"],
+      "dependsOn": ["^build", "@authdog/hydra-core#build"],
       "outputs": ["@authdog/hydra-cli/**"]
     },
     "@authdog/hydra-cli#test": {
