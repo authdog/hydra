@@ -21,7 +21,6 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
 
   const { kv, hydraConfig, rateLimiter } = ctx;
   let cacheKey = null;
-  // const { RateLimiter } = req;
   // get ip address
   const ip =
     req.headers.get("cf-connecting-ip") ||
@@ -43,10 +42,9 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
     ],
   };
 
-  const facetId = ip;
+  const facetId = ip || "localhost" // TODO: extend to more facets combinations
   const defaultRateLimitingBudget = hydraConfig.rateLimiting.default.budget;
   let remainingRateBudget = -1;
-
 
   const kvNamespace = kv;
   const requestHeaders = req.clone()?.headers;
@@ -76,33 +74,64 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
     );
     
     if (rateLimiter && !isIntrospection && !isMutation) {
-
-      const timestamp = new Date().toISOString().slice(0, 16).replace(/[-:T]/g, "");
       const facetQueriesIds = extractedQueries.map((query) => {
-        return `${facetId}_${query}`;
+
+        const facetQueryId = `${facetId}_${query}`;
+        const queryId = hydraConfig.rateLimiting?.queries?.find((queryConfig) => {
+          return queryConfig.id === query;
+        })?.id || "default";
+        const queryBudget = hydraConfig.rateLimiting?.queries?.find((queryConfig) => {
+          return queryConfig.id === query;
+        })?.budget || defaultRateLimitingBudget;
+        const queryBudgetUnit = hydraConfig.rateLimiting?.queries?.find((queryConfig) => {
+          return queryConfig.id === query;
+        })?.unit || "minute";
+
+        return {
+          facetQueryId,
+          queryId,
+          queryBudget,
+          queryBudgetUnit,
+        };
+
       })
-
-      // TODO: generate map query -> rateCount
-      const rateCounts = await Promise.all(facetQueriesIds.map(async (facetQueryId) => {
-        const rateCount = await fetchRateLimiterWithFacet(req, rateLimiter, facetQueryId, timestamp);
-        return rateCount;
-      }));
-
       let hasAtLeastOneExceeded = false;
 
-      rateCounts.map((rateCount) => {
-        // TODO: read from config budget for given query
-        if (Number(rateCount) > defaultRateLimitingBudget) {
-          hasAtLeastOneExceeded = true;
-          return true;
+      const rateCountsReports = await Promise.all(facetQueriesIds.map(async (facetObj) => {
+        let timestamp;
+        if (facetObj.queryBudgetUnit === "hour") {
+          // generate timestamp removing minutes and seconds
+          timestamp = new Date().toISOString().slice(0, 16).replace(/[-:T]/g, "").slice(0, 10);
+        } else {
+          // generate timestamp removing seconds
+          timestamp = new Date().toISOString().slice(0, 16).replace(/[-:T]/g, "").slice(0, 12);
         }
-      })
+        const rateCount = await fetchRateLimiterWithFacet(req, rateLimiter, facetObj.facetQueryId, timestamp);
+        
+        if (rateCount > facetObj.queryBudget) {
+          hasAtLeastOneExceeded = true;
+        }
+        
+        return {
+          facetQueryId: facetObj.facetQueryId,
+          queryBudget: facetObj.queryBudget,
+          queryBudgetUnit: facetObj.queryBudgetUnit,
+          rateCount
+        }
+      }));
+
+      console.log("rateCountsReports", JSON.stringify(rateCountsReports, null, 2));
+
+      const excedeedRateCountReports = rateCountsReports.filter((report) => {
+        return report.rateCount > report.queryBudget;
+      });
+
   
-      if (hasAtLeastOneExceeded) {
+      if (excedeedRateCountReports?.length > 0) {
         const errorResponse = {
           errors: [
             {
-              message: "Too many requests",
+              message: `Too many requests for ${excedeedRateCountReports[0]?.facetQueryId}`,
               extensions: {
                 code: "TOO_MANY_REQUESTS",
                 statusCode: 429,

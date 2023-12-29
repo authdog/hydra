@@ -27,24 +27,24 @@ router
   .get("/health", Health)
   .get("/graphql", GraphQLHandler)
   .post("/graphql", HydraHandler)
-  .get("/counter", async (req, { HydraRateLimiter }) => {
-    try {
-      const jsonResponse = await fetchWithRateLimiter(
-        req,
-        HydraRateLimiter,
-        "testFacet",
-      );
-      return new Response(JSON.stringify(jsonResponse), {
-        status: 200,
-        headers: {
-          "content-type": "text/plain",
-        },
-      });
-    } catch (error) {
-      // Handle any errors that might occur during the process
-      return new Response("Internal Server Error", { status: 500 });
-    }
-  })
+  // .get("/counter", async (req, { HydraRateLimiter }) => {
+  //   try {
+  //     const jsonResponse = await fetchWithRateLimiter(
+  //       req,
+  //       HydraRateLimiter,
+  //       "testFacet",
+  //     );
+  //     return new Response(JSON.stringify(jsonResponse), {
+  //       status: 200,
+  //       headers: {
+  //         "content-type": "text/plain",
+  //       },
+  //     });
+  //   } catch (error) {
+  //     // Handle any errors that might occur during the process
+  //     return new Response("Internal Server Error", { status: 500 });
+  //   }
+  // })
   .all("*", NotFound);
 
 const handleRequest = async (req, env, ctx) => {

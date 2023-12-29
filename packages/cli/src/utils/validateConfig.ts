@@ -38,8 +38,7 @@ const hydraConfigSchema = z.object({
 export const validateConfig = (config: IHydraConfig): IHydraConfig => {
   try {
     // Validate the provided config object against the Zod schema
-    const validatedConfig = hydraConfigSchema.parse(config);
-    return validatedConfig;
+    return hydraConfigSchema.parse(config);
   } catch (error) {
     throw error;
   }
