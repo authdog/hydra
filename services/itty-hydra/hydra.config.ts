@@ -22,7 +22,7 @@ export const HydraConfigAcme = {
       {
         id: "hydraDevQuery",
         budget: 15,
-        unit: "minute",
+        unit: "hour",
       },
     ]
   },
