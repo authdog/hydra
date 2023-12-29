@@ -1,6 +1,9 @@
 {
   "name": "@playground/hono-hydra",
   "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "private": true,
   "scripts": {
     "dev": "wrangler dev src/index.ts",
     "ship": "wrangler deploy --minify src/index.ts"
