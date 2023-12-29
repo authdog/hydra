@@ -1,5 +1,11 @@
 # @authdog/hydra-core
 
+## 0.1.9
+
+### Patch Changes
+
+- ecb8fba: fix facet retrieval from fetch in durable object
+
 ## 0.1.8
 
 ### Patch Changes
