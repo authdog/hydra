@@ -4,8 +4,7 @@ import { NotFound } from "./handlers/notFound";
 import { Health } from "./handlers/health";
 import {
   GraphQLHandler,
-  HydraHandler,
-  fetchWithRateLimiter,
+  HydraHandler
 } from "@authdog/hydra-core";
 import { HydraConfigAcme } from "./hydra.config";
 
