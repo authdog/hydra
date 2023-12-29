@@ -1,5 +1,12 @@
 # @playground/itty-hydra
 
+## 1.0.9
+
+### Patch Changes
+
+- Updated dependencies [ecb8fba]
+  - @authdog/hydra-core@0.1.9
+
 ## 1.0.8
 
 ### Patch Changes
