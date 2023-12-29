@@ -93,7 +93,6 @@ describe("validateConfig function", () => {
       },
       health: {
         budget: 5,
-        unit: "minute",
       }
     },
     publicQueries: [
@@ -110,19 +109,4 @@ describe("validateConfig function", () => {
   it("should validate a valid config object with custom rate limiting budgets without throwing errors", () => {
     expect(() => validateConfig(validConfigWithCustomRateLimitingBudget)).not.toThrow();
   });
-
-
-
-  // it("should log validation errors to the console for an invalid config object", () => {
-  //   const consoleErrorSpy = jest.spyOn(console, "error");
-  //   consoleErrorSpy.mockImplementation(() => {}); // Mock console.error to do nothing
-
-  //   try {
-  //     validateConfig(invalidConfig);
-  //   } catch (error) {
-  //     expect(consoleErrorSpy).toHaveBeenCalled();
-  //   }
-
-  //   consoleErrorSpy.mockRestore(); // Restore console.error
-  // });
 });

@@ -18,12 +18,10 @@ const HydraConfig = {
       {
         id: "health",
         budget: 5,
-        unit: "minute",
       },
       {
         id: "hydraDevQuery",
         budget: 50,
-        unit: "hour",
       },
     ]
   },

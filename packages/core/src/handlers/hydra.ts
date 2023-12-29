@@ -88,15 +88,10 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
         };
 
       })
-      let hasAtLeastOneExceeded = false;
 
       const rateCountsReports = await Promise.all(facetQueriesIds.map(async (facetObj) => {
         let timestamp = new Date().toISOString().slice(0, 16).replace(/[-:T]/g, "").slice(0, 12);
         const rateCount = await fetchRateLimiterWithFacet(req, rateLimiter, facetObj.facetQueryId, timestamp);
-        
-        if (rateCount > facetObj.queryBudget) {
-          hasAtLeastOneExceeded = true;
-        }
         
         return {
           facetQueryId: facetObj.facetQueryId,
@@ -113,7 +108,6 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
         const errorResponse = {
           errors: [
             {
-              // TODO: check rateCount
               message: `Too many requests for ${excedeedRateCountReports?.map((report) => {
                 return `${report.facetQueryId} (${report.rateCount}/${report.queryBudget} allowed per minute)`;
               }).join(", ")}`,
@@ -138,10 +132,7 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
       }
     }
 
-    
     const variables = JSON.stringify(requestBody?.variables);
-
-    // console.log("isMutation", isMutation);
 
     // TODO: make sure extracted queries identifiers are all public
     // if one of the name in extractedQueries doesn't belong public
@@ -259,7 +250,6 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
             "x-hydra-cached": "true",
             "x-hydra-rate-budget": String(remainingRateBudget),
             "x-hydra-rate-threshold": String(defaultRateLimitingBudget),
-            // "x-hydra-cache-key": cacheKey,
           },
         },
       );
