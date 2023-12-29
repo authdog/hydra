@@ -1,5 +1,11 @@
 # @authdog/hydra-cli
 
+## 0.1.18
+
+### Patch Changes
+
+- 7959cd6: enable ratelimiting at query level, with dedicated query/unit in the configuration
+
 ## 0.1.17
 
 ### Patch Changes
