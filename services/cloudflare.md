@@ -37,7 +37,7 @@ We need to add the durable object binding to the wrangler configuration.
 
 It must be exported by your worker index script.
 
-export { HydraRateLimiter } from "@authdog/hydra-core";
+`export { HydraRateLimiter } from "@authdog/hydra-core";`
 
 We also need to add the migration and bindings to the wrangler configuration.
 
