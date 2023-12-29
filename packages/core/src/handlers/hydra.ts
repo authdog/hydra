@@ -80,29 +80,18 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
         const queryBudget = hydraConfig.rateLimiting?.queries?.find((queryConfig) => {
           return queryConfig.id === query;
         })?.budget || defaultRateLimitingBudget;
-        const queryBudgetUnit = hydraConfig.rateLimiting?.queries?.find((queryConfig) => {
-          return queryConfig.id === query;
-        })?.unit || "minute";
 
         return {
           facetQueryId,
           queryId,
           queryBudget,
-          queryBudgetUnit,
         };
 
       })
       let hasAtLeastOneExceeded = false;
 
       const rateCountsReports = await Promise.all(facetQueriesIds.map(async (facetObj) => {
-        let timestamp;
-        if (facetObj.queryBudgetUnit === "hour") {
-          // generate timestamp removing minutes and seconds
-          timestamp = new Date().toISOString().slice(0, 16).replace(/[-:T]/g, "").slice(0, 10);
-        } else {
-          // generate timestamp removing seconds
-          timestamp = new Date().toISOString().slice(0, 16).replace(/[-:T]/g, "").slice(0, 12);
-        }
+        let timestamp = new Date().toISOString().slice(0, 16).replace(/[-:T]/g, "").slice(0, 12);
         const rateCount = await fetchRateLimiterWithFacet(req, rateLimiter, facetObj.facetQueryId, timestamp);
         
         if (rateCount > facetObj.queryBudget) {
@@ -112,7 +101,6 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
         return {
           facetQueryId: facetObj.facetQueryId,
           queryBudget: facetObj.queryBudget,
-          queryBudgetUnit: facetObj.queryBudgetUnit,
           rateCount
         }
       }));
@@ -127,7 +115,7 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
             {
               // TODO: check rateCount
               message: `Too many requests for ${excedeedRateCountReports?.map((report) => {
-                return `${report.facetQueryId} (${report.rateCount}/${report.queryBudget} allowed per ${report.queryBudgetUnit || "minute"}}})`;
+                return `${report.facetQueryId} (${report.rateCount}/${report.queryBudget} allowed per minute)`;
               }).join(", ")}`,
               extensions: {
                 code: "TOO_MANY_REQUESTS",
