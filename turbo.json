@@ -8,7 +8,8 @@
     },
     "@authdog/hydra-core#build": {
       "dependsOn": ["^build"],
-      "outputs": ["@authdog/hydra-core#build"]
+      "outputs": ["@authdog/hydra-core#build"],
+      "cache": false
     },
     "@authdog/hydra-cli#build": {
       "dependsOn": ["^build", "@authdog/hydra-core#build"],
