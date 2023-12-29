@@ -14,16 +14,22 @@ export class HydraRateLimiter {
   }
 
   getFacetValue(facet: string) {
+    console.log("facetId", facet);
     return this.facetsMap.get(facet) || 0;
   }
 
   async fetch(request) {
     let url = new URL(request.url);
-    let value = (await this.facetsMap.get(request.query?.facet)) || 0;
+
+    // request.url http://localhost:3566/increment?facet=localhost_health
+    // extract facet from url
+    const facet = url.searchParams.get("facet");
+
+    let value = (await this.facetsMap.get(facet) || 0);
 
     switch (url.pathname) {
       case "/increment":
-        this.incrementFacetValue(request.query?.facet);
+        this.incrementFacetValue(facet);
         break;
       case "/get":
         break;

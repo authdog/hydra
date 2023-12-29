@@ -59,9 +59,6 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
 
   let extractedQueries = [];
 
-
-
-
   if (isIntrospection) {
     return await GraphQLHandler(req, env, ctx);
   }
@@ -120,18 +117,18 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
         }
       }));
 
-      console.log("rateCountsReports", JSON.stringify(rateCountsReports, null, 2));
-
       const excedeedRateCountReports = rateCountsReports.filter((report) => {
         return report.rateCount > report.queryBudget;
       });
-
   
       if (excedeedRateCountReports?.length > 0) {
         const errorResponse = {
           errors: [
             {
-              message: `Too many requests for ${excedeedRateCountReports[0]?.facetQueryId}`,
+              // TODO: check rateCount
+              message: `Too many requests for ${excedeedRateCountReports?.map((report) => {
+                return `${report.facetQueryId} (${report.rateCount}/${report.queryBudget} allowed per ${report.queryBudgetUnit || "minute"}}})`;
+              }).join(", ")}`,
               extensions: {
                 code: "TOO_MANY_REQUESTS",
                 statusCode: 429,
