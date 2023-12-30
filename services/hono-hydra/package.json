@@ -15,10 +15,11 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20231218.0",
-    "wrangler": "^3.22.0",
     "@esbuild-plugins/node-globals-polyfill": "0.2.3",
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
+    "@types/node": "^20.10.6",
     "esbuild": "^0.19.5",
-    "esbuild-envfile-plugin": "^1.0.5"
+    "esbuild-envfile-plugin": "^1.0.5",
+    "wrangler": "^3.22.0"
   }
 }

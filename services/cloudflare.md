@@ -52,7 +52,6 @@ tag = "v1"
 new_classes = ["HydraRateLimiter"]
 ```
 
-
 ## Troubleshooting
 
 ```bash
@@ -61,8 +60,7 @@ new_classes = ["HydraRateLimiter"]
     ../../packages/core/build/invalidation/invalidation.js:105:27:
       105 │     const crypto = require("node:crypto");
 ```
+
 This error is caused because you don't have the node_compat flag enabled in your wrangler.toml file. To fix this, add the following line to your wrangler.toml file.
 
 Add "node_compat = true" to your wrangler.toml file and make sure to prefix the module name with "node:" to enable Node.js compatibility.
-
-
