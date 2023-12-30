@@ -1,4 +1,3 @@
-// @ts-ignore
 import cc from "node-console-colors";
 
 export const logError = (message: string) => {

@@ -18,7 +18,6 @@
         "@authdog/hydra-core": ["../core"]
       },
       "baseUrl": ".",
-      "types": ["@types/jest"],
-
+      "types": ["@types/jest"]
     }
  }
