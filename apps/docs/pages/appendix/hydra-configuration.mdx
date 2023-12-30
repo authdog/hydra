@@ -41,6 +41,12 @@ const HydraConfigAcme = {
     default: {
       budget: 100,
     },
+    queries: [
+      {
+        name: "hydraDevQuery",
+        budget: 100,
+      },
+    ]
   },
   publicQueries: [
     {
@@ -87,11 +93,19 @@ schemas: [
 `default` subfield defines the default rate limiting budget, here `budget` is 100, meaning all queries will be callable 100 times per minutes, from a given IP address.
 More facets will be added in the future.
 
+`queries` subfield defines the rate limiting budget for specific queries. Here `hydraDevQuery` will be callable 100 times per minute, from a given IP address.
+
 ```javascript copy
 rateLimiting: {
     default: {
         budget: 100,
     },
+    queries: [
+        {
+            name: "hydraDevQuery",
+            budget: 100,
+        },
+    ]
 },
 ```
 

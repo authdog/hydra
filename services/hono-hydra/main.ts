@@ -1,6 +1,5 @@
-import { GraphQLHandler, HydraHandler } from "@authdog/hydra-core";
 import { Hono } from "hono";
-
+import { GraphQLHandler, HydraHandler } from "@authdog/hydra-core";
 export { HydraRateLimiter } from "@authdog/hydra-core";
 import { HydraConfigAcme } from "./hydra.config";
 
@@ -8,10 +7,7 @@ let rawSchema: any = null;
 
 try {
   rawSchema = require("./.hydra/schemaRaw");
-} catch (err) {
-  // TODO: display errors/instruction for hydra generate-schema
-  console.log("err", err);
-}
+} catch (err) {}
 
 const app = new Hono();
 

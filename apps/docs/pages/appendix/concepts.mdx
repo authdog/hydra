@@ -19,3 +19,16 @@ Cache keys contains informations about the query, respectively
 - `user` is a hash of a given authenticated user identifier
 - `query` is a hash of a given GraphQL query
 - `variables` is a hash of GraphQL query variables set
+
+## Cache Invalidation
+
+Hydra's cache invalidation provides a way to invalidate a given cache entry, or a set of cache entries, based schema types.
+
+Assuming a mutation that creates a new `Book` in the system, owned by a given `User` type, if the mutation returns the `User` type with its `id` field, then Hydra will automatically invalidate the cached records and every associated records from the cache.
+
+## Rate Limiting
+
+Hydra's rate limiting provides a way to limit the number of requests to a given API in a given time frame.
+This is defined by a rate limit policy, which is a set of rules that define the number of requests that can be made in a given time frame.
+
+For instance, you can define a policy to protect a given endpoint with a rate limit of 100 requests per minute.

@@ -1,0 +1,158 @@
+import { Tabs } from 'nextra/components'
+
+GraphQL Hydra is officially supported by itty and hono frameworks.
+
+## Requirements
+
+- nodeJS >= 16
+- npm >= 7 (or similar package manager)
+- hydra CLI installed globally [how-to](/get-started/installation.md)
+
+At the root of your project (where your final `package.json` is located), you need to have a `hydra.config.ts` file. This file is used by the CLI to generate the GraphQL schema to be consumed by the GraphQL Hydra server.
+
+Once this is done, you can run `hydra generate-schema`, and finally install the GraphQL Hydra core package.
+
+## Installation
+
+To enable GraphQL Hydra in your project, you need to install the core package:
+
+<Tabs items={['pnpm', 'npm', 'yarn']}>
+  <Tabs.Tab>
+    ```bash {3} copy
+    pnpm add @authdog/hydra-core
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```bash {3} copy
+    npm install @authdog/hydra-core
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```bash {3} copy
+    yarn add @authdog/hydra-core
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+## wrangler
+
+For any cloudflare worker based integration, you'll need to export HydraRateLimiter class from your index file.
+
+```ts
+export { HydraRateLimiter } from "@authdog/hydra-core";
+```
+
+You'll also need to create a KV store and add Durable Object definition to your wrangler.toml file.
+
+Here's one example:
+
+```toml
+kv_namespaces = [
+    { binding = "<KV_NAME used at creation>", id = "<KV_ID>" }    
+]
+
+[durable_objects]
+bindings = [
+  { name = "HydraRateLimiter", class_name = "HydraRateLimiter" }
+]
+
+[[migrations]]
+tag = "v1"
+new_classes = ["HydraRateLimiter"]
+```
+
+## itty integration
+
+Full example:
+
+```ts copy
+import { Router } from "itty-router";
+import { createCors } from "itty-cors";
+import { NotFound } from "./handlers/notFound";
+import { Health } from "./handlers/health";
+import { GraphQLHandler, HydraHandler } from "@authdog/hydra-core";
+import { HydraConfigAcme } from "./hydra.config";
+
+let rawSchema = null;
+
+try {
+  rawSchema = require("./.hydra/schemaRaw");
+} catch (err) {}
+
+const { preflight, corsify } = createCors();
+
+const router = Router();
+router
+  .options("*", preflight)
+  .get("/", Health)
+  .get("/health", Health)
+  .get("/graphql", GraphQLHandler)
+  .post("/graphql", HydraHandler)
+  .all("*", NotFound);
+
+const handleRequest = async (req, env, ctx) => {
+  const enrichedContext = {
+    ...ctx,
+    kv: env?.HYDRA_ACME,
+    hydraConfig: HydraConfigAcme,
+    rawSchema,
+    rateLimiter: env?.HydraRateLimiter ?? null,
+  };
+
+  return router
+    .handle(req, env, enrichedContext)
+    .catch(
+      (err) => () =>
+        new Response(err.stack, {
+          status: 500,
+        }),
+    )
+    .then(corsify);
+};
+
+export default handleRequest;
+```
+
+
+## hono integration
+
+Full example:
+
+```ts copy
+import { Hono } from "hono";
+import { GraphQLHandler, HydraHandler } from "@authdog/hydra-core";
+export { HydraRateLimiter } from "@authdog/hydra-core";
+import { HydraConfigAcme } from "./hydra.config";
+
+let rawSchema: any = null;
+
+try {
+  rawSchema = require("./.hydra/schemaRaw");
+} catch (err) {}
+
+const app = new Hono();
+
+app.get("/", (c) => {
+  console.log(c);
+  return c.text("It's alive!");
+});
+
+app.get("/graphql", (c) => {
+  return GraphQLHandler(c.req.raw, c.env, {
+    rawSchema,
+  });
+});
+
+app.post("/graphql", (c) => {
+  const enrichedContext = {
+    kv: c?.env?.HYDRA_ACME,
+    hydraConfig: HydraConfigAcme,
+    rawSchema,
+    rateLimiter: c?.env?.HydraRateLimiter ?? null,
+  };
+
+  return HydraHandler(c.req.raw, c.env, enrichedContext);
+});
+
+export default app;
+```
