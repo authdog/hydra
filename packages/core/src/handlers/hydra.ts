@@ -9,6 +9,10 @@ import { readStream } from "../utils/stream";
 import { GraphQLHandler } from "./graphql";
 import { checkTokenValidness } from "keylab";
 import { fetchRateLimiterWithFacet } from "../do/utils";
+import {
+  buildRateLimitResponse,
+  unauthorizedResponse,
+} from "../responses/default";
 
 export const HydraHandler = async (req, env, ctx): Promise<Response> => {
   if (ctx.hasOwnProperty("kv") === false) {
@@ -29,18 +33,6 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
     req.headers.get("x-client-ip") ||
     req.headers.get("x-cluster-client-ip") ||
     req.headers.get("x-forwarded");
-
-  const authorizedResponse = {
-    errors: [
-      {
-        message: "Unauthorized",
-        extensions: {
-          code: "UNAUTHORIZED",
-          statusCode: 401,
-        },
-      },
-    ],
-  };
 
   const facetId = ip || "localhost"; // TODO: extend to more facets combinations
   const defaultRateLimitingBudget = hydraConfig.rateLimiting.default.budget;
@@ -114,23 +106,11 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
       });
 
       if (excedeedRateCountReports?.length > 0) {
-        const errorResponse = {
-          errors: [
-            {
-              message: `Too many requests for ${excedeedRateCountReports
-                ?.map((report) => {
-                  return `${report.facetQueryId} (${report.rateCount}/${report.queryBudget} allowed per minute)`;
-                })
-                .join(", ")}`,
-              extensions: {
-                code: "TOO_MANY_REQUESTS",
-                statusCode: 429,
-              },
-            },
-          ],
-        };
+        const rateLimiterErrorResponse = buildRateLimitResponse(
+          excedeedRateCountReports,
+        );
 
-        return new Response(JSON.stringify(errorResponse), {
+        return new Response(JSON.stringify(rateLimiterErrorResponse), {
           status: 429,
           headers: {
             "content-type": "application/json;charset=UTF-8",
@@ -216,7 +196,7 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
             userId = payload?.sub;
           }
         } catch (e) {
-          return new Response(JSON.stringify(authorizedResponse), {
+          return new Response(JSON.stringify(unauthorizedResponse), {
             status: 401,
             headers: {
               "content-type": "application/json;charset=UTF-8",
