@@ -5,14 +5,20 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "dev": "wrangler dev src/index.ts",
-    "ship": "wrangler deploy --minify src/index.ts"
+    "build": "node build.mjs",
+    "dev": "npx wrangler dev  --live-reload --port 3571",
+    "ship": "npx wrangler deploy --minify"
   },
   "dependencies": {
+    "@authdog/hydra-core": "workspace:*",
     "hono": "^3.11.11"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20231218.0",
-    "wrangler": "^3.22.0"
+    "wrangler": "^3.22.0",
+    "@esbuild-plugins/node-globals-polyfill": "0.2.3",
+    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
+    "esbuild": "^0.19.5",
+    "esbuild-envfile-plugin": "^1.0.5"
   }
 }
