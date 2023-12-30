@@ -1,4 +1,4 @@
-import { HydraRateLimiter } from "./HydraRateLimiter"; // Update the import path as needed
+import { HydraRateLimiter } from "./HydraRateLimiter";
 
 describe("HydraRateLimiter", () => {
   let rateLimiter: HydraRateLimiter;
@@ -27,12 +27,10 @@ describe("HydraRateLimiter", () => {
   it("should handle fetching based on endpoint path", async () => {
     const incrementRequest = {
       url: "http://localhost:3566/increment?facet=test_facet",
-      /* Add other necessary request properties as needed */
     };
 
     const defaultRequest = {
       url: "http://localhost:3566/default",
-      /* Add other necessary request properties as needed */
     };
 
     const incrementResponse = await rateLimiter.fetch(incrementRequest);
