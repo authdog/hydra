@@ -1,3 +1,1 @@
-export {
-    IHydraConfig
-} from "./hydra";
+export { IHydraConfig } from "./hydra";

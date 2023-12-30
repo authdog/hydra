@@ -42,7 +42,7 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
     ],
   };
 
-  const facetId = ip || "localhost" // TODO: extend to more facets combinations
+  const facetId = ip || "localhost"; // TODO: extend to more facets combinations
   const defaultRateLimitingBudget = hydraConfig.rateLimiting.default.budget;
   let remainingRateBudget = -1;
 
@@ -53,9 +53,8 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
   const isMutation = requestBody?.query?.startsWith("mutation");
 
   let isIntrospection =
-  requestBody?.operationName === "IntrospectionQuery" ||
-  requestBody?.query?.indexOf("_schema") > -1;
-
+    requestBody?.operationName === "IntrospectionQuery" ||
+    requestBody?.query?.indexOf("_schema") > -1;
 
   let extractedQueries = [];
 
@@ -64,53 +63,65 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
   }
 
   if (!isIntrospection && !isMutation) {
-
     // TODO: fix this, it excludes variables
     extractedQueries = extractedAllQueryIdentifiersInRawQuery(
       requestBody?.query,
     );
-    
+
     if (rateLimiter && !isIntrospection && !isMutation) {
       const facetQueriesIds = extractedQueries.map((query) => {
-
         const facetQueryId = `${facetId}_${query}`;
-        const queryId = hydraConfig.rateLimiting?.queries?.find((queryConfig) => {
-          return queryConfig.id === query;
-        })?.id || "default";
-        const queryBudget = hydraConfig.rateLimiting?.queries?.find((queryConfig) => {
-          return queryConfig.id === query;
-        })?.budget || defaultRateLimitingBudget;
+        const queryId =
+          hydraConfig.rateLimiting?.queries?.find((queryConfig) => {
+            return queryConfig.id === query;
+          })?.id || "default";
+        const queryBudget =
+          hydraConfig.rateLimiting?.queries?.find((queryConfig) => {
+            return queryConfig.id === query;
+          })?.budget || defaultRateLimitingBudget;
 
         return {
           facetQueryId,
           queryId,
           queryBudget,
         };
+      });
 
-      })
+      const rateCountsReports = await Promise.all(
+        facetQueriesIds.map(async (facetObj) => {
+          let timestamp = new Date()
+            .toISOString()
+            .slice(0, 16)
+            .replace(/[-:T]/g, "")
+            .slice(0, 12);
+          const rateCount = await fetchRateLimiterWithFacet(
+            req,
+            rateLimiter,
+            facetObj.facetQueryId,
+            timestamp,
+          );
 
-      const rateCountsReports = await Promise.all(facetQueriesIds.map(async (facetObj) => {
-        let timestamp = new Date().toISOString().slice(0, 16).replace(/[-:T]/g, "").slice(0, 12);
-        const rateCount = await fetchRateLimiterWithFacet(req, rateLimiter, facetObj.facetQueryId, timestamp);
-        
-        return {
-          facetQueryId: facetObj.facetQueryId,
-          queryBudget: facetObj.queryBudget,
-          rateCount
-        }
-      }));
+          return {
+            facetQueryId: facetObj.facetQueryId,
+            queryBudget: facetObj.queryBudget,
+            rateCount,
+          };
+        }),
+      );
 
       const excedeedRateCountReports = rateCountsReports.filter((report) => {
         return report.rateCount > report.queryBudget;
       });
-  
+
       if (excedeedRateCountReports?.length > 0) {
         const errorResponse = {
           errors: [
             {
-              message: `Too many requests for ${excedeedRateCountReports?.map((report) => {
-                return `${report.facetQueryId} (${report.rateCount}/${report.queryBudget} allowed per minute)`;
-              }).join(", ")}`,
+              message: `Too many requests for ${excedeedRateCountReports
+                ?.map((report) => {
+                  return `${report.facetQueryId} (${report.rateCount}/${report.queryBudget} allowed per minute)`;
+                })
+                .join(", ")}`,
               extensions: {
                 code: "TOO_MANY_REQUESTS",
                 statusCode: 429,
@@ -118,7 +129,7 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
             },
           ],
         };
-  
+
         return new Response(JSON.stringify(errorResponse), {
           status: 429,
           headers: {

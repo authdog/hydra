@@ -75,7 +75,6 @@ describe("validateConfig function", () => {
     expect(() => validateConfig(missingSchemasConfig)).toThrow();
   });
 
-
   const validConfigWithCustomRateLimitingBudget: any = {
     schemas: [
       {
@@ -93,7 +92,7 @@ describe("validateConfig function", () => {
       },
       health: {
         budget: 5,
-      }
+      },
     },
     publicQueries: [
       {
@@ -107,6 +106,8 @@ describe("validateConfig function", () => {
   };
 
   it("should validate a valid config object with custom rate limiting budgets without throwing errors", () => {
-    expect(() => validateConfig(validConfigWithCustomRateLimitingBudget)).not.toThrow();
+    expect(() =>
+      validateConfig(validConfigWithCustomRateLimitingBudget),
+    ).not.toThrow();
   });
 });

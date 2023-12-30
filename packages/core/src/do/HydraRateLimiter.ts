@@ -25,7 +25,7 @@ export class HydraRateLimiter {
     // extract facet from url
     const facet = url.searchParams.get("facet");
 
-    let value = (await this.facetsMap.get(facet) || 0);
+    let value = (await this.facetsMap.get(facet)) || 0;
 
     switch (url.pathname) {
       case "/increment":

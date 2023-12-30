@@ -14,9 +14,11 @@
        "experimentalDecorators": true,
        "sourceMap": true,
        "strict": true,
-       // add @authdog/hydra-core
       "paths": {
         "@authdog/hydra-core": ["../core"]
-      }
+      },
+      "baseUrl": ".",
+      "types": ["@types/jest"],
+
     }
  }

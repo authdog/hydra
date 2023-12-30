@@ -23,7 +23,7 @@ const HydraConfig = {
         id: "hydraDevQuery",
         budget: 50,
       },
-    ]
+    ],
   },
   publicQueries: [
     {

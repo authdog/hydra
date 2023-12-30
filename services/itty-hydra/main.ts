@@ -2,10 +2,7 @@ import { Router } from "itty-router";
 import { createCors } from "itty-cors";
 import { NotFound } from "./handlers/notFound";
 import { Health } from "./handlers/health";
-import {
-  GraphQLHandler,
-  HydraHandler
-} from "@authdog/hydra-core";
+import { GraphQLHandler, HydraHandler } from "@authdog/hydra-core";
 import { HydraConfigAcme } from "./hydra.config";
 
 let rawSchema = null;
@@ -29,8 +26,6 @@ router
   .all("*", NotFound);
 
 const handleRequest = async (req, env, ctx) => {
-
-
   const enrichedContext = {
     ...ctx,
     kv: env?.HYDRA_ACME,

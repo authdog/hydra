@@ -1,4 +1,3 @@
-// @ts-ignore
 import cliSpinners from "cli-spinners";
 
 export const initSpinner = (message: string) => {

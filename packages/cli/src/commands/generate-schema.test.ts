@@ -42,8 +42,6 @@ describe("generate schema command", () => {
         throw new Error(`Config file not found at ${configPath}`);
       }
     } catch (error: any) {
-      // Handle any errors that occur during file operations or schema generation
-      // console.error("Error:", error);
       throw error; // Rethrow the error to fail the test
     }
   });

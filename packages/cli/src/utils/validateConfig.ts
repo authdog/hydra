@@ -1,5 +1,5 @@
 import { z } from "zod";
-import {IHydraConfig} from "@authdog/hydra-core"
+import { IHydraConfig } from "@authdog/hydra-core";
 
 const rateLimitingUnitSchema = z.enum(["minute", "hour"]);
 
@@ -15,13 +15,15 @@ const rateLimitingSchema = z.object({
     budget: z.number(),
     unit: rateLimitingUnitSchema.optional(),
   }),
-  queries: z.array(
-    z.object({
-      id: z.string(),
-      budget: z.number(),
-      unit: rateLimitingUnitSchema.optional(),
-    })
-  ).optional(),
+  queries: z
+    .array(
+      z.object({
+        id: z.string(),
+        budget: z.number(),
+        unit: rateLimitingUnitSchema.optional(),
+      }),
+    )
+    .optional(),
 });
 
 const publicQuerySchema = z.object({

@@ -24,7 +24,7 @@ export const HydraConfigAcme = {
         budget: 15,
         unit: "hour",
       },
-    ]
+    ],
   },
   publicQueries: [
     {
