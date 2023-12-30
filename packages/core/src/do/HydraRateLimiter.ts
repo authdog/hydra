@@ -1,3 +1,8 @@
+import {
+  INCREMENT_FACET_DO_ENDPOINT,
+  DEFAULT_GETTER_DO_ENDPOINT,
+} from "../constants";
+
 export class HydraRateLimiter {
   private facetsMap: Map<string, number>;
 
@@ -14,7 +19,6 @@ export class HydraRateLimiter {
   }
 
   getFacetValue(facet: string) {
-    console.log("facetId", facet);
     return this.facetsMap.get(facet) || 0;
   }
 
@@ -28,10 +32,10 @@ export class HydraRateLimiter {
     let value = (await this.facetsMap.get(facet)) || 0;
 
     switch (url.pathname) {
-      case "/increment":
+      case INCREMENT_FACET_DO_ENDPOINT:
         this.incrementFacetValue(facet);
         break;
-      case "/get":
+      case DEFAULT_GETTER_DO_ENDPOINT:
         break;
       default:
         return new Response("Not found", { status: 404 });

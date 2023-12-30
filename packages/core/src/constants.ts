@@ -11,3 +11,8 @@ export const FIELD_REGEXP =
   /\s*(\w+)(\([\s\S]*?\))?: ([\w\[\]!]+)(\s*=\s*([\w\d]+))?/;
 
 export const DIRECTIVE_RAW_REGEXP = /directive @(\w+)(\([\s\S]*?\))? on (\w+)/g;
+
+// durable object
+export const INCREMENT_FACET_DO_ENDPOINT = "/increment";
+export const DEFAULT_GETTER_DO_ENDPOINT = "/get";
+export const DEFAULT_DO_FACET_QUERY_PARAM = "facet";
