@@ -1,5 +1,11 @@
 # @authdog/hydra-core
 
+## 0.1.10
+
+### Patch Changes
+
+- 6c06c38: bump
+
 ## 0.1.9
 
 ### Patch Changes
