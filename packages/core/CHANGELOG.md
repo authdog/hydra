@@ -1,5 +1,11 @@
 # @authdog/hydra-core
 
+## 0.1.12
+
+### Patch Changes
+
+- 784c3b5: add no-cache header option
+
 ## 0.1.11
 
 ### Patch Changes
