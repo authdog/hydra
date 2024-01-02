@@ -1,5 +1,11 @@
 # @authdog/hydra-cli
 
+## 0.1.19
+
+### Patch Changes
+
+- 6c06c38: bump
+
 ## 0.1.18
 
 ### Patch Changes
