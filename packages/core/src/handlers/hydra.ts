@@ -34,6 +34,8 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
     req.headers.get("x-cluster-client-ip") ||
     req.headers.get("x-forwarded");
 
+  const skipCache = req.headers.get("x-hydra-skip-cache") === "true";
+
   const facetId = ip || "localhost"; // TODO: extend to more facets combinations
   const defaultRateLimitingBudget = hydraConfig.rateLimiting.default.budget;
   let remainingRateBudget = -1;
@@ -50,7 +52,9 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
 
   let extractedQueries = [];
 
-  if (isIntrospection) {
+  const directQuery = isIntrospection || skipCache;
+
+  if (directQuery) {
     return await GraphQLHandler(req, env, ctx);
   }
 
