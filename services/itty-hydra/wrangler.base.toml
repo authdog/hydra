@@ -6,7 +6,7 @@ compatibility_date = "2023-10-10"
 compatibility_flags = ["nodejs_compat"]
 
 kv_namespaces = [
-    { binding = "HYDRA_ACME", id = "c63f48a0f29843e8ab8251ef533e1c9c" }    
+    { binding = "HYDRA_ITTY_DEMO_KV", id = "b705fe111bf04913ab9a8b13b5a54844" }
 ]
 
 [durable_objects]

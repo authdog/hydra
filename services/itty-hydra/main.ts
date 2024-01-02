@@ -28,7 +28,7 @@ router
 const handleRequest = async (req, env, ctx) => {
   const enrichedContext = {
     ...ctx,
-    kv: env?.HYDRA_ACME,
+    kv: env?.HYDRA_ITTY_DEMO_KV,
     hydraConfig: HydraConfigAcme,
     rawSchema,
     rateLimiter: env?.HydraRateLimiter ?? null,
