@@ -1,5 +1,11 @@
 # @authdog/hydra-core
 
+## 0.1.11
+
+### Patch Changes
+
+- 58a31cd: bump keylab version
+
 ## 0.1.10
 
 ### Patch Changes
