@@ -250,7 +250,6 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
       );
     }
   }
-  // }
 
   let payload: any = null;
 
@@ -329,7 +328,6 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
   if (!isIntrospection && !isMutation && cacheKey && payload) {
     const rawJsonPayload = await payload.clone().json();
 
-    // console.log("rawJsonPayload", rawJsonPayload)
 
     if (rawJsonPayload?.errors) {
       throw new Error(JSON.stringify(rawJsonPayload?.errors));
@@ -349,6 +347,7 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
             };
           }),
         ],
+        ts: new Date().toISOString(),
       },
     });
 
@@ -373,6 +372,7 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
               };
             }),
           ],
+          ts: new Date().toISOString(),
         },
       });
     });
@@ -388,7 +388,6 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
       "content-type": "application/json;charset=UTF-8",
       "x-hydra-rate-budget": String(remainingRateBudget),
       "x-hydra-rate-threshold": String(defaultRateLimitingBudget),
-      // "x-hydra-cache-key": cacheKey,
     },
   });
 

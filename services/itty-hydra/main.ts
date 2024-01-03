@@ -2,6 +2,7 @@ import { Router } from "itty-router";
 import { createCors } from "itty-cors";
 import { NotFound } from "./handlers/notFound";
 import { Health } from "./handlers/health";
+import {CacheKeysHandler} from "./handlers/cache-keys"
 import { GraphQLHandler, HydraHandler } from "@authdog/hydra-core";
 import { HydraConfigAcme } from "./hydra.config";
 
@@ -21,6 +22,7 @@ router
   .options("*", preflight)
   .get("/", Health)
   .get("/health", Health)
+  .get("/keys", CacheKeysHandler)
   .get("/graphql", GraphQLHandler)
   .post("/graphql", HydraHandler)
   .all("*", NotFound);
