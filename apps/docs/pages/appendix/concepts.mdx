@@ -1,9 +1,15 @@
+import { Callout } from 'nextra/components'
+
 # Concepts
 
 ## Caching
 
 In short Hydra's caching provides a way to read data stored in a cache automatically, instead of consuming data from the actual downstream APIs.
 Thus access to payload is significantly faster if a corresponding payload exists in cache for a given query.
+
+<Callout type="info" emoji="ℹ️">
+  Cache can be bypassed by passing the `x-hydra-skip-cache` header with a value of `true` to the request.
+</Callout>
 
 ## Cache Keys Segmentation
 
