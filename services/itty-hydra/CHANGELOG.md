@@ -1,5 +1,12 @@
 # @playground/itty-hydra
 
+## 1.0.13
+
+### Patch Changes
+
+- Updated dependencies [fa03219]
+  - @authdog/hydra-core@0.1.13
+
 ## 1.0.12
 
 ### Patch Changes

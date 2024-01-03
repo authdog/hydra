@@ -1,5 +1,11 @@
 # @authdog/hydra-core
 
+## 0.1.13
+
+### Patch Changes
+
+- fa03219: adding timestamp to metadata to know when data has been cached
+
 ## 0.1.12
 
 ### Patch Changes
