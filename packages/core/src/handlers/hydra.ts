@@ -14,6 +14,8 @@ import {
   unauthorizedResponse,
 } from "../responses/default";
 
+
+// TODO: remove duplicated identity fetcher
 export const HydraHandler = async (req, env, ctx): Promise<Response> => {
   if (ctx.hasOwnProperty("kv") === false) {
     throw new Error("Missing KV store");
@@ -51,11 +53,29 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
     requestBody?.query?.indexOf("_schema") > -1;
 
   let extractedQueries = [];
+  let userId = "";
 
   const directQuery = isIntrospection || skipCache;
 
   if (directQuery) {
     return await GraphQLHandler(req, env, ctx);
+  }
+
+  if (isMutation) {
+    cacheKey = await generateGraphQLCacheKey({
+      query: requestBody?.query,
+      userId: "",
+      variables: JSON.stringify(requestBody?.variables),
+    });
+  }
+
+  let authorization =
+    requestHeaders?.get("authorization") ||
+    requestHeaders?.get("Authorization");
+
+  if (authorization) {
+    authorization = authorization?.replace("Bearer ", "");
+    authorization = authorization?.replace("bearer ", "");
   }
 
   if (!isIntrospection && !isMutation) {
@@ -139,23 +159,12 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
       });
     });
 
-    let authorization =
-      requestHeaders?.get("authorization") ||
-      requestHeaders?.get("Authorization");
-
-    if (authorization) {
-      authorization = authorization?.replace("Bearer ", "");
-      authorization = authorization?.replace("bearer ", "");
-    }
-
     if (!requiresAuthorization) {
       cacheKey = await generateGraphQLCacheKey({
         query: requestBody?.query,
         variables,
       });
     } else if (requiresAuthorization && authorization) {
-      let userId = "";
-
       if (requiresAuthorization && authorization) {
         let sanitizedJwks = null;
 
@@ -270,10 +279,65 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
     payload = await GraphQLHandler(newRequest, env, ctx);
 
     if (isMutation) {
+      console.log("isMutation", isMutation);
+
       const { data } = await payload.clone().json();
       const aggregatedIds = aggregateTypesWithIds(data);
       const allKeys = await kvNamespace.list();
       const keysToDelete = [];
+
+      // get user from request
+      let sanitizedJwks = null;
+
+      try {
+        const cachedJwks = await kvNamespace.get(hydraConfig?.jwksUri, {
+          type: "text",
+        });
+
+        if (cachedJwks) {
+          sanitizedJwks = JSON.parse(cachedJwks);
+        } else {
+          const jwksResponse = await fetch(hydraConfig?.jwksUri);
+          const jwks = await jwksResponse.json();
+          sanitizedJwks = jwks?.keys?.map((key) => {
+            return {
+              ...Object.keys(key).reduce((acc, curr) => {
+                if (curr !== "x5c" && curr !== "__typename") {
+                  acc[curr] = key[curr];
+                }
+                return acc;
+              }, {}),
+            };
+          });
+          await kvNamespace.put(
+            hydraConfig?.jwksUri,
+            JSON.stringify(sanitizedJwks),
+            {
+              expirationTtl: 60,
+            },
+          );
+        }
+      } catch (e) {
+        //console.log(e);
+      }
+
+      const { ["payload"]: tokenPayload } = await checkTokenValidness(
+        authorization,
+        {
+          adhoc: sanitizedJwks,
+        },
+      );
+
+      if (tokenPayload) {
+        userId = tokenPayload?.sub;
+      }
+
+      cacheKey = await generateGraphQLCacheKey({
+        query: requestBody?.query,
+        userId,
+        variables: JSON.stringify(requestBody?.variables),
+      });
+
       const userKey = cacheKey?.split("_")[0];
 
       const sequenceKeys = [];
@@ -327,7 +391,6 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
 
   if (!isIntrospection && !isMutation && cacheKey && payload) {
     const rawJsonPayload = await payload.clone().json();
-
 
     if (rawJsonPayload?.errors) {
       throw new Error(JSON.stringify(rawJsonPayload?.errors));

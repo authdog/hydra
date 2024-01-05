@@ -2,7 +2,7 @@ import { Router } from "itty-router";
 import { createCors } from "itty-cors";
 import { NotFound } from "./handlers/notFound";
 import { Health } from "./handlers/health";
-import {CacheKeysHandler} from "./handlers/cache-keys"
+import { CacheKeysHandler } from "./handlers/cache-keys";
 import { GraphQLHandler, HydraHandler } from "@authdog/hydra-core";
 import { HydraConfigAcme } from "./hydra.config";
 

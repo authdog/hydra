@@ -8,6 +8,10 @@ export const HydraConfigAcme = {
       id: "authz",
       uri: "https://authz.auth.dog/graphql",
     },
+    {
+      id: "notification",
+      uri: "https://notif.auth.dog/.netlify/functions/graphql",
+    },
   ],
   rateLimiting: {
     default: {
@@ -31,6 +35,15 @@ export const HydraConfigAcme = {
     {
       name: "hydraDevQuery",
     },
+    {
+      name: "applicationEnvironment",
+    },
+    // {
+    //   name: "getEnvJwks"
+    // },
+    // {
+    //   name: "jwksPayload"
+    // }
   ],
   jwksUri: "https://id.authdog.com/oidc/.well-known/jwks.json",
 };
