@@ -1,5 +1,11 @@
 # @authdog/hydra-core
 
+## 0.1.14
+
+### Patch Changes
+
+- 320f085: patch identity fetch in mutation for non public queries
+
 ## 0.1.13
 
 ### Patch Changes
