@@ -276,6 +276,8 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
       body: JSON.stringify(newRequestPayload),
     });
 
+    console.log(JSON.stringify(newRequestPayload, null, 2));
+
     payload = await GraphQLHandler(newRequest, env, ctx);
 
     if (isMutation) {
@@ -440,18 +442,16 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
     await Promise.all(promises);
   }
 
-  const streamData: any = await readStream(payload?.body?.getReader());
+  // const streamData: any = await readStream(payload?.body?.getReader());
   // removing __typename from response prevents cache invalidation with urql, disable for now
   // const finalPayload = removeTypename(JSON.parse(streamData));
 
-  payload = new Response(JSON.stringify(streamData), {
+  return new Response(JSON.stringify(payload), {
     status: 200,
     headers: {
       "content-type": "application/json;charset=UTF-8",
       "x-hydra-rate-budget": String(remainingRateBudget),
       "x-hydra-rate-threshold": String(defaultRateLimitingBudget),
     },
-  });
-
-  return payload;
+  });;
 };
