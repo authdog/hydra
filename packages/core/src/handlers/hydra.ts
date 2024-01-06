@@ -279,8 +279,6 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
     payload = await GraphQLHandler(newRequest, env, ctx);
 
     if (isMutation) {
-      console.log("isMutation", isMutation);
-
       const { data } = await payload.clone().json();
       const aggregatedIds = aggregateTypesWithIds(data);
       const allKeys = await kvNamespace.list();
@@ -443,9 +441,10 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
   }
 
   const streamData: any = await readStream(payload?.body?.getReader());
-  const finalPayload = removeTypename(JSON.parse(streamData));
+  // removing __typename from response prevents cache invalidation with urql, disable for now
+  // const finalPayload = removeTypename(JSON.parse(streamData));
 
-  payload = new Response(JSON.stringify(finalPayload), {
+  payload = new Response(JSON.stringify(streamData), {
     status: 200,
     headers: {
       "content-type": "application/json;charset=UTF-8",
