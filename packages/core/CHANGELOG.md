@@ -1,5 +1,11 @@
 # @authdog/hydra-core
 
+## 0.1.16
+
+### Patch Changes
+
+- c391589: cleanup response
+
 ## 0.1.15
 
 ### Patch Changes
