@@ -1,5 +1,11 @@
 # @authdog/hydra-core
 
+## 0.1.17
+
+### Patch Changes
+
+- 8244af2: reenable typename in payload body
+
 ## 0.1.16
 
 ### Patch Changes
