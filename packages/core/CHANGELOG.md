@@ -1,5 +1,11 @@
 # @authdog/hydra-core
 
+## 0.1.15
+
+### Patch Changes
+
+- 2484c8d: enabling \_\_typename in response stream
+
 ## 0.1.14
 
 ### Patch Changes
