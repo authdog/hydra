@@ -14,7 +14,6 @@ import {
   unauthorizedResponse,
 } from "../responses/default";
 
-
 // TODO: remove duplicated identity fetcher
 export const HydraHandler = async (req, env, ctx): Promise<Response> => {
   if (ctx.hasOwnProperty("kv") === false) {
@@ -442,9 +441,8 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
     await Promise.all(promises);
   }
 
-
   const streamData: any = await readStream(payload?.body?.getReader());
-    
+
   // removing __typename from response prevents cache invalidation with urql, disable for now
   // const finalPayload = removeTypename(JSON.parse(streamData));
 
@@ -457,4 +455,4 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
       "x-hydra-rate-threshold": String(defaultRateLimitingBudget),
     },
   });
-}
+};
