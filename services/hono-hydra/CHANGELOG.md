@@ -1,5 +1,12 @@
 # @playground/hono-hydra
 
+## 0.0.9
+
+### Patch Changes
+
+- Updated dependencies [8244af2]
+  - @authdog/hydra-core@0.1.17
+
 ## 0.0.8
 
 ### Patch Changes
