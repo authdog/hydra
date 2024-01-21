@@ -444,9 +444,7 @@ export const HydraHandler = async (req, env, ctx): Promise<Response> => {
 
 
   const streamData: any = await readStream(payload?.body?.getReader());
-  
-  console.log("streamData", streamData)
-  
+    
   // removing __typename from response prevents cache invalidation with urql, disable for now
   // const finalPayload = removeTypename(JSON.parse(streamData));
 
