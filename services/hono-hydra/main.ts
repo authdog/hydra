@@ -1,6 +1,5 @@
 import { Hono } from "hono";
-import { GraphQLHandler, HydraHandler } from "@authdog/hydra-core";
-export { HydraRateLimiter } from "@authdog/hydra-core";
+import { GraphQLHandler, HydraHandler, HydraRateLimiter } from "@authdog/hydra-core";
 import { HydraConfigAcme } from "./hydra.config";
 
 let rawSchema: any = null;
