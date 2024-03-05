@@ -28,7 +28,7 @@ Cache keys contains informations about the query, respectively
 
 ## Cache Invalidation
 
-Hydra's cache invalidation provides a way to invalidate a given cache entry, or a set of cache entries, based schema types.
+Hydra's cache invalidation provides a way to invalidate a given cache entry, or a set of cache entries, based on schema types.
 
 Assuming a mutation that creates a new `Book` in the system, owned by a given `User` type, if the mutation returns the `User` type with its `id` field, then Hydra will automatically invalidate the cached records and every associated records from the cache.
 
