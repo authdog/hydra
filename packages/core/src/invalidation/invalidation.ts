@@ -41,12 +41,6 @@ export const extractMutationName = (inputString: string): string | null => {
   return null;
 };
 
-// export const invalidateCache = () => {
-//   // will remove the keys containing any of the following keys passed as parameter
-
-//   return;
-// };
-
 export const extractInvalidationBlocksFromQuery = (
   input: string,
   id: string = "id",
