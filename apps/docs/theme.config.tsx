@@ -26,7 +26,7 @@ const config: DocsThemeConfig = {
     component: (
       <div style={{ textAlign: "center", padding: "2em" }}>
         ©{new Date().getFullYear()}&nbsp;
-        <a href="https://www.authdog.com">Authdog</a>, LLC.
+        <a href="https://www.authdog.com">Authdog</a>
       </div>
     ),
   },
