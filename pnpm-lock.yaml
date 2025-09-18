@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 overrides:
   node-fetch: 2.6.7
 
@@ -147,8 +151,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
       hono:
-        specifier: ^3.11.11
-        version: 3.11.11
+        specifier: ^4.0.0
+        version: 4.9.8
     devDependencies:
       '@cloudflare/workers-types':
         specifier: ^4.20231218.0
@@ -4614,9 +4618,9 @@ packages:
     resolution: {integrity: sha512-2bsegYkkHO+h/9MGbn6KWcE45cHZgPANo5LXF7EvWdT0yT2EguSVO1nDgU5c8+ZOPwp2vMNa7YFsJhVcDR9Sdg==}
     dev: false
 
-  /hono@3.11.11:
-    resolution: {integrity: sha512-E3Xv7LnOjg7VXiu+t+YplDEYXvkxpcTCzZ3RUFQlcNXclSME8aiQAYwWpJPT6MQRRpa4TG5RlOolqeYEDEK3wg==}
-    engines: {node: '>=16.0.0'}
+  /hono@4.9.8:
+    resolution: {integrity: sha512-JW8Bb4RFWD9iOKxg5PbUarBYGM99IcxFl2FPBo2gSJO11jjUDqlP1Bmfyqt8Z/dGhIQ63PMA9LdcLefXyIasyg==}
+    engines: {node: '>=16.9.0'}
     dev: false
 
   /hosted-git-info@2.8.9:
@@ -8645,7 +8649,3 @@ packages:
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: false
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
