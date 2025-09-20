@@ -156,7 +156,7 @@ importers:
     devDependencies:
       '@cloudflare/workers-types':
         specifier: ^4.20231218.0
-        version: 4.20231218.0
+        version: 4.20250920.0
       '@esbuild-plugins/node-globals-polyfill':
         specifier: 0.2.3
         version: 0.2.3(esbuild@0.19.5)
@@ -839,8 +839,8 @@ packages:
     dev: true
     optional: true
 
-  /@cloudflare/workers-types@4.20231218.0:
-    resolution: {integrity: sha512-Vs1FKjfUjXYGbCsXzkl+ITp0Iyb6QiW6+vTERTNThC+v96T0IvPVAioH4tT20rXwoxAfxh380mAaxYtTrJUNVg==}
+  /@cloudflare/workers-types@4.20250920.0:
+    resolution: {integrity: sha512-UkyHVhvCUw5E1kmyVYDafmKwL4d8LnBh5lRL9nNoavkSQjraYdg4Pbizw3QTiPrpKapw7oLp1EHBgZmYA4YvSg==}
     dev: true
 
   /@cspotcode/source-map-support@0.8.1:
