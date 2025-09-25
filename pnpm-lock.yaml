@@ -136,7 +136,7 @@ importers:
         version: 2.12.6(graphql@16.11.0)
       keylab:
         specifier: ^0.1.31
-        version: 0.1.31
+        version: 0.1.35
       node-fetch:
         specifier: 2.6.7
         version: 2.6.7
@@ -192,7 +192,7 @@ importers:
         version: 4.0.23
       keylab:
         specifier: ^0.1.30
-        version: 0.1.30
+        version: 0.1.35
       node-fetch:
         specifier: 2.6.7
         version: 2.6.7
@@ -5100,12 +5100,8 @@ packages:
       - ts-node
     dev: true
 
-  /jose@5.1.1:
-    resolution: {integrity: sha512-bfB+lNxowY49LfrBO0ITUn93JbUhxUN8I11K6oI5hJu/G6PO6fEUddVLjqdD0cQ9SXIHWXuWh7eJYwZF7Z0N/g==}
-    dev: false
-
-  /jose@5.2.0:
-    resolution: {integrity: sha512-oW3PCnvyrcm1HMvGTzqjxxfnEs9EoFOFWi2HsEGhlFVOXxTE3K9GKWVMFoFw06yPUqwpvEWic1BmtUZBI/tIjw==}
+  /jose@6.1.0:
+    resolution: {integrity: sha512-TTQJyoEoKcC1lscpVDCSsVgYzUDg/0Bt3WE//WiTPK6uOCQC2KZS4MpugbMWt/zyjkopgZoXhZuCi00gLudfUA==}
     dev: false
 
   /joycon@3.1.1:
@@ -5171,16 +5167,10 @@ packages:
       commander: 8.3.0
     dev: false
 
-  /keylab@0.1.30:
-    resolution: {integrity: sha512-3F6y+jKHV+zXl0dFaRyQCzWa25kCD7Rff6d6biNjEynSDMIchIj/n3txutvruBVlE0CCvXIFHsfv5p0K5ZWlrg==}
+  /keylab@0.1.35:
+    resolution: {integrity: sha512-AUXrBd1S7QTKG1zvDXpl5y9tHjZO63dOdXbvQaLMzqt0brx5qZFhhj07SmIFAeX0dYBYNVLDr9q8KtJx9XVBeQ==}
     dependencies:
-      jose: 5.1.1
-    dev: false
-
-  /keylab@0.1.31:
-    resolution: {integrity: sha512-BbCQROvAlqT5/VOQWhTvmbqYw2JLL91ren0Zk75MAMk6KTpDxp2sNyJBK7B4l4C2aqKhWI5Nj5T+5cOQCeo6Jw==}
-    dependencies:
-      jose: 5.2.0
+      jose: 6.1.0
     dev: false
 
   /khroma@2.1.0:
