@@ -28,7 +28,7 @@ importers:
         version: 2.6.7
       react-icons:
         specifier: ^4.12.0
-        version: 4.12.0(react@19.2.0)
+        version: 4.12.0(react@19.2.3)
     devDependencies:
       '@changesets/cli':
         specifier: ^2.27.1
@@ -183,7 +183,7 @@ importers:
         version: link:../../packages/core
       itty-cors:
         specifier: ^0.3.6
-        version: 0.3.6
+        version: 0.3.7
       itty-durable:
         specifier: 2.1.0
         version: 2.1.0(itty-router@4.0.23)
@@ -4622,8 +4622,8 @@ packages:
       istanbul-lib-report: 3.0.1
     dev: true
 
-  /itty-cors@0.3.6:
-    resolution: {integrity: sha512-VlDDB9CLneCyjqtg8kShl6oBZrJxxwKd8sXWrYC77H6BcW9sDMRDwx7JgCB2T+18pQv/Tau3OIlchEKrEHKKKQ==}
+  /itty-cors@0.3.7:
+    resolution: {integrity: sha512-iH2kyDCOmPwoT+gxmO/BeLfD1slJHbGxdEkvOjmTD0MzpACezx7bVIlSxBL3p9KxdN96lVFu42WPTd/vHUobRQ==}
     dev: false
 
   /itty-durable@2.1.0(itty-router@4.0.23):
@@ -6612,12 +6612,12 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-icons@4.12.0(react@19.2.0):
+  /react-icons@4.12.0(react@19.2.3):
     resolution: {integrity: sha512-IBaDuHiShdZqmfc/TwHu6+d6k2ltNCf3AszxNmjJc1KUfXdEeRJOKyNvLmAHaarhzGmTSVygNdyu8/opXv2gaw==}
     peerDependencies:
       react: '*'
     dependencies:
-      react: 19.2.0
+      react: 19.2.3
     dev: false
 
   /react-is@18.2.0:
@@ -6631,8 +6631,8 @@ packages:
       loose-envify: 1.4.0
     dev: false
 
-  /react@19.2.0:
-    resolution: {integrity: sha512-tmbWg6W31tQLeB5cdIBOicJDJRR2KzXsV7uSK9iNfLWQ5bIZfxuPEHp7M8wiHyHnn0DD1i7w3Zmin0FtkrwoCQ==}
+  /react@19.2.3:
+    resolution: {integrity: sha512-Ku/hhYbVjOQnXDZFv2+RibmLFGwFdeeKHFcOTlrt7xplBnya5OGn/hIRDsqDiSUcfORsDC7MPxwork8jBwsIWA==}
     engines: {node: '>=0.10.0'}
     dev: false
 
