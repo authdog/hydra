@@ -28,14 +28,14 @@ importers:
         version: 2.6.7
       react-icons:
         specifier: ^4.12.0
-        version: 4.12.0(react@19.2.0)
+        version: 4.12.0(react@19.2.3)
     devDependencies:
       '@changesets/cli':
         specifier: ^2.27.1
         version: 2.29.7(@types/node@20.9.0)
       '@types/jest':
         specifier: ^29.5.8
-        version: 29.5.8
+        version: 29.5.14
       '@types/node':
         specifier: ^20.9.0
         version: 20.9.0
@@ -2357,8 +2357,8 @@ packages:
       '@types/istanbul-lib-report': 3.0.3
     dev: true
 
-  /@types/jest@29.5.8:
-    resolution: {integrity: sha512-fXEFTxMV2Co8ZF5aYFJv+YeA08RTYJfhtN5c9JSv/mFEMe+xxjufCb+PHL+bJcMs/ebPUsBu+UNTEz+ydXrR6g==}
+  /@types/jest@29.5.14:
+    resolution: {integrity: sha512-ZN+4sdnLUbo8EVvVc2ao0GFW6oVrQRPn4K2lglySj7APvSrgzxHiNNK99us4WDMi57xxA2yggblIAMNhXOotLQ==}
     dependencies:
       expect: 29.7.0
       pretty-format: 29.7.0
@@ -6612,12 +6612,12 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-icons@4.12.0(react@19.2.0):
+  /react-icons@4.12.0(react@19.2.3):
     resolution: {integrity: sha512-IBaDuHiShdZqmfc/TwHu6+d6k2ltNCf3AszxNmjJc1KUfXdEeRJOKyNvLmAHaarhzGmTSVygNdyu8/opXv2gaw==}
     peerDependencies:
       react: '*'
     dependencies:
-      react: 19.2.0
+      react: 19.2.3
     dev: false
 
   /react-is@18.2.0:
@@ -6631,8 +6631,8 @@ packages:
       loose-envify: 1.4.0
     dev: false
 
-  /react@19.2.0:
-    resolution: {integrity: sha512-tmbWg6W31tQLeB5cdIBOicJDJRR2KzXsV7uSK9iNfLWQ5bIZfxuPEHp7M8wiHyHnn0DD1i7w3Zmin0FtkrwoCQ==}
+  /react@19.2.3:
+    resolution: {integrity: sha512-Ku/hhYbVjOQnXDZFv2+RibmLFGwFdeeKHFcOTlrt7xplBnya5OGn/hIRDsqDiSUcfORsDC7MPxwork8jBwsIWA==}
     engines: {node: '>=0.10.0'}
     dev: false
 
