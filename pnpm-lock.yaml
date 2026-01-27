@@ -28,7 +28,7 @@ importers:
         version: 2.6.7
       react-icons:
         specifier: ^4.12.0
-        version: 4.12.0(react@19.2.3)
+        version: 4.12.0(react@19.2.4)
     devDependencies:
       '@changesets/cli':
         specifier: ^2.27.1
@@ -152,7 +152,7 @@ importers:
         version: link:../../packages/core
       hono:
         specifier: ^4.0.0
-        version: 4.11.4
+        version: 4.11.7
     devDependencies:
       '@cloudflare/workers-types':
         specifier: ^4.20231218.0
@@ -4617,8 +4617,8 @@ packages:
     resolution: {integrity: sha512-2bsegYkkHO+h/9MGbn6KWcE45cHZgPANo5LXF7EvWdT0yT2EguSVO1nDgU5c8+ZOPwp2vMNa7YFsJhVcDR9Sdg==}
     dev: false
 
-  /hono@4.11.4:
-    resolution: {integrity: sha512-U7tt8JsyrxSRKspfhtLET79pU8K+tInj5QZXs1jSugO1Vq5dFj3kmZsRldo29mTBfcjDRVRXrEZ6LS63Cog9ZA==}
+  /hono@4.11.7:
+    resolution: {integrity: sha512-l7qMiNee7t82bH3SeyUCt9UF15EVmaBvsppY2zQtrbIhl/yzBTny+YUxsVjSjQ6gaqaeVtZmGocom8TzBlA4Yw==}
     engines: {node: '>=16.9.0'}
     dev: false
 
@@ -6896,12 +6896,12 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-icons@4.12.0(react@19.2.3):
+  /react-icons@4.12.0(react@19.2.4):
     resolution: {integrity: sha512-IBaDuHiShdZqmfc/TwHu6+d6k2ltNCf3AszxNmjJc1KUfXdEeRJOKyNvLmAHaarhzGmTSVygNdyu8/opXv2gaw==}
     peerDependencies:
       react: '*'
     dependencies:
-      react: 19.2.3
+      react: 19.2.4
     dev: false
 
   /react-is@18.2.0:
@@ -6915,8 +6915,8 @@ packages:
       loose-envify: 1.4.0
     dev: false
 
-  /react@19.2.3:
-    resolution: {integrity: sha512-Ku/hhYbVjOQnXDZFv2+RibmLFGwFdeeKHFcOTlrt7xplBnya5OGn/hIRDsqDiSUcfORsDC7MPxwork8jBwsIWA==}
+  /react@19.2.4:
+    resolution: {integrity: sha512-9nfp2hYpCwOjAN+8TZFGhtWEwgvWHXqESH8qT89AT/lWklpLON22Lc8pEtnpsZz7VmawabSU0gCjnj8aC0euHQ==}
     engines: {node: '>=0.10.0'}
     dev: false
 
